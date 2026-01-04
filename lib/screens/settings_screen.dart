@@ -42,7 +42,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   SystemInfo? _systemInfo;
-  bool _isDarkMode = false;
+  String _themeMode = 'system'; // 'system', 'light', or 'dark'
   
   // Auth settings
   bool _pinEnabled = false;
@@ -87,10 +87,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   }
 
   Future<void> _loadThemeMode() async {
-    final isDark = await StorageService().loadBool('dark_mode') ?? false;
+    final themeMode = await StorageService().loadString('theme_mode') ?? 'system';
     if (mounted) {
       setState(() {
-        _isDarkMode = isDark;
+        _themeMode = themeMode;
       });
     }
   }
@@ -132,12 +132,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     }
   }
 
-  void _toggleDarkMode(bool value) {
+  void _updateThemeMode(String? value) {
+    if (value == null) return;
     setState(() {
-      _isDarkMode = value;
+      _themeMode = value;
     });
-    final toggleTheme = context.read<Function(bool)>();
-    toggleTheme(value);
+    final updateTheme = context.read<Function(String)>();
+    updateTheme(value);
   }
 
   Future<void> _togglePinLock(bool value) async {
@@ -148,12 +149,19 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       // Disable PIN
       final authService = AuthService();
       await authService.disablePin();
+      
+      // Also disable biometric if it was enabled
+      if (_biometricEnabled) {
+        await authService.setBiometricEnabled(false);
+      }
+      
       setState(() {
         _pinEnabled = false;
+        _biometricEnabled = false;
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('PIN lock disabled')),
+          const SnackBar(content: Text('PIN lock disabled. Biometric lock also disabled.')),
         );
       }
     }
@@ -375,7 +383,34 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   Future<void> _toggleBiometric(bool value) async {
     final authService = AuthService();
     
+    // Check if PIN is enabled first
+    if (!_pinEnabled) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enable PIN lock first before using biometric'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+      return;
+    }
+    
     if (value) {
+      // Double-check biometric availability
+      final isAvailable = await authService.isBiometricAvailable();
+      if (!isAvailable) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Biometric authentication is not available on this device'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        return;
+      }
+
       // Test biometric authentication first
       final authenticated = await authService.authenticateWithBiometrics(
         localizedReason: 'Authenticate to enable biometric lock',
@@ -388,14 +423,17 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Biometric lock enabled')),
+            const SnackBar(
+              content: Text('Biometric lock enabled'),
+              backgroundColor: Colors.green,
+            ),
           );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Biometric authentication failed'),
+              content: Text('Biometric authentication failed or was cancelled'),
               backgroundColor: Colors.red,
             ),
           );
@@ -475,15 +513,42 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   ),
             ),
             const SizedBox(height: 16),
-            SwitchListTile(
-              title: const Text('Dark Mode'),
-              subtitle: const Text('Use dark theme'),
-              secondary: Icon(
-                _isDarkMode ? Icons.dark_mode : Icons.light_mode,
+            ListTile(
+              leading: Icon(
+                _themeMode == 'dark'
+                    ? Icons.dark_mode
+                    : _themeMode == 'light'
+                        ? Icons.light_mode
+                        : Icons.brightness_auto,
                 color: Theme.of(context).primaryColor,
               ),
-              value: _isDarkMode,
-              onChanged: _toggleDarkMode,
+              title: const Text('Theme'),
+              subtitle: Text(
+                _themeMode == 'system'
+                    ? 'Follow system theme'
+                    : _themeMode == 'light'
+                        ? 'Light mode'
+                        : 'Dark mode',
+              ),
+              trailing: DropdownButton<String>(
+                value: _themeMode,
+                underline: const SizedBox(),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'system',
+                    child: Text('System'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'light',
+                    child: Text('Light'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'dark',
+                    child: Text('Dark'),
+                  ),
+                ],
+                onChanged: _updateThemeMode,
+              ),
             ),
           ],
         ),
@@ -532,13 +597,15 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               const Divider(),
               SwitchListTile(
                 title: Text('${_getBiometricName()} Lock'),
-                subtitle: Text('Use ${_getBiometricName()} to unlock app'),
+                subtitle: Text(_pinEnabled
+                    ? 'Use ${_getBiometricName()} to unlock app'
+                    : 'Enable PIN lock first to use biometric'),
                 secondary: Icon(
                   Icons.fingerprint,
                   color: Theme.of(context).primaryColor,
                 ),
                 value: _biometricEnabled,
-                onChanged: _toggleBiometric,
+                onChanged: _pinEnabled ? _toggleBiometric : null,
               ),
             ],
             if (_pinEnabled || _biometricEnabled) ...[

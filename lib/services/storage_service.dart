@@ -34,6 +34,25 @@ class StorageService {
   /// Initialize shared preferences
   Future<void> init() async {
     _prefs ??= await SharedPreferences.getInstance();
+    await _migrateThemeMode();
+  }
+
+  /// Migrate from old dark_mode boolean to new theme_mode string
+  Future<void> _migrateThemeMode() async {
+    // Check if we have the old dark_mode setting
+    final oldDarkMode = _prefs?.getBool('dark_mode');
+    final newThemeMode = _prefs?.getString('theme_mode');
+    
+    // If we have old setting but no new setting, migrate
+    if (oldDarkMode != null && newThemeMode == null) {
+      await _prefs?.setString('theme_mode', oldDarkMode ? 'dark' : 'light');
+      await _prefs?.remove('dark_mode');
+    }
+    
+    // If no setting exists at all, default to system
+    if (newThemeMode == null && oldDarkMode == null) {
+      await _prefs?.setString('theme_mode', 'system');
+    }
   }
 
   // ==================== Secure Storage (Credentials) ====================
