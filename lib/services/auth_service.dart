@@ -95,7 +95,8 @@ class AuthService {
   /// Check if device supports biometric authentication
   Future<bool> canCheckBiometrics() async {
     try {
-      return await _localAuth.canCheckBiometrics;
+      final canCheck = await _localAuth.canCheckBiometrics;
+      return canCheck;
     } on PlatformException {
       return false;
     }
@@ -117,7 +118,8 @@ class AuthService {
   /// Get available biometric types
   Future<List<BiometricType>> getAvailableBiometrics() async {
     try {
-      return await _localAuth.getAvailableBiometrics();
+      final biometrics = await _localAuth.getAvailableBiometrics();
+      return biometrics;
     } on PlatformException {
       return [];
     }
@@ -130,6 +132,9 @@ class AuthService {
     try {
       final canCheck = await canCheckBiometrics();
       if (!canCheck) return false;
+
+      final isAvailable = await isBiometricAvailable();
+      if (!isAvailable) return false;
 
       return await _localAuth.authenticate(
         localizedReason: localizedReason,

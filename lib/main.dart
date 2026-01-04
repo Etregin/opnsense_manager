@@ -47,7 +47,7 @@ class OPNsenseManagerApp extends StatefulWidget {
 }
 
 class _OPNsenseManagerAppState extends State<OPNsenseManagerApp> {
-  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode _themeMode = ThemeMode.system;
 
   @override
   void initState() {
@@ -56,17 +56,29 @@ class _OPNsenseManagerAppState extends State<OPNsenseManagerApp> {
   }
 
   Future<void> _loadThemeMode() async {
-    final isDark = await StorageService().loadBool('dark_mode') ?? false;
+    final themeModeString = await StorageService().loadString('theme_mode') ?? 'system';
     setState(() {
-      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = _getThemeModeFromString(themeModeString);
     });
   }
 
-  void _toggleTheme(bool isDark) {
+  ThemeMode _getThemeModeFromString(String mode) {
+    switch (mode) {
+      case 'light':
+        return ThemeMode.light;
+      case 'dark':
+        return ThemeMode.dark;
+      case 'system':
+      default:
+        return ThemeMode.system;
+    }
+  }
+
+  void _updateThemeMode(String mode) {
     setState(() {
-      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = _getThemeModeFromString(mode);
     });
-    StorageService().saveBool('dark_mode', isDark);
+    StorageService().saveString('theme_mode', mode);
   }
 
   @override
@@ -85,8 +97,8 @@ class _OPNsenseManagerAppState extends State<OPNsenseManagerApp> {
         Provider<ProfileService>(
           create: (_) => ProfileService(),
         ),
-        Provider<Function(bool)>(
-          create: (_) => _toggleTheme,
+        Provider<Function(String)>(
+          create: (_) => _updateThemeMode,
         ),
       ],
       child: MaterialApp(
