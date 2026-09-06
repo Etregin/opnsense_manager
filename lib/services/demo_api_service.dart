@@ -42,7 +42,13 @@ import '../models/openvpn_client_override.dart';
 import '../models/openvpn_client_override_search_response.dart';
 import '../models/openvpn_log_search_response.dart';
 import '../models/neighbor.dart';
+import '../models/netflow_status.dart';
+import '../models/network_insight_direction_total.dart';
+import '../models/network_insight_timeserie.dart';
+import '../models/network_insight_top_addr.dart';
+import '../models/network_insight_top_port.dart';
 import 'demo_data_service.dart';
+import 'demo/demo_network_insight_data_generator.dart';
 import 'opnsense_api_service.dart';
 import 'demo/demo_api_decorator.dart';
 
@@ -50,6 +56,8 @@ import 'demo/demo_api_decorator.dart';
 class DemoApiService {
   final OPNsenseApiService _realApiService;
   final DemoDataService _demoDataService = DemoDataService();
+  final DemoNetworkInsightDataGenerator _insightGenerator =
+      DemoNetworkInsightDataGenerator();
   bool _isDemoMode = false;
 
   DemoApiService(this._realApiService);
@@ -1720,6 +1728,96 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
         },
         realAction: () => _realApiService.getFirmwareChangelog(version),
         delayMs: 300,
+      );
+
+  // ── Network Insight ─────────────────────────────────────────────────────────
+
+  Future<NetflowStatus> checkNetflowEnabled() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateNetflowStatus(),
+        realAction: () => _realApiService.checkNetflowEnabled(),
+        delayMs: 300,
+      );
+
+  Future<Map<String, String>> getInsightInterfaces() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateInterfaces(),
+        realAction: () => _realApiService.getInsightInterfaces(),
+        delayMs: 300,
+      );
+
+  Future<List<NetworkInsightSeries>> getInsightTimeseries({
+    required int startTs,
+    required int endTs,
+    required int resolution,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTimeseries(
+          startTs: startTs,
+          endTs: endTs,
+          resolution: resolution,
+        ),
+        realAction: () => _realApiService.getInsightTimeseries(
+          startTs: startTs,
+          endTs: endTs,
+          resolution: resolution,
+        ),
+        delayMs: 500,
+      );
+
+  Future<List<NetworkInsightTopPort>> getInsightTopPorts({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTopPorts(),
+        realAction: () => _realApiService.getInsightTopPorts(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        delayMs: 400,
+      );
+
+  Future<List<NetworkInsightTopAddr>> getInsightTopAddresses({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTopAddresses(),
+        realAction: () => _realApiService.getInsightTopAddresses(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        delayMs: 400,
+      );
+
+  Future<List<NetworkInsightDirectionTotal>> getInsightDirectionTotals({
+    required String interface,
+    required int startTs,
+    required int endTs,
+    required String measure,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => measure == 'packets'
+            ? _insightGenerator.generateDirectionPacketTotals()
+            : _insightGenerator.generateDirectionOctetTotals(),
+        realAction: () => _realApiService.getInsightDirectionTotals(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: measure,
+        ),
+        delayMs: 400,
       );
 
   /// Clear service state

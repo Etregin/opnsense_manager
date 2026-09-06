@@ -1,0 +1,268 @@
+/*
+ * OPNsense Manager - Flutter application for managing OPNsense firewalls
+ * Copyright (C) 2026 OPNsense Manager
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import 'package:flutter/foundation.dart';
+import '../models/netflow_status.dart';
+import '../models/network_insight_direction_total.dart';
+import '../models/network_insight_timeserie.dart';
+import '../models/network_insight_top_addr.dart';
+import '../models/network_insight_top_port.dart';
+import '../services/demo_api_service.dart';
+
+/// ViewModel for the Network Insight screen.
+///
+/// Manages:
+/// - NetFlow gate check (must be enabled before showing charts).
+/// - Time range and resolution selection.
+/// - Interface list and per-interface filter for the breakdown section.
+/// - Parallel loading of all chart data.
+class NetworkInsightViewModel extends ChangeNotifier {
+  final DemoApiService _apiService;
+
+  NetworkInsightViewModel(this._apiService);
+
+  // ── NetFlow gate ────────────────────────────────────────────────────────────
+
+  bool _isCheckingNetflow = false;
+  NetflowStatus? _netflowStatus;
+  String? _errorMessage;
+
+  bool get isCheckingNetflow => _isCheckingNetflow;
+  NetflowStatus? get netflowStatus => _netflowStatus;
+  bool get netflowEnabled => _netflowStatus?.isEnabled ?? false;
+  String? get errorMessage => _errorMessage;
+
+  // ── Interfaces ──────────────────────────────────────────────────────────────
+
+  Map<String, String> _interfaces = {};
+  String? _selectedInterface;
+
+  /// Interface key → human-readable label.
+  Map<String, String> get interfaces => Map.unmodifiable(_interfaces);
+
+  /// Currently selected interface key for the breakdown section.
+  String? get selectedInterface => _selectedInterface;
+
+  // ── Time range ──────────────────────────────────────────────────────────────
+
+  // Duration of the selected window (e.g. 2 hours). The end is always
+  // recalculated to DateTime.now() on each load so data stays current.
+  Duration _windowDuration = const Duration(hours: 2);
+  int _resolution = 30; // seconds
+
+  Duration get windowDuration => _windowDuration;
+  int get resolution => _resolution;
+
+  // ── Chart data ──────────────────────────────────────────────────────────────
+
+  bool _isLoadingCharts = false;
+  bool get isLoadingCharts => _isLoadingCharts;
+
+  List<NetworkInsightSeries> _timeseries = [];
+  List<NetworkInsightTopPort> _topPorts = [];
+  List<NetworkInsightTopAddr> _topAddresses = [];
+  List<NetworkInsightDirectionTotal> _directionOctetTotals = [];
+  List<NetworkInsightDirectionTotal> _directionPacketTotals = [];
+
+  List<NetworkInsightSeries> get timeseries => List.unmodifiable(_timeseries);
+  List<NetworkInsightTopPort> get topPorts => List.unmodifiable(_topPorts);
+  List<NetworkInsightTopAddr> get topAddresses => List.unmodifiable(_topAddresses);
+  List<NetworkInsightDirectionTotal> get directionOctetTotals =>
+      List.unmodifiable(_directionOctetTotals);
+  List<NetworkInsightDirectionTotal> get directionPacketTotals =>
+      List.unmodifiable(_directionPacketTotals);
+
+  // ── Initialisation ──────────────────────────────────────────────────────────
+
+  /// First call on screen open.
+  ///
+  /// Checks NetFlow status and, if enabled, loads interfaces and chart data.
+  Future<void> loadInitial() async {
+    _setDefaultTimeRange();
+    _isCheckingNetflow = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _netflowStatus = await _apiService.checkNetflowEnabled();
+
+      if (_netflowStatus!.isEnabled) {
+        await _loadInterfaces();
+        await loadChartData();
+      }
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isCheckingNetflow = false;
+      notifyListeners();
+    }
+  }
+
+  void _setDefaultTimeRange() {
+    _windowDuration = const Duration(hours: 2);
+    _resolution = 30;
+  }
+
+  Future<void> _loadInterfaces() async {
+    try {
+      _interfaces = await _apiService.getInsightInterfaces();
+      // Default to first non-loopback interface
+      _selectedInterface = _interfaces.keys.firstWhere(
+        (k) => !_isLoopback(_interfaces[k]!),
+        orElse: () => _interfaces.keys.first,
+      );
+    } catch (e) {
+      _errorMessage = e.toString();
+    }
+  }
+
+  // ── Data loading ────────────────────────────────────────────────────────────
+
+  /// Loads all chart data in parallel.
+  Future<void> loadChartData() async {
+    _isLoadingCharts = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      // Match the OPNsense GUI timestamp algorithm exactly:
+      //   endTs   = now (raw, no snapping)
+      //   startTs = floor((now - window) / 3600) * 3600  (snapped to hour boundary)
+      final endTs = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final rawStart = endTs - _windowDuration.inSeconds;
+      final startTs = (rawStart ~/ 3600) * 3600;
+      final iface = _selectedInterface ?? '';
+
+      final results = await Future.wait([
+        _apiService.getInsightTimeseries(
+          startTs: startTs,
+          endTs: endTs,
+          resolution: _resolution,
+        ),
+        _apiService.getInsightTopPorts(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        _apiService.getInsightTopAddresses(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        _apiService.getInsightDirectionTotals(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: 'octets',
+        ),
+        _apiService.getInsightDirectionTotals(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: 'packets',
+        ),
+      ]);
+
+      _timeseries = results[0] as List<NetworkInsightSeries>;
+      _topPorts = results[1] as List<NetworkInsightTopPort>;
+      _topAddresses = results[2] as List<NetworkInsightTopAddr>;
+      _directionOctetTotals = results[3] as List<NetworkInsightDirectionTotal>;
+      _directionPacketTotals = results[4] as List<NetworkInsightDirectionTotal>;
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isLoadingCharts = false;
+      notifyListeners();
+    }
+  }
+
+  /// Loads only the per-interface breakdown data (pie charts + totals).
+  Future<void> _loadBreakdownData() async {
+    _isLoadingCharts = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final endTs = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final rawStart = endTs - _windowDuration.inSeconds;
+      final startTs = (rawStart ~/ 3600) * 3600;
+      final iface = _selectedInterface ?? '';
+
+      final results = await Future.wait([
+        _apiService.getInsightTopPorts(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        _apiService.getInsightTopAddresses(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        _apiService.getInsightDirectionTotals(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: 'octets',
+        ),
+        _apiService.getInsightDirectionTotals(
+          interface: iface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: 'packets',
+        ),
+      ]);
+
+      _topPorts = results[0] as List<NetworkInsightTopPort>;
+      _topAddresses = results[1] as List<NetworkInsightTopAddr>;
+      _directionOctetTotals = results[2] as List<NetworkInsightDirectionTotal>;
+      _directionPacketTotals = results[3] as List<NetworkInsightDirectionTotal>;
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isLoadingCharts = false;
+      notifyListeners();
+    }
+  }
+
+  // ── Mutations ───────────────────────────────────────────────────────────────
+
+  /// Updates the window duration and resolution, then reloads all chart data.
+  ///
+  /// The end timestamp is always computed as DateTime.now() at load time, so
+  /// only the duration and resolution need to be stored.
+  void setTimeRange(Duration duration, int resolution) {
+    _windowDuration = duration;
+    _resolution = resolution;
+    loadChartData();
+  }
+
+  /// Updates the selected interface for the breakdown section and reloads.
+  void setSelectedInterface(String key) {
+    if (_selectedInterface == key) return;
+    _selectedInterface = key;
+    _loadBreakdownData();
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
+
+  static bool _isLoopback(String label) {
+    final l = label.toLowerCase();
+    return l.contains('loopback') || l == 'lo0';
+  }
+}
