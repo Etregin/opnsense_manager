@@ -43,6 +43,9 @@ dependencies:
   # QR Code generation for WireGuard configs
   qr_flutter: ^4.1.0
   
+  # Charts for Network Insight and Reporting
+  fl_chart: ^0.69.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

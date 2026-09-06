@@ -63,6 +63,9 @@ class Routes {
   static const String tailscaleSettings = 'tailscale_settings';
   static const String tailscaleStatus = 'tailscale_status';
 
+  // ── Reporting routes ─────────────────────────────────────────────────────────
+  static const String networkInsight = 'reporting_network_insight';
+
   // ── Section prefix strings (used with NavigationService.isRouteInSection) ───
   static const String firewallPrefix = 'firewall_';
   static const String vpnPrefix = 'vpn_';
@@ -71,4 +74,5 @@ class Routes {
   static const String tailscalePrefix = 'tailscale_';
   static const String networkPrefix = 'network_';
   static const String systemLogPrefix = 'system_log_';
+  static const String reportingPrefix = 'reporting_';
 }

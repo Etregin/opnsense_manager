@@ -26,7 +26,12 @@ import '../models/firewall_rule.dart';
 import '../models/firewall_form_options.dart';
 import '../models/firewall_alias.dart';
 import '../models/vpn_connection.dart';
+import '../models/netflow_status.dart';
 import '../models/network_host.dart';
+import '../models/network_insight_direction_total.dart';
+import '../models/network_insight_timeserie.dart';
+import '../models/network_insight_top_addr.dart';
+import '../models/network_insight_top_port.dart';
 import '../models/wireguard_server.dart';
 import '../models/wireguard_peer.dart';
 import '../models/wireguard_key_pair.dart';
@@ -52,6 +57,7 @@ import 'firewall/firewall_service.dart';
 import 'firewall/firewall_alias_service.dart' as alias_service;
 import 'vpn/vpn_service.dart';
 import 'vpn/wireguard_service.dart';
+import 'network/network_insight_service.dart';
 import 'network/network_service.dart';
 import 'network/dhcp_service.dart';
 import 'network/gateway_service.dart';
@@ -93,6 +99,7 @@ class OPNsenseApiService {
   final ServiceControlService _serviceControlService = ServiceControlService();
   final TailscaleService _tailscaleService = TailscaleService();
   final SystemLogService _systemLogService = SystemLogService();
+  final NetworkInsightService _networkInsightService = NetworkInsightService();
 
   Dio? _dio;
   OPNsenseConfig? _config;
@@ -142,6 +149,7 @@ class OPNsenseApiService {
     _serviceControlService.init(_dio!, config);
     _tailscaleService.init(_dio!, config);
     _systemLogService.init(_dio!, config);
+    _networkInsightService.init(_dio!, config);
   }
 
   /// Test connection to OPNsense
@@ -200,7 +208,8 @@ class OPNsenseApiService {
     _serviceControlService.clear();
     _tailscaleService.clear();
     _systemLogService.clear();
-    
+    _networkInsightService.clear();
+
     // Clear main service state
     _dio = null;
     _config = null;
@@ -675,6 +684,62 @@ class OPNsenseApiService {
   Future<Map<String, dynamic>> deleteTailscaleSubnet(String uuid) => _tailscaleService.deleteTailscaleSubnet(uuid);
   
   Future<Map<String, dynamic>> reloadTailscaleSettings() => _tailscaleService.reloadTailscaleSettings();
+
+  // ============================================================================
+  // Network Insight Service Delegations
+  // ============================================================================
+
+  Future<NetflowStatus> checkNetflowEnabled() =>
+      _networkInsightService.checkNetflowEnabled();
+
+  Future<Map<String, String>> getInsightInterfaces() =>
+      _networkInsightService.getInterfaces();
+
+  Future<List<NetworkInsightSeries>> getInsightTimeseries({
+    required int startTs,
+    required int endTs,
+    required int resolution,
+  }) =>
+      _networkInsightService.getTimeseries(
+        startTs: startTs,
+        endTs: endTs,
+        resolution: resolution,
+      );
+
+  Future<List<NetworkInsightTopPort>> getInsightTopPorts({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      _networkInsightService.getTopPorts(
+        interface: interface,
+        startTs: startTs,
+        endTs: endTs,
+      );
+
+  Future<List<NetworkInsightTopAddr>> getInsightTopAddresses({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      _networkInsightService.getTopAddresses(
+        interface: interface,
+        startTs: startTs,
+        endTs: endTs,
+      );
+
+  Future<List<NetworkInsightDirectionTotal>> getInsightDirectionTotals({
+    required String interface,
+    required int startTs,
+    required int endTs,
+    required String measure,
+  }) =>
+      _networkInsightService.getDirectionTotals(
+        interface: interface,
+        startTs: startTs,
+        endTs: endTs,
+        measure: measure,
+      );
 }
 
 

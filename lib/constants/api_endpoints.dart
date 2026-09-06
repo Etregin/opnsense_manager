@@ -167,4 +167,41 @@ class ApiEndpoints {
   // ── Network / Traffic ────────────────────────────────────────────────────────
   static String diagnosticsTrafficTopInterface(String interface) =>
       '/diagnostics/traffic/top/$interface';
+
+  // ── NetFlow / Network Insight ────────────────────────────────────────────────
+  static const String netflowIsEnabled =
+      '/diagnostics/netflow/is_enabled';
+  static const String networkInsightGetInterfaces =
+      '/diagnostics/networkinsight/get_interfaces';
+  static const String networkInsightGetMetadata =
+      '/diagnostics/networkinsight/get_metadata';
+
+  /// Time-series bandwidth data endpoint.
+  ///
+  /// Example: `/diagnostics/networkinsight/timeserie/FlowInterfaceTotals/bps/{start}/{end}/{resolution}/if,direction`
+  static String networkInsightTimeserie({
+    required String aggregator,
+    required String measure,
+    required int startTs,
+    required int endTs,
+    required int resolution,
+    required String dimensions,
+  }) =>
+      '/diagnostics/networkinsight/timeserie/$aggregator/$measure/$startTs/$endTs/$resolution/$dimensions';
+
+  /// Top-N ranked breakdown endpoint.
+  ///
+  /// Filter parameters (`filter_field`, `filter_value`) must be passed via
+  /// Dio `queryParameters` — not appended to this path string.
+  ///
+  /// Example: `/diagnostics/networkinsight/top/FlowDstPortTotals/{start}/{end}/dst_port,protocol/octets/25/`
+  static String networkInsightTop({
+    required String aggregator,
+    required int startTs,
+    required int endTs,
+    required String dimensions,
+    required String measure,
+    required int limit,
+  }) =>
+      '/diagnostics/networkinsight/top/$aggregator/$startTs/$endTs/$dimensions/$measure/$limit/';
 }
