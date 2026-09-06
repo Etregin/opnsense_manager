@@ -1847,6 +1847,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get liveNetworkMonitor => 'Live Network Monitor';
 
   @override
+  String get networkInsight => 'Network Insight';
+
+  @override
+  String get reporting => 'Reporting';
+
+  @override
+  String get netflowNotEnabled =>
+      'Local data collection is not enabled at the moment, please configure NetFlow first.';
+
+  @override
+  String get interfaceTotalsBitsPerSec => 'Interface Totals (bits/sec)';
+
+  @override
+  String get showLoopback => 'Show Loopback';
+
+  @override
+  String get protocolsBreakdown => 'Protocols';
+
+  @override
+  String get sourceAddressBreakdown => 'Source Addresses';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get timeRangeFrom => 'From';
+
+  @override
+  String get timeRangeTo => 'To';
+
+  @override
+  String get resolutionLabel => 'Resolution';
+
+  @override
+  String get resolution30s => '30 seconds';
+
+  @override
+  String get resolution5min => '5 minutes';
+
+  @override
+  String get resolution1hr => '1 hour';
+
+  @override
+  String get resolution24hr => '24 hours';
+
+  @override
+  String get perInterfaceBreakdown => 'Per-Interface Breakdown';
+
+  @override
+  String get totalBytesIn => 'Total Bytes In';
+
+  @override
+  String get totalBytesOut => 'Total Bytes Out';
+
+  @override
+  String get totalPacketsIn => 'Total Packets In';
+
+  @override
+  String get totalPacketsOut => 'Total Packets Out';
+
+  @override
+  String get checkingNetflowStatus => 'Checking NetFlow status...';
+
+  @override
   String get neighborDiscovery => 'Neighbor Discovery';
 
   @override

@@ -1838,6 +1838,70 @@ class AppLocalizationsAr extends AppLocalizations {
   String get liveNetworkMonitor => 'مراقب الشبكة المباشر';
 
   @override
+  String get networkInsight => 'نظرة ثاقبة على الشبكة';
+
+  @override
+  String get reporting => 'التقارير';
+
+  @override
+  String get netflowNotEnabled =>
+      'جمع البيانات المحلية غير مفعّل حاليًا، يرجى ضبط إعدادات NetFlow أولًا.';
+
+  @override
+  String get interfaceTotalsBitsPerSec => 'إجماليات الواجهة (بت/ثانية)';
+
+  @override
+  String get showLoopback => 'إظهار الاسترجاع';
+
+  @override
+  String get protocolsBreakdown => 'البروتوكولات';
+
+  @override
+  String get sourceAddressBreakdown => 'عناوين المصدر';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String get timeRangeFrom => 'من';
+
+  @override
+  String get timeRangeTo => 'إلى';
+
+  @override
+  String get resolutionLabel => 'الدقة';
+
+  @override
+  String get resolution30s => '30 ثانية';
+
+  @override
+  String get resolution5min => '5 دقائق';
+
+  @override
+  String get resolution1hr => 'ساعة واحدة';
+
+  @override
+  String get resolution24hr => '24 ساعة';
+
+  @override
+  String get perInterfaceBreakdown => 'تفصيل لكل واجهة';
+
+  @override
+  String get totalBytesIn => 'إجمالي البايت الواردة';
+
+  @override
+  String get totalBytesOut => 'إجمالي البايت الصادرة';
+
+  @override
+  String get totalPacketsIn => 'إجمالي الحزم الواردة';
+
+  @override
+  String get totalPacketsOut => 'إجمالي الحزم الصادرة';
+
+  @override
+  String get checkingNetflowStatus => 'جارٍ التحقق من حالة NetFlow...';
+
+  @override
   String get neighborDiscovery => 'اكتشاف الأجهزة المجاورة';
 
   @override

@@ -3338,6 +3338,132 @@ abstract class AppLocalizations {
   /// **'Live Network Monitor'**
   String get liveNetworkMonitor;
 
+  /// No description provided for @networkInsight.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Insight'**
+  String get networkInsight;
+
+  /// No description provided for @reporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting'**
+  String get reporting;
+
+  /// No description provided for @netflowNotEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Local data collection is not enabled at the moment, please configure NetFlow first.'**
+  String get netflowNotEnabled;
+
+  /// No description provided for @interfaceTotalsBitsPerSec.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface Totals (bits/sec)'**
+  String get interfaceTotalsBitsPerSec;
+
+  /// No description provided for @showLoopback.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Loopback'**
+  String get showLoopback;
+
+  /// No description provided for @protocolsBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocols'**
+  String get protocolsBreakdown;
+
+  /// No description provided for @sourceAddressBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Addresses'**
+  String get sourceAddressBreakdown;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @timeRangeFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get timeRangeFrom;
+
+  /// No description provided for @timeRangeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get timeRangeTo;
+
+  /// No description provided for @resolutionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolution'**
+  String get resolutionLabel;
+
+  /// No description provided for @resolution30s.
+  ///
+  /// In en, this message translates to:
+  /// **'30 seconds'**
+  String get resolution30s;
+
+  /// No description provided for @resolution5min.
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get resolution5min;
+
+  /// No description provided for @resolution1hr.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get resolution1hr;
+
+  /// No description provided for @resolution24hr.
+  ///
+  /// In en, this message translates to:
+  /// **'24 hours'**
+  String get resolution24hr;
+
+  /// No description provided for @perInterfaceBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-Interface Breakdown'**
+  String get perInterfaceBreakdown;
+
+  /// No description provided for @totalBytesIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Bytes In'**
+  String get totalBytesIn;
+
+  /// No description provided for @totalBytesOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Bytes Out'**
+  String get totalBytesOut;
+
+  /// No description provided for @totalPacketsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Packets In'**
+  String get totalPacketsIn;
+
+  /// No description provided for @totalPacketsOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Packets Out'**
+  String get totalPacketsOut;
+
+  /// No description provided for @checkingNetflowStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking NetFlow status...'**
+  String get checkingNetflowStatus;
+
   /// No description provided for @neighborDiscovery.
   ///
   /// In en, this message translates to:
