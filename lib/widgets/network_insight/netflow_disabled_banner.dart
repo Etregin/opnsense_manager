@@ -17,15 +17,16 @@
  */
 
 import 'package:flutter/material.dart';
+import '../../constants/routes.dart';
 import '../../l10n/app_localizations.dart';
+import '../../screens/netflow_screen.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
 
 /// Warning banner shown when NetFlow local data collection is disabled.
 ///
-/// Informs the user that data collection is not active and directs them to
-/// configure NetFlow in the settings. No tappable link is shown — navigation
-/// to the configuration section is deferred to a future feature.
+/// Informs the user that data collection is not active and provides a button
+/// to navigate to the NetFlow configuration screen.
 class NetflowDisabledBanner extends StatelessWidget {
   const NetflowDisabledBanner({super.key});
 
@@ -46,21 +47,48 @@ class NetflowDisabledBanner extends StatelessWidget {
               ),
             ),
           ),
-          child: Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.warningIcon,
-                size: AppConstants.iconSize,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: AppColors.warningIcon,
+                    size: AppConstants.iconSize,
+                  ),
+                  const SizedBox(width: AppConstants.compactPadding),
+                  Expanded(
+                    child: Text(
+                      l10n.netflowNotEnabled,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppColors.warningDark,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: AppConstants.compactPadding),
-              Expanded(
-                child: Text(
-                  l10n.netflowNotEnabled,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.warningDark,
+              const SizedBox(height: AppConstants.standardPadding),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const NetflowScreen(),
+                        settings:
+                            const RouteSettings(name: Routes.netflow),
                       ),
+                    );
+                  },
+                  icon: const Icon(Icons.settings, size: 18),
+                  label: Text(l10n.goToNetflowConfig),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.warningDark,
+                  ),
                 ),
               ),
             ],

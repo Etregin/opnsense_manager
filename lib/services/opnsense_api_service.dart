@@ -26,6 +26,8 @@ import '../models/firewall_rule.dart';
 import '../models/firewall_form_options.dart';
 import '../models/firewall_alias.dart';
 import '../models/vpn_connection.dart';
+import '../models/netflow_cache_stat.dart';
+import '../models/netflow_config.dart';
 import '../models/netflow_status.dart';
 import '../models/network_host.dart';
 import '../models/network_insight_direction_total.dart';
@@ -57,6 +59,7 @@ import 'firewall/firewall_service.dart';
 import 'firewall/firewall_alias_service.dart' as alias_service;
 import 'vpn/vpn_service.dart';
 import 'vpn/wireguard_service.dart';
+import 'network/netflow_config_service.dart';
 import 'network/network_insight_service.dart';
 import 'network/network_service.dart';
 import 'network/dhcp_service.dart';
@@ -99,6 +102,7 @@ class OPNsenseApiService {
   final ServiceControlService _serviceControlService = ServiceControlService();
   final TailscaleService _tailscaleService = TailscaleService();
   final SystemLogService _systemLogService = SystemLogService();
+  final NetflowConfigService _netflowConfigService = NetflowConfigService();
   final NetworkInsightService _networkInsightService = NetworkInsightService();
 
   Dio? _dio;
@@ -149,6 +153,7 @@ class OPNsenseApiService {
     _serviceControlService.init(_dio!, config);
     _tailscaleService.init(_dio!, config);
     _systemLogService.init(_dio!, config);
+    _netflowConfigService.init(_dio!, config);
     _networkInsightService.init(_dio!, config);
   }
 
@@ -208,6 +213,7 @@ class OPNsenseApiService {
     _serviceControlService.clear();
     _tailscaleService.clear();
     _systemLogService.clear();
+    _netflowConfigService.clear();
     _networkInsightService.clear();
 
     // Clear main service state
@@ -684,6 +690,25 @@ class OPNsenseApiService {
   Future<Map<String, dynamic>> deleteTailscaleSubnet(String uuid) => _tailscaleService.deleteTailscaleSubnet(uuid);
   
   Future<Map<String, dynamic>> reloadTailscaleSettings() => _tailscaleService.reloadTailscaleSettings();
+
+  // ============================================================================
+  // NetFlow Config Service Delegations
+  // ============================================================================
+
+  Future<NetflowConfig> getNetflowConfig() =>
+      _netflowConfigService.getConfig();
+
+  Future<void> saveNetflowConfig(NetflowConfig config) =>
+      _netflowConfigService.saveConfig(config);
+
+  Future<void> reconfigureNetflow() =>
+      _netflowConfigService.reconfigure();
+
+  Future<void> resetNetflowData() =>
+      _netflowConfigService.resetData();
+
+  Future<List<NetflowCacheStat>> getNetflowCacheStats() =>
+      _netflowConfigService.getCacheStats();
 
   // ============================================================================
   // Network Insight Service Delegations

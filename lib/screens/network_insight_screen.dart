@@ -70,17 +70,19 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
 
   // ── Time range presets ──────────────────────────────────────────────────────
 
+  /// Raw preset definitions (duration + resolution). Labels are built from
+  /// l10n at build time via [_buildPresetLabel].
   static const List<_TimePreset> _presets = [
-    _TimePreset('2 Hours, 30 seconds average',    Duration(hours: 2),    30),
-    _TimePreset('8 Hours, 5 minutes average',     Duration(hours: 8),    300),
-    _TimePreset('24 Hours, 5 minutes average',    Duration(hours: 24),   300),
-    _TimePreset('7 Days, 1 hour average',         Duration(days: 7),     3600),
-    _TimePreset('14 Days, 1 hour average',        Duration(days: 14),    3600),
-    _TimePreset('30 Days, 24 hours average',      Duration(days: 30),    86400),
-    _TimePreset('60 Days, 24 hours average',      Duration(days: 60),    86400),
-    _TimePreset('90 Days, 24 hours average',      Duration(days: 90),    86400),
-    _TimePreset('182 Days, 24 hours average',     Duration(days: 182),   86400),
-    _TimePreset('Last Year, 24 hours average',    Duration(days: 365),   86400),
+    _TimePreset(Duration(hours: 2),    30),
+    _TimePreset(Duration(hours: 8),    300),
+    _TimePreset(Duration(hours: 24),   300),
+    _TimePreset(Duration(days: 7),     3600),
+    _TimePreset(Duration(days: 14),    3600),
+    _TimePreset(Duration(days: 30),    86400),
+    _TimePreset(Duration(days: 60),    86400),
+    _TimePreset(Duration(days: 90),    86400),
+    _TimePreset(Duration(days: 182),   86400),
+    _TimePreset(Duration(days: 365),   86400),
   ];
 
   int _selectedPresetIndex = 0;
@@ -89,6 +91,32 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
     setState(() => _selectedPresetIndex = index);
     final preset = _presets[index];
     _vm.setTimeRange(preset.duration, preset.resolution);
+  }
+
+  /// Builds the human-readable label for a preset using l10n.
+  String _buildPresetLabel(AppLocalizations l10n, _TimePreset preset) {
+    final String window;
+    if (preset.duration.inDays == 365) {
+      window = l10n.durationLastYear;
+    } else if (preset.duration.inDays > 0) {
+      window = l10n.durationDays(preset.duration.inDays);
+    } else {
+      window = l10n.durationHours(preset.duration.inHours);
+    }
+
+    final String avgInterval;
+    switch (preset.resolution) {
+      case 30:
+        avgInterval = l10n.resolution30s;
+      case 300:
+        avgInterval = l10n.resolution5min;
+      case 3600:
+        avgInterval = l10n.resolution1hr;
+      default:
+        avgInterval = l10n.resolution24hr;
+    }
+
+    return l10n.timePresetLabel(window, avgInterval);
   }
 
   // ── Build ────────────────────────────────────────────────────────────────────
@@ -183,7 +211,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
                     (i) => DropdownMenuItem(
                       value: i,
                       child: Text(
-                        _presets[i].label,
+                        _buildPresetLabel(l10n, _presets[i]),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -450,9 +478,8 @@ class _SummaryRow extends StatelessWidget {
 
 /// Simple data class for time-range presets.
 class _TimePreset {
-  final String label;
   final Duration duration;
   final int resolution;
 
-  const _TimePreset(this.label, this.duration, this.resolution);
+  const _TimePreset(this.duration, this.resolution);
 }

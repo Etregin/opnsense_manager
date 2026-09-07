@@ -42,6 +42,8 @@ import '../models/openvpn_client_override.dart';
 import '../models/openvpn_client_override_search_response.dart';
 import '../models/openvpn_log_search_response.dart';
 import '../models/neighbor.dart';
+import '../models/netflow_cache_stat.dart';
+import '../models/netflow_config.dart';
 import '../models/netflow_status.dart';
 import '../models/network_insight_direction_total.dart';
 import '../models/network_insight_timeserie.dart';
@@ -1817,6 +1819,64 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
           endTs: endTs,
           measure: measure,
         ),
+        delayMs: 400,
+      );
+
+  // ── NetFlow Config ────────────────────────────────────────────────────────
+
+  Future<NetflowConfig> getNetflowConfig() => DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => const NetflowConfig(
+          interfaceOptions: {'lan': 'LAN', 'wan': 'WAN', 'opt1': 'WAN2_MIFI'},
+          selectedInterfaces: ['lan', 'wan'],
+          egressOnlyOptions: {'lan': 'LAN', 'wan': 'WAN', 'opt1': 'WAN2_MIFI'},
+          selectedEgressOnly: ['wan'],
+          versionOptions: {'v5': 'v5', 'v9': 'v9'},
+          selectedVersion: 'v9',
+          targets: ['127.0.0.1:2056'],
+          collectEnabled: false,
+          activeTimeout: '1800',
+          inactiveTimeout: '15',
+        ),
+        realAction: () => _realApiService.getNetflowConfig(),
+        delayMs: 400,
+      );
+
+  Future<void> saveNetflowConfig(NetflowConfig config) =>
+      DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.saveNetflowConfig(config),
+      );
+
+  Future<void> reconfigureNetflow() => DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.reconfigureNetflow(),
+        delayMs: 300,
+      );
+
+  Future<void> resetNetflowData() => DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.resetNetflowData(),
+        delayMs: 300,
+      );
+
+  Future<List<NetflowCacheStat>> getNetflowCacheStats() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => [
+          NetflowCacheStat.fromEntry('netflow_vtnet1',
+              {'Pkts': 170626, 'if': 'vtnet1', 'SrcIPaddresses': 205, 'DstIPaddresses': 605}),
+          NetflowCacheStat.fromEntry('ksocket_netflow_vtnet1',
+              {'Pkts': 0, 'if': 'netflow_vtnet1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+          NetflowCacheStat.fromEntry('netflow_pppoe1',
+              {'Pkts': 0, 'if': 'pppoe1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+          NetflowCacheStat.fromEntry('ksocket_netflow_pppoe1',
+              {'Pkts': 0, 'if': 'netflow_pppoe1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+        ],
+        realAction: () => _realApiService.getNetflowCacheStats(),
         delayMs: 400,
       );
 
