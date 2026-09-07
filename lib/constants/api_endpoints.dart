@@ -171,6 +171,11 @@ class ApiEndpoints {
   // ── NetFlow / Network Insight ────────────────────────────────────────────────
   static const String netflowIsEnabled =
       '/diagnostics/netflow/is_enabled';
+  static const String netflowGetConfig = '/diagnostics/netflow/getconfig';
+  static const String netflowSetConfig = '/diagnostics/netflow/setconfig';
+  static const String netflowReconfigure = '/diagnostics/netflow/reconfigure';
+  static const String netflowReset = '/diagnostics/netflow/reset';
+  static const String netflowCacheStats = '/diagnostics/netflow/cache_stats';
   static const String networkInsightGetInterfaces =
       '/diagnostics/networkinsight/get_interfaces';
   static const String networkInsightGetMetadata =
