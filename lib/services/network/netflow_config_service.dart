@@ -50,6 +50,9 @@ class NetflowConfigService extends BaseOPNsenseService {
     ensureInitialized();
     try {
       final response = await dio.get(ApiEndpoints.netflowCacheStats);
+      // When NetFlow is disabled the API returns an empty JSON array ([])
+      // instead of an object, so guard before casting.
+      if (response.data is! Map<String, dynamic>) return [];
       final data = response.data as Map<String, dynamic>;
       return NetflowCacheStat.fromResponse(data);
     } on DioException catch (e) {
