@@ -3518,6 +3518,42 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get tabExport;
 
+  /// No description provided for @collection.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection'**
+  String get collection;
+
+  /// No description provided for @resolutionSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolution (seconds)'**
+  String get resolutionSeconds;
+
+  /// No description provided for @resolution86400.
+  ///
+  /// In en, this message translates to:
+  /// **'86400 (1 day)'**
+  String get resolution86400;
+
+  /// No description provided for @exportNetflowCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export NetFlow CSV'**
+  String get exportNetflowCsv;
+
+  /// No description provided for @netflowExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow CSV exported successfully'**
+  String get netflowExportSuccess;
+
+  /// No description provided for @netflowExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export NetFlow CSV: {error}'**
+  String netflowExportFailed(String error);
+
   /// No description provided for @dateFrom.
   ///
   /// In en, this message translates to:

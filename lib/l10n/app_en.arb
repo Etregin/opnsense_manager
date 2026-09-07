@@ -1713,6 +1713,24 @@
   "@tabDetails": {},
   "tabExport": "Export",
   "@tabExport": {},
+  "collection": "Collection",
+  "@collection": {},
+  "resolutionSeconds": "Resolution (seconds)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (1 day)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "Export NetFlow CSV",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "NetFlow CSV exported successfully",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "Failed to export NetFlow CSV: {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "dateFrom": "Date From",
   "@dateFrom": {},
   "dateTo": "Date To",

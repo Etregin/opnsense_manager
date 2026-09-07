@@ -1980,6 +1980,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tabExport => 'Exporter';
 
   @override
+  String get collection => 'Collection';
+
+  @override
+  String get resolutionSeconds => 'Résolution (secondes)';
+
+  @override
+  String get resolution86400 => '86400 (1 jour)';
+
+  @override
+  String get exportNetflowCsv => 'Exporter le CSV NetFlow';
+
+  @override
+  String get netflowExportSuccess => 'CSV NetFlow exporté avec succès';
+
+  @override
+  String netflowExportFailed(String error) {
+    return 'Échec de l\'exportation du CSV NetFlow : $error';
+  }
+
+  @override
   String get dateFrom => 'Date de début';
 
   @override

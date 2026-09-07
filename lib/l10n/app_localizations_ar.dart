@@ -1947,6 +1947,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tabExport => 'تصدير';
 
   @override
+  String get collection => 'المجموعة';
+
+  @override
+  String get resolutionSeconds => 'الدقة (بالثواني)';
+
+  @override
+  String get resolution86400 => '86400 (يوم واحد)';
+
+  @override
+  String get exportNetflowCsv => 'تصدير NetFlow بتنسيق CSV';
+
+  @override
+  String get netflowExportSuccess => 'تم تصدير ملف NetFlow CSV بنجاح';
+
+  @override
+  String netflowExportFailed(String error) {
+    return 'فشل تصدير ملف NetFlow CSV: $error';
+  }
+
+  @override
   String get dateFrom => 'التاريخ من';
 
   @override

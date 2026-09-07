@@ -3501,6 +3501,24 @@
   "@tabDetails": {},
   "tabExport": "Exportar",
   "@tabExport": {},
+  "collection": "Colección",
+  "@collection": {},
+  "resolutionSeconds": "Resolución (segundos)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (1 día)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "Exportar CSV de NetFlow",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "CSV de NetFlow exportado con éxito",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "Error al exportar CSV de NetFlow: {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "dateFrom": "Fecha desde",
   "@dateFrom": {},
   "dateTo": "Fecha hasta",

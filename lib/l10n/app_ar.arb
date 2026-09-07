@@ -3492,6 +3492,24 @@
   "@tabDetails": {},
   "tabExport": "تصدير",
   "@tabExport": {},
+  "collection": "المجموعة",
+  "@collection": {},
+  "resolutionSeconds": "الدقة (بالثواني)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (يوم واحد)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "تصدير NetFlow بتنسيق CSV",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "تم تصدير ملف NetFlow CSV بنجاح",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "فشل تصدير ملف NetFlow CSV: {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "dateFrom": "التاريخ من",
   "@dateFrom": {},
   "dateTo": "التاريخ إلى",
