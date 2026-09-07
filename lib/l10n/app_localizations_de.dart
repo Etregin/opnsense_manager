@@ -1974,6 +1974,48 @@ class AppLocalizationsDe extends AppLocalizations {
   String get goToNetflowConfig => 'Zur NetFlow-Konfiguration';
 
   @override
+  String get tabTotals => 'Gesamt';
+
+  @override
+  String get tabDetails => 'Details';
+
+  @override
+  String get tabExport => 'Exportieren';
+
+  @override
+  String get dateFrom => 'Datum von';
+
+  @override
+  String get dateTo => 'Datum bis';
+
+  @override
+  String get dstPort => 'Zielport';
+
+  @override
+  String get dstAddress => 'Zieladresse';
+
+  @override
+  String get srcAddress => 'Quelladresse';
+
+  @override
+  String get serviceColumn => 'Dienst';
+
+  @override
+  String get sourceColumn => 'Quelle';
+
+  @override
+  String get destinationColumn => 'Ziel';
+
+  @override
+  String get bytesColumn => 'Bytes';
+
+  @override
+  String get lastSeenColumn => 'Zuletzt gesehen';
+
+  @override
+  String get percentColumn => '%';
+
+  @override
   String get neighborDiscovery => 'Nachbarerkennung';
 
   @override

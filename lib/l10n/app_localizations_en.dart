@@ -1847,7 +1847,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get liveNetworkMonitor => 'Live Network Monitor';
 
   @override
-  String get networkInsight => 'Network Insight';
+  String get networkInsight => 'Insights';
 
   @override
   String get reporting => 'Reporting';
@@ -1945,6 +1945,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToNetflowConfig => 'Go to NetFlow Configuration';
+
+  @override
+  String get tabTotals => 'Totals';
+
+  @override
+  String get tabDetails => 'Details';
+
+  @override
+  String get tabExport => 'Export';
+
+  @override
+  String get dateFrom => 'Date From';
+
+  @override
+  String get dateTo => 'Date To';
+
+  @override
+  String get dstPort => 'Destination Port';
+
+  @override
+  String get dstAddress => 'Destination Address';
+
+  @override
+  String get srcAddress => 'Source Address';
+
+  @override
+  String get serviceColumn => 'Service';
+
+  @override
+  String get sourceColumn => 'Source';
+
+  @override
+  String get destinationColumn => 'Destination';
+
+  @override
+  String get bytesColumn => 'Bytes';
+
+  @override
+  String get lastSeenColumn => 'Last Seen';
+
+  @override
+  String get percentColumn => '%';
 
   @override
   String get neighborDiscovery => 'Neighbor Discovery';

@@ -1938,6 +1938,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get goToNetflowConfig => 'الانتقال إلى إعدادات NetFlow';
 
   @override
+  String get tabTotals => 'الإجماليات';
+
+  @override
+  String get tabDetails => 'التفاصيل';
+
+  @override
+  String get tabExport => 'تصدير';
+
+  @override
+  String get dateFrom => 'التاريخ من';
+
+  @override
+  String get dateTo => 'التاريخ إلى';
+
+  @override
+  String get dstPort => 'المنفذ الوجهة';
+
+  @override
+  String get dstAddress => 'عنوان الوجهة';
+
+  @override
+  String get srcAddress => 'عنوان المصدر';
+
+  @override
+  String get serviceColumn => 'الخدمة';
+
+  @override
+  String get sourceColumn => 'المصدر';
+
+  @override
+  String get destinationColumn => 'الوجهة';
+
+  @override
+  String get bytesColumn => 'البايتات';
+
+  @override
+  String get lastSeenColumn => 'آخر ظهور';
+
+  @override
+  String get percentColumn => '%';
+
+  @override
   String get neighborDiscovery => 'اكتشاف الأجهزة المجاورة';
 
   @override

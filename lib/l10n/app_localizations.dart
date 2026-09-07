@@ -3341,7 +3341,7 @@ abstract class AppLocalizations {
   /// No description provided for @networkInsight.
   ///
   /// In en, this message translates to:
-  /// **'Network Insight'**
+  /// **'Insights'**
   String get networkInsight;
 
   /// No description provided for @reporting.
@@ -3499,6 +3499,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to NetFlow Configuration'**
   String get goToNetflowConfig;
+
+  /// No description provided for @tabTotals.
+  ///
+  /// In en, this message translates to:
+  /// **'Totals'**
+  String get tabTotals;
+
+  /// No description provided for @tabDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get tabDetails;
+
+  /// No description provided for @tabExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get tabExport;
+
+  /// No description provided for @dateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Date From'**
+  String get dateFrom;
+
+  /// No description provided for @dateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Date To'**
+  String get dateTo;
+
+  /// No description provided for @dstPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Port'**
+  String get dstPort;
+
+  /// No description provided for @dstAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Address'**
+  String get dstAddress;
+
+  /// No description provided for @srcAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Address'**
+  String get srcAddress;
+
+  /// No description provided for @serviceColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get serviceColumn;
+
+  /// No description provided for @sourceColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get sourceColumn;
+
+  /// No description provided for @destinationColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get destinationColumn;
+
+  /// No description provided for @bytesColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bytes'**
+  String get bytesColumn;
+
+  /// No description provided for @lastSeenColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get lastSeenColumn;
+
+  /// No description provided for @percentColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'%'**
+  String get percentColumn;
 
   /// No description provided for @neighborDiscovery.
   ///
