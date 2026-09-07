@@ -4125,25 +4125,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get netflowCacheTab => 'ذاكرة التخزين المؤقت';
 
   @override
-  String get netflowCaptureInterfaces => 'واجهات الالتقاط';
+  String get netflowListeningInterfaces => 'واجهات الاستماع';
 
   @override
-  String get netflowEgressOnly => 'الخروج فقط';
+  String get netflowWanInterfaces => 'واجهات WAN';
 
   @override
-  String get netflowVersion => 'إصدار NetFlow';
+  String get netflowVersion => 'الإصدار';
 
   @override
-  String get netflowCollectorTargets => 'أهداف المجمّع';
+  String get netflowDestinations => 'الوجهات';
 
   @override
-  String get netflowCollectLocal => 'تفعيل جمع البيانات المحلية';
+  String get netflowCaptureLocal => 'التقاط محلي';
 
   @override
-  String get netflowActiveTimeout => 'مهلة التدفق النشط (ثانية)';
+  String get netflowActiveTimeout => 'مهلة التدفق النشط';
 
   @override
-  String get netflowInactiveTimeout => 'مهلة التدفق غير النشط (ثانية)';
+  String get netflowInactiveTimeout => 'مهلة التدفق غير النشط';
 
   @override
   String get netflowResetData => 'إعادة تعيين بيانات NetFlow';
@@ -4159,7 +4159,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get netflowCacheStatsTitle => 'إحصائيات ذاكرة التخزين المؤقت';
 
   @override
-  String get netflowCacheName => 'التدفق';
+  String get netflowCacheFlow => 'التدفق';
 
   @override
   String get netflowCacheInterface => 'الواجهة';
@@ -4177,15 +4177,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get remove => 'إزالة';
 
   @override
-  String get netflowCaptureInterfacesHint =>
+  String get netflowListeningInterfacesHint =>
       'حدد جميع الواجهات لتفعيل NetFlow عليها.';
 
   @override
-  String get netflowEgressOnlyHint =>
+  String get netflowWanInterfacesHint =>
       'حدد الواجهات المستخدمة لحركة مرور WAN لتجنب احتساب حركة NAT مرتين.';
 
   @override
-  String get netflowCollectLocalHint =>
+  String get netflowCaptureLocalHint =>
       'جمع بيانات NetFlow على هذا الجدار الناري لاستخدامها مع Insight. يحتفظ الذاكرة المحلية بآخر 100 ميغابايت فقط.';
 
   @override

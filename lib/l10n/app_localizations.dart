@@ -7466,46 +7466,46 @@ abstract class AppLocalizations {
   /// **'Cache'**
   String get netflowCacheTab;
 
-  /// No description provided for @netflowCaptureInterfaces.
+  /// No description provided for @netflowListeningInterfaces.
   ///
   /// In en, this message translates to:
-  /// **'Capture Interfaces'**
-  String get netflowCaptureInterfaces;
+  /// **'Listening Interfaces'**
+  String get netflowListeningInterfaces;
 
-  /// No description provided for @netflowEgressOnly.
+  /// No description provided for @netflowWanInterfaces.
   ///
   /// In en, this message translates to:
-  /// **'Egress Only'**
-  String get netflowEgressOnly;
+  /// **'WAN Interfaces'**
+  String get netflowWanInterfaces;
 
   /// No description provided for @netflowVersion.
   ///
   /// In en, this message translates to:
-  /// **'NetFlow Version'**
+  /// **'Version'**
   String get netflowVersion;
 
-  /// No description provided for @netflowCollectorTargets.
+  /// No description provided for @netflowDestinations.
   ///
   /// In en, this message translates to:
-  /// **'Collector Targets'**
-  String get netflowCollectorTargets;
+  /// **'Destinations'**
+  String get netflowDestinations;
 
-  /// No description provided for @netflowCollectLocal.
+  /// No description provided for @netflowCaptureLocal.
   ///
   /// In en, this message translates to:
-  /// **'Enable Local Data Collection'**
-  String get netflowCollectLocal;
+  /// **'Capture Local'**
+  String get netflowCaptureLocal;
 
   /// No description provided for @netflowActiveTimeout.
   ///
   /// In en, this message translates to:
-  /// **'Active Timeout (seconds)'**
+  /// **'Active Timeout'**
   String get netflowActiveTimeout;
 
   /// No description provided for @netflowInactiveTimeout.
   ///
   /// In en, this message translates to:
-  /// **'Inactive Timeout (seconds)'**
+  /// **'Inactive Timeout'**
   String get netflowInactiveTimeout;
 
   /// No description provided for @netflowResetData.
@@ -7532,11 +7532,11 @@ abstract class AppLocalizations {
   /// **'Cache Statistics'**
   String get netflowCacheStatsTitle;
 
-  /// No description provided for @netflowCacheName.
+  /// No description provided for @netflowCacheFlow.
   ///
   /// In en, this message translates to:
   /// **'Flow'**
-  String get netflowCacheName;
+  String get netflowCacheFlow;
 
   /// No description provided for @netflowCacheInterface.
   ///
@@ -7568,23 +7568,23 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get remove;
 
-  /// No description provided for @netflowCaptureInterfacesHint.
+  /// No description provided for @netflowListeningInterfacesHint.
   ///
   /// In en, this message translates to:
   /// **'Select all the interfaces to enable NetFlow on.'**
-  String get netflowCaptureInterfacesHint;
+  String get netflowListeningInterfacesHint;
 
-  /// No description provided for @netflowEgressOnlyHint.
+  /// No description provided for @netflowWanInterfacesHint.
   ///
   /// In en, this message translates to:
   /// **'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.'**
-  String get netflowEgressOnlyHint;
+  String get netflowWanInterfacesHint;
 
-  /// No description provided for @netflowCollectLocalHint.
+  /// No description provided for @netflowCaptureLocalHint.
   ///
   /// In en, this message translates to:
   /// **'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.'**
-  String get netflowCollectLocalHint;
+  String get netflowCaptureLocalHint;
 
   /// No description provided for @netflowDestinationsHint.
   ///

@@ -4188,25 +4188,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get netflowCacheTab => 'Cache';
 
   @override
-  String get netflowCaptureInterfaces => 'Interfaces de capture';
+  String get netflowListeningInterfaces => 'Interfaces d\'écoute';
 
   @override
-  String get netflowEgressOnly => 'Sortant uniquement';
+  String get netflowWanInterfaces => 'Interfaces WAN';
 
   @override
-  String get netflowVersion => 'Version NetFlow';
+  String get netflowVersion => 'Version';
 
   @override
-  String get netflowCollectorTargets => 'Cibles du collecteur';
+  String get netflowDestinations => 'Destinations';
 
   @override
-  String get netflowCollectLocal => 'Activer la collecte de données locale';
+  String get netflowCaptureLocal => 'Capture locale';
 
   @override
-  String get netflowActiveTimeout => 'Délai d\'expiration actif (secondes)';
+  String get netflowActiveTimeout => 'Délai d\'expiration actif';
 
   @override
-  String get netflowInactiveTimeout => 'Délai d\'expiration inactif (secondes)';
+  String get netflowInactiveTimeout => 'Délai d\'expiration inactif';
 
   @override
   String get netflowResetData => 'Réinitialiser les données NetFlow';
@@ -4222,7 +4222,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get netflowCacheStatsTitle => 'Statistiques du cache';
 
   @override
-  String get netflowCacheName => 'Flux';
+  String get netflowCacheFlow => 'Flux';
 
   @override
   String get netflowCacheInterface => 'Interface';
@@ -4240,15 +4240,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get remove => 'Supprimer';
 
   @override
-  String get netflowCaptureInterfacesHint =>
+  String get netflowListeningInterfacesHint =>
       'Sélectionnez toutes les interfaces sur lesquelles activer NetFlow.';
 
   @override
-  String get netflowEgressOnlyHint =>
+  String get netflowWanInterfacesHint =>
       'Sélectionnez les interfaces utilisées pour le trafic WAN pour éviter de compter le trafic NAT deux fois.';
 
   @override
-  String get netflowCollectLocalHint =>
+  String get netflowCaptureLocalHint =>
       'Collectez les données NetFlow sur ce pare-feu pour Insight. Le cache local ne conserve que les 100 derniers Mo.';
 
   @override

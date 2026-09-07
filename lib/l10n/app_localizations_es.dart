@@ -4190,25 +4190,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get netflowCacheTab => 'Caché';
 
   @override
-  String get netflowCaptureInterfaces => 'Interfaces de captura';
+  String get netflowListeningInterfaces => 'Interfaces de escucha';
 
   @override
-  String get netflowEgressOnly => 'Solo salida';
+  String get netflowWanInterfaces => 'Interfaces WAN';
 
   @override
-  String get netflowVersion => 'Versión de NetFlow';
+  String get netflowVersion => 'Versión';
 
   @override
-  String get netflowCollectorTargets => 'Destinos del colector';
+  String get netflowDestinations => 'Destinos';
 
   @override
-  String get netflowCollectLocal => 'Habilitar recopilación de datos local';
+  String get netflowCaptureLocal => 'Captura local';
 
   @override
-  String get netflowActiveTimeout => 'Tiempo de espera activo (segundos)';
+  String get netflowActiveTimeout => 'Tiempo de espera activo';
 
   @override
-  String get netflowInactiveTimeout => 'Tiempo de espera inactivo (segundos)';
+  String get netflowInactiveTimeout => 'Tiempo de espera inactivo';
 
   @override
   String get netflowResetData => 'Restablecer datos de NetFlow';
@@ -4224,7 +4224,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get netflowCacheStatsTitle => 'Estadísticas de caché';
 
   @override
-  String get netflowCacheName => 'Flujo';
+  String get netflowCacheFlow => 'Flujo';
 
   @override
   String get netflowCacheInterface => 'Interfaz';
@@ -4242,15 +4242,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get remove => 'Eliminar';
 
   @override
-  String get netflowCaptureInterfacesHint =>
+  String get netflowListeningInterfacesHint =>
       'Seleccione todas las interfaces en las que activar NetFlow.';
 
   @override
-  String get netflowEgressOnlyHint =>
+  String get netflowWanInterfacesHint =>
       'Seleccione las interfaces usadas para tráfico WAN para evitar contar el tráfico NAT dos veces.';
 
   @override
-  String get netflowCollectLocalHint =>
+  String get netflowCaptureLocalHint =>
       'Recopilar datos NetFlow en este firewall para uso con Insight. La caché local solo conserva los últimos 100 MB.';
 
   @override

@@ -19,32 +19,32 @@
 /// Represents the netflow capture configuration returned by
 /// `GET /api/diagnostics/netflow/getconfig`.
 class NetflowConfig {
-  /// All available interface options: key → display label.
-  final Map<String, String> interfaceOptions;
+  /// All available listening interface options: key → display label.
+  final Map<String, String> listeningInterfaceOptions;
 
-  /// Keys of currently selected capture interfaces.
-  final List<String> selectedInterfaces;
+  /// Keys of currently selected listening interfaces.
+  final List<String> listeningInterfaces;
 
-  /// All interface options available for egress-only capture.
-  final Map<String, String> egressOnlyOptions;
+  /// All interface options available for WAN (egress-only) capture.
+  final Map<String, String> wanInterfaceOptions;
 
   /// Keys of interfaces where only egress (outbound) flows are captured.
-  final List<String> selectedEgressOnly;
+  final List<String> wanInterfaces;
 
   /// Available NetFlow version options: key → display label (e.g. v5 / v9).
   final Map<String, String> versionOptions;
 
   /// Currently selected NetFlow version key (e.g. "v9").
-  final String selectedVersion;
+  final String version;
 
-  /// Editable list of collector targets (e.g. "127.0.0.1:2056").
+  /// Editable list of collector destinations (e.g. "127.0.0.1:2056").
   ///
   /// Unlike interfaces, destinations are a free-form list the user can
   /// add to, edit, or remove entries from.
   final List<String> targets;
 
-  /// Whether local data collection is enabled.
-  final bool collectEnabled;
+  /// Whether local data capture is enabled.
+  final bool captureLocal;
 
   /// Active flow timeout in seconds.
   final String activeTimeout;
@@ -53,14 +53,14 @@ class NetflowConfig {
   final String inactiveTimeout;
 
   const NetflowConfig({
-    required this.interfaceOptions,
-    required this.selectedInterfaces,
-    required this.egressOnlyOptions,
-    required this.selectedEgressOnly,
+    required this.listeningInterfaceOptions,
+    required this.listeningInterfaces,
+    required this.wanInterfaceOptions,
+    required this.wanInterfaces,
     required this.versionOptions,
-    required this.selectedVersion,
+    required this.version,
     required this.targets,
-    required this.collectEnabled,
+    required this.captureLocal,
     required this.activeTimeout,
     required this.inactiveTimeout,
   });
@@ -76,19 +76,18 @@ class NetflowConfig {
     final selectedTargets = _extractSelected(cap['targets']);
 
     return NetflowConfig(
-      interfaceOptions: _extractOptions(cap['interfaces']),
-      selectedInterfaces: _extractSelected(cap['interfaces']),
-      egressOnlyOptions: _extractOptions(cap['egress_only']),
-      selectedEgressOnly: _extractSelected(cap['egress_only']),
+      listeningInterfaceOptions: _extractOptions(cap['interfaces']),
+      listeningInterfaces: _extractSelected(cap['interfaces']),
+      wanInterfaceOptions: _extractOptions(cap['egress_only']),
+      wanInterfaces: _extractSelected(cap['egress_only']),
       versionOptions: _extractOptions(cap['version']),
-      selectedVersion:
-          _extractSelected(cap['version']).firstOrNull ?? '',
+      version: _extractSelected(cap['version']).firstOrNull ?? '',
       // Use selected targets as the initial editable list; if none selected,
       // fall back to all available keys so the user can see what exists.
       targets: selectedTargets.isNotEmpty
           ? selectedTargets
           : _extractOptions(cap['targets']).keys.toList(),
-      collectEnabled: (collect['enable'] as String?) == '1',
+      captureLocal: (collect['enable'] as String?) == '1',
       activeTimeout: (nf['activeTimeout'] as String?) ?? '',
       inactiveTimeout: (nf['inactiveTimeout'] as String?) ?? '',
     );
@@ -99,13 +98,13 @@ class NetflowConfig {
     return {
       'netflow': {
         'capture': {
-          'interfaces': selectedInterfaces.join(','),
-          'egress_only': selectedEgressOnly.join(','),
-          'version': selectedVersion,
+          'interfaces': listeningInterfaces.join(','),
+          'egress_only': wanInterfaces.join(','),
+          'version': version,
           'targets': targets.join(','),
         },
         'collect': {
-          'enable': collectEnabled ? '1' : '0',
+          'enable': captureLocal ? '1' : '0',
         },
         'activeTimeout': activeTimeout,
         'inactiveTimeout': inactiveTimeout,
@@ -115,23 +114,23 @@ class NetflowConfig {
 
   /// Returns a copy with the given fields replaced.
   NetflowConfig copyWith({
-    List<String>? selectedInterfaces,
-    List<String>? selectedEgressOnly,
-    String? selectedVersion,
+    List<String>? listeningInterfaces,
+    List<String>? wanInterfaces,
+    String? version,
     List<String>? targets,
-    bool? collectEnabled,
+    bool? captureLocal,
     String? activeTimeout,
     String? inactiveTimeout,
   }) {
     return NetflowConfig(
-      interfaceOptions: interfaceOptions,
-      selectedInterfaces: selectedInterfaces ?? this.selectedInterfaces,
-      egressOnlyOptions: egressOnlyOptions,
-      selectedEgressOnly: selectedEgressOnly ?? this.selectedEgressOnly,
+      listeningInterfaceOptions: listeningInterfaceOptions,
+      listeningInterfaces: listeningInterfaces ?? this.listeningInterfaces,
+      wanInterfaceOptions: wanInterfaceOptions,
+      wanInterfaces: wanInterfaces ?? this.wanInterfaces,
       versionOptions: versionOptions,
-      selectedVersion: selectedVersion ?? this.selectedVersion,
+      version: version ?? this.version,
       targets: targets ?? this.targets,
-      collectEnabled: collectEnabled ?? this.collectEnabled,
+      captureLocal: captureLocal ?? this.captureLocal,
       activeTimeout: activeTimeout ?? this.activeTimeout,
       inactiveTimeout: inactiveTimeout ?? this.inactiveTimeout,
     );

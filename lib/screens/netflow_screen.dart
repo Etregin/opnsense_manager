@@ -125,27 +125,27 @@ class _CaptureTab extends StatelessWidget {
       children: [
         // ── Listening Interfaces ─────────────────────────────────────────
         _SectionCard(
-          title: l10n.netflowCaptureInterfaces,
-          hint: l10n.netflowCaptureInterfacesHint,
+          title: l10n.netflowListeningInterfaces,
+          hint: l10n.netflowListeningInterfacesHint,
           child: _MultiSelectField(
-            options: config.interfaceOptions,
-            selected: config.selectedInterfaces,
+            options: config.listeningInterfaceOptions,
+            selected: config.listeningInterfaces,
             onChanged: (selected) => viewModel.updateConfig(
-              config.copyWith(selectedInterfaces: selected),
+              config.copyWith(listeningInterfaces: selected),
             ),
           ),
         ),
         const SizedBox(height: AppConstants.standardPadding),
 
-        // ── WAN Interfaces (Egress Only) ─────────────────────────────────
+        // ── WAN Interfaces ───────────────────────────────────────────────
         _SectionCard(
-          title: l10n.netflowEgressOnly,
-          hint: l10n.netflowEgressOnlyHint,
+          title: l10n.netflowWanInterfaces,
+          hint: l10n.netflowWanInterfacesHint,
           child: _MultiSelectField(
-            options: config.egressOnlyOptions,
-            selected: config.selectedEgressOnly,
+            options: config.wanInterfaceOptions,
+            selected: config.wanInterfaces,
             onChanged: (selected) => viewModel.updateConfig(
-              config.copyWith(selectedEgressOnly: selected),
+              config.copyWith(wanInterfaces: selected),
             ),
           ),
         ),
@@ -153,12 +153,12 @@ class _CaptureTab extends StatelessWidget {
 
         // ── Capture Local ────────────────────────────────────────────────
         _SectionCard(
-          title: l10n.netflowCollectLocal,
-          hint: l10n.netflowCollectLocalHint,
+          title: l10n.netflowCaptureLocal,
+          hint: l10n.netflowCaptureLocalHint,
           child: Switch(
-            value: config.collectEnabled,
+            value: config.captureLocal,
             onChanged: (val) => viewModel.updateConfig(
-              config.copyWith(collectEnabled: val),
+              config.copyWith(captureLocal: val),
             ),
           ),
         ),
@@ -168,9 +168,9 @@ class _CaptureTab extends StatelessWidget {
         _SectionCard(
           title: l10n.netflowVersion,
           child: DropdownButtonFormField<String>(
-            value: config.selectedVersion.isEmpty
+            value: config.version.isEmpty
                 ? null
-                : config.selectedVersion,
+                : config.version,
             decoration: const InputDecoration(
               isDense: true,
               border: OutlineInputBorder(),
@@ -186,7 +186,7 @@ class _CaptureTab extends StatelessWidget {
             onChanged: (val) {
               if (val != null) {
                 viewModel.updateConfig(
-                  config.copyWith(selectedVersion: val),
+                  config.copyWith(version: val),
                 );
               }
             },
@@ -196,7 +196,7 @@ class _CaptureTab extends StatelessWidget {
 
         // ── Destinations (editable list) ─────────────────────────────────
         _SectionCard(
-          title: l10n.netflowCollectorTargets,
+          title: l10n.netflowDestinations,
           hint: l10n.netflowDestinationsHint,
           child: _DestinationsField(
             targets: config.targets,
@@ -368,7 +368,7 @@ class _CacheTab extends StatelessWidget {
                     Theme.of(context).colorScheme.surfaceContainerHighest,
                   ),
                   columns: [
-                    DataColumn(label: Text(l10n.netflowCacheName)),
+                    DataColumn(label: Text(l10n.netflowCacheFlow)),
                     DataColumn(label: Text(l10n.netflowCacheInterface)),
                     DataColumn(
                         label: Text(l10n.netflowCacheDstIps), numeric: true),

@@ -4139,25 +4139,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get netflowCacheTab => 'Cache';
 
   @override
-  String get netflowCaptureInterfaces => 'Capture Interfaces';
+  String get netflowListeningInterfaces => 'Listening Interfaces';
 
   @override
-  String get netflowEgressOnly => 'Egress Only';
+  String get netflowWanInterfaces => 'WAN Interfaces';
 
   @override
-  String get netflowVersion => 'NetFlow Version';
+  String get netflowVersion => 'Version';
 
   @override
-  String get netflowCollectorTargets => 'Collector Targets';
+  String get netflowDestinations => 'Destinations';
 
   @override
-  String get netflowCollectLocal => 'Enable Local Data Collection';
+  String get netflowCaptureLocal => 'Capture Local';
 
   @override
-  String get netflowActiveTimeout => 'Active Timeout (seconds)';
+  String get netflowActiveTimeout => 'Active Timeout';
 
   @override
-  String get netflowInactiveTimeout => 'Inactive Timeout (seconds)';
+  String get netflowInactiveTimeout => 'Inactive Timeout';
 
   @override
   String get netflowResetData => 'Reset NetFlow Data';
@@ -4173,7 +4173,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get netflowCacheStatsTitle => 'Cache Statistics';
 
   @override
-  String get netflowCacheName => 'Flow';
+  String get netflowCacheFlow => 'Flow';
 
   @override
   String get netflowCacheInterface => 'Interface';
@@ -4191,15 +4191,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remove => 'Remove';
 
   @override
-  String get netflowCaptureInterfacesHint =>
+  String get netflowListeningInterfacesHint =>
       'Select all the interfaces to enable NetFlow on.';
 
   @override
-  String get netflowEgressOnlyHint =>
+  String get netflowWanInterfacesHint =>
       'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.';
 
   @override
-  String get netflowCollectLocalHint =>
+  String get netflowCaptureLocalHint =>
       'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.';
 
   @override

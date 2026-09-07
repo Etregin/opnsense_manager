@@ -4190,25 +4190,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get netflowCacheTab => 'Cache';
 
   @override
-  String get netflowCaptureInterfaces => 'Erfassungs-Interfaces';
+  String get netflowListeningInterfaces => 'Listening-Interfaces';
 
   @override
-  String get netflowEgressOnly => 'Nur Ausgehend';
+  String get netflowWanInterfaces => 'WAN-Interfaces';
 
   @override
-  String get netflowVersion => 'NetFlow-Version';
+  String get netflowVersion => 'Version';
 
   @override
-  String get netflowCollectorTargets => 'Collector-Ziele';
+  String get netflowDestinations => 'Ziele';
 
   @override
-  String get netflowCollectLocal => 'Lokale Datenerfassung aktivieren';
+  String get netflowCaptureLocal => 'Lokal erfassen';
 
   @override
-  String get netflowActiveTimeout => 'Aktives Timeout (Sekunden)';
+  String get netflowActiveTimeout => 'Aktives Timeout';
 
   @override
-  String get netflowInactiveTimeout => 'Inaktives Timeout (Sekunden)';
+  String get netflowInactiveTimeout => 'Inaktives Timeout';
 
   @override
   String get netflowResetData => 'NetFlow-Daten zurücksetzen';
@@ -4224,7 +4224,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get netflowCacheStatsTitle => 'Cache-Statistiken';
 
   @override
-  String get netflowCacheName => 'Flow';
+  String get netflowCacheFlow => 'Flow';
 
   @override
   String get netflowCacheInterface => 'Interface';
@@ -4242,15 +4242,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get remove => 'Entfernen';
 
   @override
-  String get netflowCaptureInterfacesHint =>
+  String get netflowListeningInterfacesHint =>
       'Wählen Sie alle Interfaces aus, auf denen NetFlow aktiviert werden soll.';
 
   @override
-  String get netflowEgressOnlyHint =>
+  String get netflowWanInterfacesHint =>
       'Wählen Sie Interfaces für WAN-Verkehr aus, um NAT-Doppelzählung zu vermeiden.';
 
   @override
-  String get netflowCollectLocalHint =>
+  String get netflowCaptureLocalHint =>
       'NetFlow-Daten auf dieser Firewall für Insight sammeln. Der lokale Cache speichert nur die letzten 100 MB.';
 
   @override
