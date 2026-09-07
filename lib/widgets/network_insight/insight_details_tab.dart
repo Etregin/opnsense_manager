@@ -52,10 +52,25 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
     _dstPortCtrl.text = _vm.detailsDstPort;
     _dstAddrCtrl.text = _vm.detailsDstAddr;
     _srcAddrCtrl.text = _vm.detailsSrcAddr;
+    // Sync controllers when a drilldown resets the filter fields.
+    _vm.addListener(_syncControllers);
+  }
+
+  void _syncControllers() {
+    if (_dstPortCtrl.text != _vm.detailsDstPort) {
+      _dstPortCtrl.text = _vm.detailsDstPort;
+    }
+    if (_dstAddrCtrl.text != _vm.detailsDstAddr) {
+      _dstAddrCtrl.text = _vm.detailsDstAddr;
+    }
+    if (_srcAddrCtrl.text != _vm.detailsSrcAddr) {
+      _srcAddrCtrl.text = _vm.detailsSrcAddr;
+    }
   }
 
   @override
   void dispose() {
+    _vm.removeListener(_syncControllers);
     _dstPortCtrl.dispose();
     _dstAddrCtrl.dispose();
     _srcAddrCtrl.dispose();
@@ -110,6 +125,9 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
     return ListenableBuilder(
       listenable: _vm,
       builder: (context, _) {
+        // Sync controllers on every rebuild — handles the case where the tab
+        // was lazily built after a drilldown already mutated the VM state.
+        _syncControllers();
         return SingleChildScrollView(
           padding: const EdgeInsets.all(AppConstants.standardPadding),
           child: Column(
@@ -160,7 +178,7 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
             // Row 2: Interface dropdown
             if (_vm.interfaces.isNotEmpty)
               _InterfaceRow(
-                label: 'Interface',
+                label: l10n.interface,
                 interfaces: _vm.interfaces,
                 selectedKey: _vm.detailsInterface.isEmpty
                     ? _vm.interfaces.keys.first
@@ -178,7 +196,10 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              onChanged: _vm.setDetailsDstPort,
+              onChanged: (v) {
+                _vm.clearDrilldown();
+                _vm.setDetailsDstPort(v);
+              },
             ),
             const SizedBox(height: AppConstants.standardPadding),
 
@@ -190,7 +211,10 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              onChanged: _vm.setDetailsDstAddr,
+              onChanged: (v) {
+                _vm.clearDrilldown();
+                _vm.setDetailsDstAddr(v);
+              },
             ),
             const SizedBox(height: AppConstants.standardPadding),
 
@@ -202,7 +226,10 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              onChanged: _vm.setDetailsSrcAddr,
+              onChanged: (v) {
+                _vm.clearDrilldown();
+                _vm.setDetailsSrcAddr(v);
+              },
             ),
             const SizedBox(height: AppConstants.standardPadding),
 
@@ -279,7 +306,7 @@ class _InsightDetailsTabState extends State<InsightDetailsTab> {
           // Totals row
           DataRow(
             cells: [
-              DataCell(Text('Total', style: boldStyle)),
+              DataCell(Text(l10n.total, style: boldStyle)),
               const DataCell(Text('')),
               const DataCell(Text('')),
               DataCell(Text(

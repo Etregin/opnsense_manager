@@ -193,6 +193,13 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
           onPresetChanged: _onPresetChanged,
           onShowLoopbackChanged: (v) => setState(() => _showLoopback = v),
           buildPresetLabel: _buildPresetLabel,
+          onDrilldown: (filterField, filterValue) {
+            _vm.drilldownToDetails(
+              filterField: filterField,
+              filterValue: filterValue,
+            );
+            _tabController.animateTo(1); // switch to Details tab
+          },
         ),
         _DetailsTab(vm: _vm),
         _ExportTab(),
@@ -211,6 +218,9 @@ class _TotalsTab extends StatelessWidget {
   final ValueChanged<int> onPresetChanged;
   final ValueChanged<bool> onShowLoopbackChanged;
   final String Function(AppLocalizations, _TimePreset) buildPresetLabel;
+  /// Called with (filterField, filterValue) when the user drills down from
+  /// a pie chart item. filterField is `service_port` or `src_addr`.
+  final void Function(String filterField, String filterValue) onDrilldown;
 
   const _TotalsTab({
     required this.vm,
@@ -220,6 +230,7 @@ class _TotalsTab extends StatelessWidget {
     required this.onPresetChanged,
     required this.onShowLoopbackChanged,
     required this.buildPresetLabel,
+    required this.onDrilldown,
   });
 
   @override
@@ -426,23 +437,25 @@ class _TotalsTab extends StatelessWidget {
   }
 
   Widget _buildPieCharts(BuildContext context, AppLocalizations l10n) {
-    final portItems = vm.topPorts
-        .map((p) => (
-              p.isOther ? l10n.other : (p.label.isEmpty ? p.dstPort : p.label),
-              p.total,
-            ))
-        .toList();
+    // Build port chart items keeping a label→rawPort map for drilldown.
+    final Map<String, String> labelToPort = {};
+    final portItems = vm.topPorts.map((p) {
+      if (p.isOther) return (l10n.other, p.total);
+      final label = p.label.isEmpty ? p.dstPort : p.label;
+      labelToPort[label] = p.dstPort;
+      return (label, p.total);
+    }).toList();
 
-    // Apply resolved hostnames when reverse lookup is enabled.
-    final addrItems = vm.topAddresses
-        .map((a) {
-          if (a.isOther) return (l10n.other, a.total);
-          final label = vm.reverseLookupEnabled
-              ? (vm.resolvedLabels[a.srcAddr] ?? a.srcAddr)
-              : a.srcAddr;
-          return (label, a.total);
-        })
-        .toList();
+    // Build address chart items keeping a label→rawAddr map for drilldown.
+    final Map<String, String> labelToAddr = {};
+    final addrItems = vm.topAddresses.map((a) {
+      if (a.isOther) return (l10n.other, a.total);
+      final label = vm.reverseLookupEnabled
+          ? (vm.resolvedLabels[a.srcAddr] ?? a.srcAddr)
+          : a.srcAddr;
+      labelToAddr[label] = a.srcAddr; // always map to the raw IP
+      return (label, a.total);
+    }).toList();
 
     return Column(
       children: [
@@ -454,6 +467,12 @@ class _TotalsTab extends StatelessWidget {
               title: l10n.protocolsBreakdown,
               items: portItems,
               otherLabel: l10n.other,
+              onItemTap: (label) {
+                final rawPort = labelToPort[label];
+                if (rawPort != null && rawPort.isNotEmpty) {
+                  onDrilldown('service_port', rawPort);
+                }
+              },
             ),
           ),
         ),
@@ -498,6 +517,10 @@ class _TotalsTab extends StatelessWidget {
                   title: '',
                   items: addrItems,
                   otherLabel: l10n.other,
+                  onItemTap: (label) {
+                    final rawAddr = labelToAddr[label] ?? label;
+                    onDrilldown('src_addr', rawAddr);
+                  },
                 ),
               ],
             ),

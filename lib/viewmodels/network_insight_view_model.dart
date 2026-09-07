@@ -98,6 +98,9 @@ class NetworkInsightViewModel extends ChangeNotifier {
   String _detailsDstPort = '';
   String _detailsDstAddr = '';
   String _detailsSrcAddr = '';
+  // Extra server-side filter applied during pie chart drilldowns.
+  String? _detailsExtraFilterField;
+  String? _detailsExtraFilterValue;
   bool _isLoadingDetails = false;
   String? _detailsErrorMessage;
   List<InsightFlowDetail> _flowDetails = [];
@@ -327,6 +330,10 @@ class NetworkInsightViewModel extends ChangeNotifier {
   // ── Details loading ─────────────────────────────────────────────────────────
 
   /// Loads the per-flow details for the Details tab.
+  ///
+  /// Uses [_detailsExtraFilterField] / [_detailsExtraFilterValue] when set
+  /// (drilldown from pie chart), otherwise falls back to the manual form
+  /// text field filters.
   Future<void> loadFlowDetails() async {
     _isLoadingDetails = true;
     _detailsErrorMessage = null;
@@ -339,6 +346,8 @@ class NetworkInsightViewModel extends ChangeNotifier {
         startTs: startTs,
         endTs: endTs,
         interface: _detailsInterface,
+        extraFilterField: _detailsExtraFilterField,
+        extraFilterValue: _detailsExtraFilterValue,
         dstPort: _detailsDstPort.isEmpty ? null : _detailsDstPort,
         dstAddr: _detailsDstAddr.isEmpty ? null : _detailsDstAddr,
         srcAddr: _detailsSrcAddr.isEmpty ? null : _detailsSrcAddr,
@@ -349,6 +358,55 @@ class NetworkInsightViewModel extends ChangeNotifier {
       _isLoadingDetails = false;
       notifyListeners();
     }
+  }
+
+  /// Drilldown from a pie chart slice into the Details tab.
+  ///
+  /// Populates the corresponding visible form field with [filterValue] so the
+  /// user sees the active filter, and sets the extra server-side filter for an
+  /// accurate API query. The caller is responsible for switching the tab.
+  ///
+  /// [filterField] must be `'service_port'` (port chart) or `'src_addr'`
+  /// (address chart).
+  void drilldownToDetails({
+    required String filterField,
+    required String filterValue,
+  }) {
+    _detailsExtraFilterField = filterField;
+    _detailsExtraFilterValue = filterValue;
+
+    // Mirror the currently selected Totals interface into the Details form.
+    if (_selectedInterface != null && _selectedInterface!.isNotEmpty) {
+      _detailsInterface = _selectedInterface!;
+    }
+
+    // Populate the matching visible form field; clear the others.
+    if (filterField == 'service_port') {
+      _detailsDstPort = filterValue;
+      _detailsDstAddr = '';
+      _detailsSrcAddr = '';
+    } else if (filterField == 'src_addr') {
+      _detailsDstPort = '';
+      _detailsDstAddr = '';
+      _detailsSrcAddr = filterValue;
+    } else {
+      _detailsDstPort = '';
+      _detailsDstAddr = '';
+      _detailsSrcAddr = '';
+    }
+
+    // Notify immediately so the Details tab controllers sync even if the tab
+    // was already mounted before the drilldown (lazy-build safe).
+    notifyListeners();
+
+    loadFlowDetails();
+  }
+
+  /// Clears the drilldown filter (called when the user edits the form manually).
+  void clearDrilldown() {
+    _detailsExtraFilterField = null;
+    _detailsExtraFilterValue = null;
+    notifyListeners();
   }
 
   // ── Mutations ───────────────────────────────────────────────────────────────

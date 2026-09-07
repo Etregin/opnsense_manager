@@ -190,14 +190,18 @@ class NetworkInsightService extends BaseOPNsenseService {
 
   /// Returns per-flow details using the `FlowSourceAddrDetails` aggregator.
   ///
-  /// Filters by [interface] server-side (single filter_field/filter_value pair).
-  /// Optional [dstPort], [dstAddr], and [srcAddr] are applied client-side.
-  /// The "Other" sentinel row (empty fields) is always retained so callers can
-  /// calculate percentages against the true grand total.
+  /// The [interface] is always applied as a server-side filter.
+  /// Optional [extraFilterField] / [extraFilterValue] add a second comma-joined
+  /// server-side filter (e.g. `service_port` / `41127` for a port drilldown,
+  /// or `src_addr` / `162.196.24.123` for an address drilldown).
+  /// Optional [dstPort], [dstAddr], and [srcAddr] are applied client-side for
+  /// the manual form filters.
   Future<List<InsightFlowDetail>> getFlowDetails({
     required int startTs,
     required int endTs,
     required String interface,
+    String? extraFilterField,
+    String? extraFilterValue,
     String? dstPort,
     String? dstAddr,
     String? srcAddr,
@@ -212,18 +216,33 @@ class NetworkInsightService extends BaseOPNsenseService {
         measure: 'octets',
         limit: 100,
       );
-      final response = await dio.get(
-        path,
-        queryParameters: interface.isNotEmpty
-            ? {'filter_field': 'if', 'filter_value': interface}
-            : null,
-      );
+
+      // Build filter_field / filter_value query params.
+      // The API accepts comma-separated values for multiple filters.
+      Map<String, String>? queryParams;
+      if (interface.isNotEmpty) {
+        if (extraFilterField != null && extraFilterField.isNotEmpty &&
+            extraFilterValue != null && extraFilterValue.isNotEmpty) {
+          queryParams = {
+            'filter_field': 'if,$extraFilterField',
+            'filter_value': '$interface,$extraFilterValue',
+          };
+        } else {
+          queryParams = {
+            'filter_field': 'if',
+            'filter_value': interface,
+          };
+        }
+      }
+
+      final response = await dio.get(path, queryParameters: queryParams);
       final list = response.data as List<dynamic>;
       var rows = list
           .map((e) => InsightFlowDetail.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      // Apply client-side filters — always keep the "Other" sentinel row.
+      // Apply client-side filters from the manual form — always keep the
+      // "Other" sentinel row so callers can compute percentages.
       if (dstPort != null && dstPort.isNotEmpty) {
         rows = rows
             .where((r) => r.isOther || r.servicePort.contains(dstPort))
