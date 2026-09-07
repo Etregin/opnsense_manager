@@ -1927,6 +1927,29 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
         delayMs: 500,
       );
 
+  Future<String> exportInsightData({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateExportCsv(
+          collection: collection,
+          fromTs: fromTs,
+          toTs: toTs,
+          resolution: resolution,
+        ),
+        realAction: () => _realApiService.exportInsightData(
+          collection: collection,
+          fromTs: fromTs,
+          toTs: toTs,
+          resolution: resolution,
+        ),
+        delayMs: 600,
+      );
+
   // ── NetFlow Config ────────────────────────────────────────────────────────
 
   Future<NetflowConfig> getNetflowConfig() => DemoApiDecorator.execute(

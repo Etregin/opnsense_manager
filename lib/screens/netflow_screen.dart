@@ -168,7 +168,7 @@ class _CaptureTab extends StatelessWidget {
         _SectionCard(
           title: l10n.netflowVersion,
           child: DropdownButtonFormField<String>(
-            value: config.version.isEmpty
+            initialValue: config.version.isEmpty
                 ? null
                 : config.version,
             decoration: const InputDecoration(

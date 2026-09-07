@@ -17,7 +17,9 @@
  */
 
 import 'dart:async' show unawaited;
+import 'dart:convert' show utf8;
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import '../models/insight_flow_detail.dart';
 import '../models/netflow_status.dart';
@@ -115,6 +117,89 @@ class NetworkInsightViewModel extends ChangeNotifier {
   String? get detailsErrorMessage => _detailsErrorMessage;
   List<InsightFlowDetail> get flowDetails => List.unmodifiable(_flowDetails);
 
+  // ── Export tab state ────────────────────────────────────────────────────────
+
+  static const List<String> exportCollections = [
+    'FlowSourceAddrDetails',
+    'FlowSourceAddrTotals',
+    'FlowDstPortTotals',
+    'FlowInterfaceTotals',
+  ];
+
+  String _exportCollection = 'FlowSourceAddrDetails';
+  static const int exportResolution = 86400; // 86400 seconds (1 day)
+  late DateTime _exportFrom;
+  late DateTime _exportTo;
+  bool _isExporting = false;
+  String? _exportErrorMessage;
+
+  String get exportCollection => _exportCollection;
+  DateTime get exportFrom => _exportFrom;
+  DateTime get exportTo => _exportTo;
+  bool get isExporting => _isExporting;
+  String? get exportErrorMessage => _exportErrorMessage;
+
+  void setExportCollection(String collection) {
+    if (_exportCollection == collection) return;
+    _exportCollection = collection;
+    notifyListeners();
+  }
+
+  void setExportDateRange(DateTime from, DateTime to) {
+    _exportFrom = from;
+    _exportTo = to;
+    notifyListeners();
+  }
+
+  /// Downloads the NetFlow CSV export data and prompts the user to save it via [FilePicker.saveFile].
+  ///
+  /// Returns `true` if saved successfully, `false` if cancelled or failed.
+  Future<bool> exportNetflowCsv() async {
+    _isExporting = true;
+    _exportErrorMessage = null;
+    notifyListeners();
+
+    try {
+      final fromTs = _exportFrom.millisecondsSinceEpoch ~/ 1000;
+      final toTs = _exportTo.millisecondsSinceEpoch ~/ 1000;
+
+      final csvData = await _apiService.exportInsightData(
+        collection: _exportCollection,
+        fromTs: fromTs,
+        toTs: toTs,
+        resolution: exportResolution,
+      );
+
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final suggestedName = 'netflow_${_exportCollection}_$timestamp.csv';
+      final bytes = utf8.encode(csvData);
+
+      final filePath = await FilePicker.saveFile(
+        dialogTitle: 'Save NetFlow CSV Export',
+        fileName: suggestedName,
+        type: FileType.custom,
+        allowedExtensions: ['csv'],
+        bytes: bytes,
+      );
+
+      if (filePath == null) {
+        // User cancelled picker
+        _isExporting = false;
+        notifyListeners();
+        return false;
+      }
+
+      _isExporting = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _exportErrorMessage = e.toString();
+      _isExporting = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   void setDetailsDateRange(DateTime from, DateTime to) {
     _detailsFrom = from;
     _detailsTo = to;
@@ -165,6 +250,7 @@ class NetworkInsightViewModel extends ChangeNotifier {
   Future<void> loadInitial() async {
     _setDefaultTimeRange();
     _setDefaultDetailsRange();
+    _setDefaultExportRange();
     _isCheckingNetflow = true;
     _errorMessage = null;
     notifyListeners();
@@ -193,6 +279,12 @@ class NetworkInsightViewModel extends ChangeNotifier {
     final now = DateTime.now();
     _detailsFrom = DateTime(now.year, now.month, now.day); // midnight today
     _detailsTo = now;
+  }
+
+  void _setDefaultExportRange() {
+    final now = DateTime.now();
+    _exportFrom = DateTime(now.year, now.month, now.day); // start of today (00:00:00)
+    _exportTo = DateTime(now.year, now.month, now.day, 23, 59, 59); // end of today (23:59:59)
   }
 
   Future<void> _loadInterfaces() async {

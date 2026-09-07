@@ -303,4 +303,36 @@ class NetworkInsightService extends BaseOPNsenseService {
       throw handleDioError(e);
     }
   }
+
+  // ── CSV Export ─────────────────────────────────────────────────────────────
+
+  /// Exports NetFlow data as a CSV string for the given parameters.
+  ///
+  /// [collection] is one of `FlowSourceAddrDetails`, `FlowSourceAddrTotals`,
+  /// `FlowDstPortTotals`, `FlowInterfaceTotals`.
+  /// [fromTs] and [toTs] are epoch timestamps in seconds.
+  /// [resolution] is the bucket resolution in seconds (typically 86400).
+  Future<String> exportNetflowData({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) async {
+    ensureInitialized();
+    try {
+      final path = ApiEndpoints.networkInsightExport(
+        collection: collection,
+        fromTs: fromTs,
+        toTs: toTs,
+        resolution: resolution,
+      );
+      final response = await dio.get<String>(
+        path,
+        options: Options(responseType: ResponseType.plain),
+      );
+      return response.data ?? '';
+    } on DioException catch (e) {
+      throw handleDioError(e);
+    }
+  }
 }

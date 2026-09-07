@@ -791,6 +791,19 @@ class OPNsenseApiService {
         dstAddr: dstAddr,
         srcAddr: srcAddr,
       );
+
+  Future<String> exportInsightData({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) =>
+      _networkInsightService.exportNetflowData(
+        collection: collection,
+        fromTs: fromTs,
+        toTs: toTs,
+        resolution: resolution,
+      );
 }
 
 

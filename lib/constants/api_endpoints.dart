@@ -211,4 +211,15 @@ class ApiEndpoints {
     required int limit,
   }) =>
       '/diagnostics/networkinsight/top/$aggregator/$startTs/$endTs/$dimensions/$measure/$limit/';
+
+  /// Network Insight CSV export endpoint.
+  ///
+  /// Example: `/diagnostics/networkinsight/export/FlowSourceAddrDetails/1788739200/1788825599/86400`
+  static String networkInsightExport({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) =>
+      '/diagnostics/networkinsight/export/$collection/$fromTs/$toTs/$resolution';
 }

@@ -27,9 +27,9 @@ import '../utils/formatters.dart';
 import '../utils/single_init_mixin.dart';
 import '../viewmodels/network_insight_view_model.dart';
 import '../widgets/app_drawer.dart';
-import '../widgets/common/empty_state_widget.dart';
 import '../widgets/common/error_display.dart';
 import '../widgets/network_insight/insight_details_tab.dart';
+import '../widgets/network_insight/insight_export_tab.dart';
 import '../widgets/network_insight/interface_totals_chart.dart';
 import '../widgets/network_insight/netflow_disabled_banner.dart';
 import '../widgets/network_insight/top_breakdown_pie_chart.dart';
@@ -202,7 +202,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
           },
         ),
         _DetailsTab(vm: _vm),
-        _ExportTab(),
+        _ExportTab(vm: _vm),
       ],
     );
   }
@@ -547,13 +547,13 @@ class _DetailsTab extends StatelessWidget {
 // ── Export tab ────────────────────────────────────────────────────────────────
 
 class _ExportTab extends StatelessWidget {
+  final NetworkInsightViewModel vm;
+
+  const _ExportTab({required this.vm});
+
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return EmptyStateWidget(
-      icon: Icons.download,
-      title: l10n.tabExport,
-    );
+    return InsightExportTab(viewModel: vm);
   }
 }
 

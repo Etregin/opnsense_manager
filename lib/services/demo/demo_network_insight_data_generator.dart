@@ -177,6 +177,47 @@ class DemoNetworkInsightDataGenerator {
         NetworkInsightDirectionTotal(
             direction: 'out', total: 1370555.0, lastSeen: 1788705184),
       ];
+
+  // ── CSV Export ─────────────────────────────────────────────────────────────
+
+  /// Generates sample CSV export data for the given [collection].
+  String generateExportCsv({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) {
+    switch (collection) {
+      case 'FlowSourceAddrTotals':
+        return 'src_addr,octets,resolution,start_time,end_time\n'
+            '192.168.1.160,411859651,$resolution,$fromTs,$toTs\n'
+            '192.168.1.118,291219648,$resolution,$fromTs,$toTs\n'
+            '192.168.1.110,8945607,$resolution,$fromTs,$toTs\n'
+            '192.168.1.228,4223650,$resolution,$fromTs,$toTs\n'
+            '192.168.1.200,1406782,$resolution,$fromTs,$toTs\n';
+      case 'FlowDstPortTotals':
+        return 'dst_port,protocol,octets,resolution,start_time,end_time\n'
+            '443,tcp,1258410294,$resolution,$fromTs,$toTs\n'
+            '80,tcp,312450192,$resolution,$fromTs,$toTs\n'
+            '53,udp,45892100,$resolution,$fromTs,$toTs\n'
+            '853,tcp,12480192,$resolution,$fromTs,$toTs\n'
+            '123,udp,1249501,$resolution,$fromTs,$toTs\n';
+      case 'FlowInterfaceTotals':
+        return 'interface,direction,octets,packets,resolution,start_time,end_time\n'
+            'pppoe1,in,931835146,1373688,$resolution,$fromTs,$toTs\n'
+            'pppoe1,out,775527345,1370555,$resolution,$fromTs,$toTs\n'
+            'vtnet1,in,750431200,1120450,$resolution,$fromTs,$toTs\n'
+            'vtnet1,out,580129400,980400,$resolution,$fromTs,$toTs\n';
+      case 'FlowSourceAddrDetails':
+      default:
+        return 'service_port,protocol,if,src_addr,dst_addr,octets,resolution,start_time,end_time\n'
+            '443,tcp,pppoe1,192.168.1.160,104.244.42.1,385412900,$resolution,$fromTs,$toTs\n'
+            '443,tcp,pppoe1,192.168.1.118,172.217.16.206,254109400,$resolution,$fromTs,$toTs\n'
+            '80,tcp,pppoe1,192.168.1.110,93.184.216.34,8450120,$resolution,$fromTs,$toTs\n'
+            '53,udp,pppoe1,192.168.1.228,1.1.1.1,4120500,$resolution,$fromTs,$toTs\n'
+            '853,tcp,pppoe1,192.168.1.200,1.0.0.1,1390400,$resolution,$fromTs,$toTs\n';
+    }
+  }
 }
 
 // ── Internal helper ──────────────────────────────────────────────────────────
