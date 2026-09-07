@@ -1,0 +1,309 @@
+/*
+ * OPNsense Manager - Flutter application for managing OPNsense firewalls
+ * Copyright (C) 2026 OPNsense Manager
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
+import '../../models/unbound_rolling.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/constants.dart';
+import '../../utils/formatters.dart';
+
+class UnboundClientActivityChart extends StatelessWidget {
+  final List<UnboundRollingClientPoint> points;
+  final int selectedDurationHours;
+  final bool isLogarithmic;
+  final ValueChanged<int> onDurationChanged;
+  final ValueChanged<bool> onLogarithmicChanged;
+
+  const UnboundClientActivityChart({
+    super.key,
+    required this.points,
+    required this.selectedDurationHours,
+    required this.isLogarithmic,
+    required this.onDurationChanged,
+    required this.onLogarithmicChanged,
+  });
+
+  static const List<Color> _clientColors = [
+    AppColors.primary,
+    AppColors.secondary,
+    AppColors.warning,
+    AppColors.bandwidth,
+    AppColors.success,
+    AppColors.info,
+    Colors.teal,
+    Colors.indigo,
+    Colors.amber,
+    Colors.pink,
+  ];
+
+  double _transformY(double value) {
+    if (!isLogarithmic) return value;
+    if (value <= 0) return 0;
+    return log(value + 1) / ln10;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    if (points.isEmpty) {
+      return Card(
+        elevation: AppConstants.cardElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.standardPadding),
+          child: Center(child: Text(l10n.noDataAvailable)),
+        ),
+      );
+    }
+
+    final clientIpTotals = <String, int>{};
+    for (final p in points) {
+      for (final c in p.clients) {
+        clientIpTotals[c.ip] = (clientIpTotals[c.ip] ?? 0) + c.count;
+      }
+    }
+    final sortedClients = clientIpTotals.keys.toList()
+      ..sort((a, b) => (clientIpTotals[b] ?? 0).compareTo(clientIpTotals[a] ?? 0));
+    final top10Ips = sortedClients.take(10).toList();
+
+    final minX = points.first.timestamp;
+    final maxX = points.last.timestamp;
+
+    double maxVal = 0;
+    for (final p in points) {
+      for (final c in p.clients) {
+        if (c.count > maxVal) maxVal = c.count.toDouble();
+      }
+    }
+    if (maxVal == 0) maxVal = 10;
+    final maxY = _transformY(maxVal) * 1.15;
+
+    final lineBars = <LineChartBarData>[];
+    for (int i = 0; i < top10Ips.length; i++) {
+      final ip = top10Ips[i];
+      final color = _clientColors[i % _clientColors.length];
+      final spots = <FlSpot>[];
+
+      for (final p in points) {
+        final hit = p.clients.firstWhere(
+          (c) => c.ip == ip,
+          orElse: () => const UnboundClientHit(ip: '', count: 0, hostname: ''),
+        );
+        spots.add(FlSpot(p.timestamp, _transformY(hit.count.toDouble())));
+      }
+
+      lineBars.add(
+        LineChartBarData(
+          spots: spots,
+          color: color,
+          show: true,
+          barWidth: 0,
+          isCurved: false,
+          dotData: FlDotData(
+            show: true,
+            getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+              radius: 3,
+              color: color,
+              strokeWidth: 0,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      elevation: AppConstants.cardElevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppConstants.standardPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.topClientActivityOverTheLast,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DropdownButton<int>(
+                  value: selectedDurationHours,
+                  underline: const SizedBox.shrink(),
+                  items: [
+                    DropdownMenuItem(value: 24, child: Text(l10n.hoursDuration(24))),
+                    DropdownMenuItem(value: 12, child: Text(l10n.hoursDuration(12))),
+                    DropdownMenuItem(value: 1, child: Text(l10n.oneHourDuration)),
+                  ],
+                  onChanged: (val) {
+                    if (val != null) onDurationChanged(val);
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    spacing: AppConstants.compactPadding,
+                    runSpacing: 4,
+                    children: [
+                      for (int i = 0; i < top10Ips.length; i++)
+                        _LegendDot(
+                          color: _clientColors[i % _clientColors.length],
+                          label: top10Ips[i],
+                        ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(l10n.logarithmic, style: theme.textTheme.bodySmall),
+                    Switch(
+                      value: isLogarithmic,
+                      onChanged: onLogarithmicChanged,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: AppConstants.standardPadding),
+            SizedBox(
+              height: 200,
+              child: LineChart(
+                LineChartData(
+                  minX: minX,
+                  maxX: maxX,
+                  minY: 0,
+                  maxY: maxY > 0 ? maxY : 10,
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: false,
+                    getDrawingHorizontalLine: (value) => FlLine(
+                      color: theme.colorScheme.outlineVariant.withValues(
+                        alpha: AppColors.opacityDivider,
+                      ),
+                      strokeWidth: 1,
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        getTitlesWidget: (val, meta) {
+                          if (val == meta.max || val == meta.min) return const SizedBox.shrink();
+                          final display = isLogarithmic ? pow(10, val).round() : val.round();
+                          return Text(
+                            Formatters.formatNumber(display),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 24,
+                        getTitlesWidget: (val, meta) {
+                          if (val == meta.max || val == meta.min) return const SizedBox.shrink();
+                          final dt = DateTime.fromMillisecondsSinceEpoch((val * 1000).toInt());
+                          return Text(
+                            Formatters.formatTime(dt),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  borderData: FlBorderData(show: false),
+                  lineBarsData: lineBars,
+                  lineTouchData: LineTouchData(
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipItems: (touchedSpots) {
+                        return touchedSpots.map((touchedSpot) {
+                          final originalY = isLogarithmic
+                              ? (touchedSpot.y == 0 ? 0 : (pow(10, touchedSpot.y) - 1).round())
+                              : touchedSpot.y.round();
+
+                          final ip = touchedSpot.barIndex < top10Ips.length
+                              ? top10Ips[touchedSpot.barIndex]
+                              : '';
+
+                          return LineTooltipItem(
+                            '$ip: ${Formatters.formatNumber(originalY)}',
+                            TextStyle(
+                              color: touchedSpot.bar.color ?? theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          );
+                        }).toList();
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LegendDot extends StatelessWidget {
+  final Color color;
+  final String label;
+
+  const _LegendDot({required this.color, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 4),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
+  }
+}

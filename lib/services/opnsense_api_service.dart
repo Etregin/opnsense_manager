@@ -52,6 +52,10 @@ import '../models/openvpn_session_search_response.dart';
 import '../models/openvpn_route_search_response.dart';
 import '../models/openvpn_log_search_response.dart';
 import '../models/neighbor.dart';
+import '../models/unbound_overview_status.dart';
+import '../models/unbound_rolling.dart';
+import '../models/unbound_settings.dart';
+import '../models/unbound_totals.dart';
 import '../utils/constants.dart';
 
 // Import all specialized services
@@ -72,6 +76,7 @@ import 'services/service_control_service.dart';
 import 'tailscale/tailscale_service.dart';
 import 'vpn/openvpn_service.dart';
 import 'system/system_log_service.dart';
+import 'unbound/unbound_dns_service.dart';
 
 // Re-export ApiException and helper classes for backward compatibility
 export 'base/api_exception.dart';
@@ -105,6 +110,7 @@ class OPNsenseApiService {
   final SystemLogService _systemLogService = SystemLogService();
   final NetflowConfigService _netflowConfigService = NetflowConfigService();
   final NetworkInsightService _networkInsightService = NetworkInsightService();
+  final UnboundDnsService _unboundDnsService = UnboundDnsService();
 
   Dio? _dio;
   OPNsenseConfig? _config;
@@ -156,6 +162,7 @@ class OPNsenseApiService {
     _systemLogService.init(_dio!, config);
     _netflowConfigService.init(_dio!, config);
     _networkInsightService.init(_dio!, config);
+    _unboundDnsService.init(_dio!, config);
   }
 
   /// Test connection to OPNsense
@@ -216,6 +223,7 @@ class OPNsenseApiService {
     _systemLogService.clear();
     _netflowConfigService.clear();
     _networkInsightService.clear();
+    _unboundDnsService.clear();
 
     // Clear main service state
     _dio = null;
@@ -804,6 +812,37 @@ class OPNsenseApiService {
         toTs: toTs,
         resolution: resolution,
       );
+
+  // ============================================================================
+  // Unbound DNS Reporting Delegations
+  // ============================================================================
+
+  Future<UnboundOverviewStatus> checkUnboundOverviewEnabled() =>
+      _unboundDnsService.checkIsEnabled();
+
+  Future<UnboundTotals> getUnboundTotals({int limit = 10}) =>
+      _unboundDnsService.getTotals(limit: limit);
+
+  Future<List<UnboundRollingPoint>> getUnboundRolling(int hours) =>
+      _unboundDnsService.getRolling(hours);
+
+  Future<List<UnboundRollingClientPoint>> getUnboundClientActivity(int hours) =>
+      _unboundDnsService.getClientActivity(hours);
+
+  Future<UnboundSettings> getUnboundSettings() =>
+      _unboundDnsService.getSettings();
+
+  Future<void> setUnboundStatsEnabled(bool enabled) =>
+      _unboundDnsService.setStatsEnabled(enabled);
+
+  Future<void> reconfigureUnboundGeneral() =>
+      _unboundDnsService.reconfigureGeneral();
+
+  Future<void> resetUnboundDnsData() =>
+      _unboundDnsService.resetDnsData();
+
+  Future<String> getUnboundServiceStatus() =>
+      _unboundDnsService.getServiceStatus();
 }
 
 
