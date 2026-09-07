@@ -367,11 +367,21 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
 
   Widget _buildPieCharts(BuildContext context, AppLocalizations l10n) {
     final portItems = _vm.topPorts
-        .map((p) => (p.isOther ? l10n.other : (p.label.isEmpty ? p.dstPort : p.label), p.total))
+        .map((p) => (
+              p.isOther ? l10n.other : (p.label.isEmpty ? p.dstPort : p.label),
+              p.total,
+            ))
         .toList();
 
+    // Apply resolved hostnames when reverse lookup is enabled.
     final addrItems = _vm.topAddresses
-        .map((a) => (a.isOther ? l10n.other : a.srcAddr, a.total))
+        .map((a) {
+          if (a.isOther) return (l10n.other, a.total);
+          final label = _vm.reverseLookupEnabled
+              ? (_vm.resolvedLabels[a.srcAddr] ?? a.srcAddr)
+              : a.srcAddr;
+          return (label, a.total);
+        })
         .toList();
 
     return Column(
@@ -392,10 +402,44 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
           elevation: AppConstants.cardElevation,
           child: Padding(
             padding: const EdgeInsets.all(AppConstants.standardPadding),
-            child: TopBreakdownPieChart(
-              title: l10n.sourceAddressBreakdown,
-              items: addrItems,
-              otherLabel: l10n.other,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ── Reverse lookup toggle ───────────────────────────
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.sourceAddressBreakdown,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                    if (_vm.isResolvingDns)
+                      const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    const SizedBox(width: AppConstants.compactPadding),
+                    Text(
+                      l10n.reverseLookup,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Switch(
+                      value: _vm.reverseLookupEnabled,
+                      onChanged: _vm.isLoadingCharts
+                          ? null
+                          : (v) => _vm.toggleReverseLookup(enabled: v),
+                    ),
+                  ],
+                ),
+                // ── Pie chart (title already shown in header above) ─
+                TopBreakdownPieChart(
+                  title: '',
+                  items: addrItems,
+                  otherLabel: l10n.other,
+                ),
+              ],
             ),
           ),
         ),

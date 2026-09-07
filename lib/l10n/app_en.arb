@@ -1654,6 +1654,8 @@
   "@protocolsBreakdown": {},
   "sourceAddressBreakdown": "Source Addresses",
   "@sourceAddressBreakdown": {},
+  "reverseLookup": "Reverse Lookup",
+  "@reverseLookup": {},
   "other": "Other",
   "@other": {},
   "timeRangeFrom": "From",

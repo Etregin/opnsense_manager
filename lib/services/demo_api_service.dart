@@ -1802,6 +1802,16 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
         delayMs: 400,
       );
 
+  Future<Map<String, String>> reverseLookupAddresses(List<String> addresses) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        // In demo mode echo each address back unchanged (no real DNS).
+        demoAction: () async =>
+            {for (final a in addresses) a: a},
+        realAction: () => _realApiService.reverseLookupAddresses(addresses),
+        delayMs: 300,
+      );
+
   Future<List<NetworkInsightDirectionTotal>> getInsightDirectionTotals({
     required String interface,
     required int startTs,

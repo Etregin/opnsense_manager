@@ -3442,6 +3442,8 @@
   "@protocolsBreakdown": {},
   "sourceAddressBreakdown": "Adresses sources",
   "@sourceAddressBreakdown": {},
+  "reverseLookup": "Résolution inverse",
+  "@reverseLookup": {},
   "other": "Autres",
   "@other": {},
   "timeRangeFrom": "De",

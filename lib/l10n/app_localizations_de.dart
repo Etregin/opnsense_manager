@@ -1896,6 +1896,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sourceAddressBreakdown => 'Quelladressen';
 
   @override
+  String get reverseLookup => 'Rückwärtsauflösung';
+
+  @override
   String get other => 'Sonstige';
 
   @override

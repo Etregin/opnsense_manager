@@ -3442,6 +3442,8 @@
   "@protocolsBreakdown": {},
   "sourceAddressBreakdown": "Quelladressen",
   "@sourceAddressBreakdown": {},
+  "reverseLookup": "Rückwärtsauflösung",
+  "@reverseLookup": {},
   "other": "Sonstige",
   "@other": {},
   "timeRangeFrom": "Von",

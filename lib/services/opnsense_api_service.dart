@@ -753,6 +753,10 @@ class OPNsenseApiService {
         endTs: endTs,
       );
 
+  Future<Map<String, String>> reverseLookupAddresses(
+          List<String> addresses) =>
+      _networkInsightService.reverseLookup(addresses);
+
   Future<List<NetworkInsightDirectionTotal>> getInsightDirectionTotals({
     required String interface,
     required int startTs,

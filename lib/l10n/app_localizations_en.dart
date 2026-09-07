@@ -1869,6 +1869,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sourceAddressBreakdown => 'Source Addresses';
 
   @override
+  String get reverseLookup => 'Reverse Lookup';
+
+  @override
   String get other => 'Other';
 
   @override

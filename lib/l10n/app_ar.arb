@@ -3433,6 +3433,8 @@
   "@protocolsBreakdown": {},
   "sourceAddressBreakdown": "عناوين المصدر",
   "@sourceAddressBreakdown": {},
+  "reverseLookup": "البحث العكسي",
+  "@reverseLookup": {},
   "other": "أخرى",
   "@other": {},
   "timeRangeFrom": "من",

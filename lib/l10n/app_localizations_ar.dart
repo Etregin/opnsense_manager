@@ -1860,6 +1860,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sourceAddressBreakdown => 'عناوين المصدر';
 
   @override
+  String get reverseLookup => 'البحث العكسي';
+
+  @override
   String get other => 'أخرى';
 
   @override

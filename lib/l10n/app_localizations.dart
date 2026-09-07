@@ -3380,6 +3380,12 @@ abstract class AppLocalizations {
   /// **'Source Addresses'**
   String get sourceAddressBreakdown;
 
+  /// No description provided for @reverseLookup.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse Lookup'**
+  String get reverseLookup;
+
   /// No description provided for @other.
   ///
   /// In en, this message translates to:

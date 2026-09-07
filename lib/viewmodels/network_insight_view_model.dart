@@ -16,6 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import 'dart:async' show unawaited;
+
 import 'package:flutter/foundation.dart';
 import '../models/netflow_status.dart';
 import '../models/network_insight_direction_total.dart';
@@ -86,6 +88,22 @@ class NetworkInsightViewModel extends ChangeNotifier {
       List.unmodifiable(_directionOctetTotals);
   List<NetworkInsightDirectionTotal> get directionPacketTotals =>
       List.unmodifiable(_directionPacketTotals);
+
+  // ── Reverse DNS lookup ──────────────────────────────────────────────────────
+
+  bool _reverseLookupEnabled = false;
+  bool _isResolvingDns = false;
+
+  /// Whether the reverse-lookup toggle is currently on.
+  bool get reverseLookupEnabled => _reverseLookupEnabled;
+
+  /// True while the DNS batch request is in flight.
+  bool get isResolvingDns => _isResolvingDns;
+
+  /// Map of `ip → resolved hostname` (or back to IP if unresolvable).
+  /// Populated after a successful reverse lookup; cleared when toggle is off.
+  Map<String, String> _resolvedLabels = {};
+  Map<String, String> get resolvedLabels => Map.unmodifiable(_resolvedLabels);
 
   // ── Initialisation ──────────────────────────────────────────────────────────
 
@@ -183,6 +201,10 @@ class NetworkInsightViewModel extends ChangeNotifier {
       _topAddresses = results[2] as List<NetworkInsightTopAddr>;
       _directionOctetTotals = results[3] as List<NetworkInsightDirectionTotal>;
       _directionPacketTotals = results[4] as List<NetworkInsightDirectionTotal>;
+      // Re-run DNS resolution if the toggle is still on (new address list).
+      if (_reverseLookupEnabled) {
+        unawaited(toggleReverseLookup(enabled: true));
+      }
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -232,6 +254,10 @@ class NetworkInsightViewModel extends ChangeNotifier {
       _topAddresses = results[1] as List<NetworkInsightTopAddr>;
       _directionOctetTotals = results[2] as List<NetworkInsightDirectionTotal>;
       _directionPacketTotals = results[3] as List<NetworkInsightDirectionTotal>;
+      // Re-run DNS resolution if the toggle is still on (new address list).
+      if (_reverseLookupEnabled) {
+        unawaited(toggleReverseLookup(enabled: true));
+      }
     } catch (e) {
       _errorMessage = e.toString();
     } finally {
@@ -256,7 +282,49 @@ class NetworkInsightViewModel extends ChangeNotifier {
   void setSelectedInterface(String key) {
     if (_selectedInterface == key) return;
     _selectedInterface = key;
+    // Clear any previous resolved labels when the interface changes —
+    // the address list will be different after reload.
+    _resolvedLabels = {};
     _loadBreakdownData();
+  }
+
+  /// Toggles reverse DNS resolution for the source-address pie chart.
+  ///
+  /// When turned on, calls the OPNsense DNS reverse-lookup endpoint with all
+  /// non-empty, non-"other" IP addresses from [_topAddresses].
+  /// When turned off, clears [_resolvedLabels] immediately.
+  Future<void> toggleReverseLookup({required bool enabled}) async {
+    _reverseLookupEnabled = enabled;
+    if (!enabled) {
+      _resolvedLabels = {};
+      notifyListeners();
+      return;
+    }
+
+    // Collect the real IP addresses (skip the empty "Other" sentinel row).
+    final addresses = _topAddresses
+        .where((a) => !a.isOther && a.srcAddr.isNotEmpty)
+        .map((a) => a.srcAddr)
+        .toList();
+
+    if (addresses.isEmpty) {
+      notifyListeners();
+      return;
+    }
+
+    _isResolvingDns = true;
+    notifyListeners();
+
+    try {
+      _resolvedLabels =
+          await _apiService.reverseLookupAddresses(addresses);
+    } catch (_) {
+      // On failure leave _resolvedLabels empty; IPs are shown as-is.
+      _resolvedLabels = {};
+    } finally {
+      _isResolvingDns = false;
+      notifyListeners();
+    }
   }
 
   // ── Helpers ─────────────────────────────────────────────────────────────────

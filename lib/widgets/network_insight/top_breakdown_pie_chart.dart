@@ -101,11 +101,13 @@ class _TopBreakdownPieChartState extends State<TopBreakdownPieChart> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.title,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(height: AppConstants.compactPadding),
+        if (widget.title.isNotEmpty) ...[
+          Text(
+            widget.title,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: AppConstants.compactPadding),
+        ],
         SizedBox(
           height: 200,
           child: PieChart(

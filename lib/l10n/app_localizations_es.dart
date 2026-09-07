@@ -1890,6 +1890,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sourceAddressBreakdown => 'Direcciones de origen';
 
   @override
+  String get reverseLookup => 'Resolución inversa';
+
+  @override
   String get other => 'Otros';
 
   @override

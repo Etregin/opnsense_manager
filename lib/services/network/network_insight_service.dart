@@ -163,6 +163,28 @@ class NetworkInsightService extends BaseOPNsenseService {
     }
   }
 
+  // ── DNS reverse lookup ──────────────────────────────────────────────────────
+
+  /// Resolves a list of IP addresses to hostnames via OPNsense DNS.
+  ///
+  /// Returns a map of `ip → hostname`. Addresses that cannot be resolved
+  /// are echoed back as-is (the API does this automatically).
+  Future<Map<String, String>> reverseLookup(List<String> addresses) async {
+    ensureInitialized();
+    try {
+      final response = await dio.get(
+        ApiEndpoints.diagnosticsDnsReverseLookup,
+        queryParameters: {
+          'address[]': addresses,
+        },
+      );
+      final data = response.data as Map<String, dynamic>;
+      return data.map((k, v) => MapEntry(k, v.toString()));
+    } on DioException catch (e) {
+      throw handleDioError(e);
+    }
+  }
+
   /// Returns in/out totals for the given [interface].
   ///
   /// [measure] should be either `'octets'` (bytes) or `'packets'`.

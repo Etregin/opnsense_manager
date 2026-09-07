@@ -176,6 +176,8 @@ class ApiEndpoints {
   static const String netflowReconfigure = '/diagnostics/netflow/reconfigure';
   static const String netflowReset = '/diagnostics/netflow/reset';
   static const String netflowCacheStats = '/diagnostics/netflow/cache_stats';
+  static const String diagnosticsDnsReverseLookup =
+      '/diagnostics/dns/reverse_lookup';
   static const String networkInsightGetInterfaces =
       '/diagnostics/networkinsight/get_interfaces';
   static const String networkInsightGetMetadata =
