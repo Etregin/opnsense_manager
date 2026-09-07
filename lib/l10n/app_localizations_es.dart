@@ -2010,6 +2010,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get percentColumn => '%';
 
   @override
+  String get total => 'Total';
+
+  @override
   String get neighborDiscovery => 'Descubrimiento de Vecinos';
 
   @override

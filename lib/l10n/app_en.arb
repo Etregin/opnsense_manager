@@ -1735,6 +1735,8 @@
   "@lastSeenColumn": {},
   "percentColumn": "%",
   "@percentColumn": {},
+  "total": "Total",
+  "@total": {},
   "neighborDiscovery": "Neighbor Discovery",
   "@neighborDiscovery": {},
   "loading": "Loading...",

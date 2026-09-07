@@ -1980,6 +1980,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get percentColumn => '%';
 
   @override
+  String get total => 'الإجمالي';
+
+  @override
   String get neighborDiscovery => 'اكتشاف الأجهزة المجاورة';
 
   @override

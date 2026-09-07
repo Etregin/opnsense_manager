@@ -2016,6 +2016,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get percentColumn => '%';
 
   @override
+  String get total => 'Gesamt';
+
+  @override
   String get neighborDiscovery => 'Nachbarerkennung';
 
   @override

@@ -3523,6 +3523,8 @@
   "@lastSeenColumn": {},
   "percentColumn": "%",
   "@percentColumn": {},
+  "total": "Gesamt",
+  "@total": {},
   "netflowConfig": "NetFlow",
   "@netflowConfig": {},
   "netflowCaptureTab": "Erfassung",

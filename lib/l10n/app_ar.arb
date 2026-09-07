@@ -3514,6 +3514,8 @@
   "@lastSeenColumn": {},
   "percentColumn": "%",
   "@percentColumn": {},
+  "total": "الإجمالي",
+  "@total": {},
   "netflowConfig": "NetFlow",
   "@netflowConfig": {},
   "netflowCaptureTab": "التقاط",
