@@ -4334,4 +4334,95 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get netflowAddDestination => 'Agregar destino';
+
+  @override
+  String get unboundDns => 'Unbound DNS';
+
+  @override
+  String get unboundOverview => 'Resumen';
+
+  @override
+  String get unboundDetails => 'Detalles';
+
+  @override
+  String get unboundSettings => 'Configuración';
+
+  @override
+  String get enableUnboundStatistics => 'Habilitar estadísticas de Unbound';
+
+  @override
+  String get enableUnboundStatisticsDescription =>
+      'Recopilar estadísticas sobre consultas DNS procesadas por Unbound para informes.';
+
+  @override
+  String get resetDnsData => 'Restablecer datos de DNS';
+
+  @override
+  String get resetDnsDataConfirmation =>
+      '¿Realmente desea restablecer los datos estadísticos de Unbound?';
+
+  @override
+  String get dnsDataResetSuccess =>
+      'Los datos de estadísticas DNS han sido restablecidos.';
+
+  @override
+  String get unboundSettingsSaved =>
+      'Configuración de Unbound DNS guardada y reconfigurada.';
+
+  @override
+  String startingFrom(String date) {
+    return 'A partir de $date';
+  }
+
+  @override
+  String get totalQueries => 'Total';
+
+  @override
+  String get resolvedQueries => 'Resueltas';
+
+  @override
+  String get blockedQueries => 'Bloqueadas';
+
+  @override
+  String get blocklistSize => 'Tamaño de lista de bloqueo';
+
+  @override
+  String get queriesOverTheLast => 'Consultas durante las últimas';
+
+  @override
+  String get topClientActivityOverTheLast =>
+      'Actividad de los 10 principales clientes durante las últimas';
+
+  @override
+  String get logarithmic => 'Logarítmica';
+
+  @override
+  String get numberOfDomains => 'Número de dominios';
+
+  @override
+  String get topPassedDomains => 'Principales dominios permitidos';
+
+  @override
+  String get topBlockedDomains => 'Principales dominios bloqueados';
+
+  @override
+  String get domain => 'Dominio';
+
+  @override
+  String get count => 'Cantidad';
+
+  @override
+  String get percentOfTotal => '% del Total';
+
+  @override
+  String get unboundStatsDisabledNotice =>
+      'Las estadísticas de Unbound están deshabilitadas actualmente. Habilite las estadísticas en la pestaña Configuración para ver los datos de informes DNS.';
+
+  @override
+  String hoursDuration(int hours) {
+    return '$hours horas';
+  }
+
+  @override
+  String get oneHourDuration => '1 hora';
 }

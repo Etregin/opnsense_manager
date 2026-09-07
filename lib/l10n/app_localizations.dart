@@ -7741,6 +7741,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Destination'**
   String get netflowAddDestination;
+
+  /// No description provided for @unboundDns.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbound DNS'**
+  String get unboundDns;
+
+  /// No description provided for @unboundOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get unboundOverview;
+
+  /// No description provided for @unboundDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get unboundDetails;
+
+  /// No description provided for @unboundSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get unboundSettings;
+
+  /// No description provided for @enableUnboundStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Unbound statistics'**
+  String get enableUnboundStatistics;
+
+  /// No description provided for @enableUnboundStatisticsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect statistics about DNS queries handled by Unbound for reporting.'**
+  String get enableUnboundStatisticsDescription;
+
+  /// No description provided for @resetDnsData.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset DNS Data'**
+  String get resetDnsData;
+
+  /// No description provided for @resetDnsDataConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you really want to reset the Unbound statistics data?'**
+  String get resetDnsDataConfirmation;
+
+  /// No description provided for @dnsDataResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'DNS statistics data has been reset.'**
+  String get dnsDataResetSuccess;
+
+  /// No description provided for @unboundSettingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbound DNS settings saved and reconfigured.'**
+  String get unboundSettingsSaved;
+
+  /// No description provided for @startingFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting from {date}'**
+  String startingFrom(String date);
+
+  /// No description provided for @totalQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get totalQueries;
+
+  /// No description provided for @resolvedQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get resolvedQueries;
+
+  /// No description provided for @blockedQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get blockedQueries;
+
+  /// No description provided for @blocklistSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size of blocklist'**
+  String get blocklistSize;
+
+  /// No description provided for @queriesOverTheLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Queries over the last'**
+  String get queriesOverTheLast;
+
+  /// No description provided for @topClientActivityOverTheLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Top 10 client activity over the last'**
+  String get topClientActivityOverTheLast;
+
+  /// No description provided for @logarithmic.
+  ///
+  /// In en, this message translates to:
+  /// **'Logarithmic'**
+  String get logarithmic;
+
+  /// No description provided for @numberOfDomains.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of domains'**
+  String get numberOfDomains;
+
+  /// No description provided for @topPassedDomains.
+  ///
+  /// In en, this message translates to:
+  /// **'Top passed domains'**
+  String get topPassedDomains;
+
+  /// No description provided for @topBlockedDomains.
+  ///
+  /// In en, this message translates to:
+  /// **'Top blocked domains'**
+  String get topBlockedDomains;
+
+  /// No description provided for @domain.
+  ///
+  /// In en, this message translates to:
+  /// **'Domain'**
+  String get domain;
+
+  /// No description provided for @count.
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get count;
+
+  /// No description provided for @percentOfTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'% of Total'**
+  String get percentOfTotal;
+
+  /// No description provided for @unboundStatsDisabledNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbound statistics are currently disabled. Enable statistics in the Settings tab to view DNS reporting data.'**
+  String get unboundStatsDisabledNotice;
+
+  /// No description provided for @hoursDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours'**
+  String hoursDuration(int hours);
+
+  /// No description provided for @oneHourDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get oneHourDuration;
 }
 
 class _AppLocalizationsDelegate
