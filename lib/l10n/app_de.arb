@@ -283,12 +283,11 @@
   "@cancel": {},
   "checkForUpdates": "Updates prüfen",
   "@checkForUpdates": {},
-  "checkingForUpdates": "Updates werden geprüft\u2026",
+  "checkingForUpdates": "Updates werden geprüft…",
   "@checkingForUpdates": {},
-
   "installUpdate": "Update installieren",
   "@installUpdate": {},
-  "installingUpdate": "Update wird installiert\u2026",
+  "installingUpdate": "Update wird installiert…",
   "@installingUpdate": {},
   "updateComplete": "Update erfolgreich installiert",
   "@updateComplete": {},
@@ -1030,7 +1029,9 @@
   "failedToSwitchProfile": "Profil wechseln fehlgeschlagen: {error}",
   "@failedToSwitchProfile": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "failedToBlockHost": "Host konnte nicht blockiert werden",
@@ -3154,8 +3155,7 @@
   "rawTimestamp": "Roh-Zeitstempel",
   "@rawTimestamp": {
     "description": "Label for raw timestamp row in log detail"
-  }
-,
+  },
   "organisationSection": "Organisation",
   "@organisationSection": {},
   "interfaceSection": "Interface",
@@ -3303,13 +3303,17 @@
   "interfaceNet": "{name} net",
   "@interfaceNet": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "interfaceAddress": "{name} address",
   "@interfaceAddress": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "sortOrderLabel": "Sort Order",
@@ -3333,7 +3337,9 @@
   "errorSavingAlias": "Error saving alias: {error}",
   "@errorSavingAlias": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "aliasNameLabel": "Name",
@@ -3409,13 +3415,186 @@
   "aliasContentEntries": "Inhalt ({count})",
   "@aliasContentEntries": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aliasRuntimeEntries": "{count} aktive Einträge (Laufzeit)",
   "@aliasRuntimeEntries": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "networkInsight": "Netzwerk-Einblick",
+  "@networkInsight": {},
+  "reporting": "Berichte",
+  "@reporting": {},
+  "netflowNotEnabled": "Die lokale Datenerfassung ist derzeit nicht aktiviert. Bitte konfigurieren Sie zuerst NetFlow.",
+  "@netflowNotEnabled": {},
+  "interfaceTotalsBitsPerSec": "Interface-Gesamtwerte (Bit/s)",
+  "@interfaceTotalsBitsPerSec": {},
+  "showLoopback": "Loopback anzeigen",
+  "@showLoopback": {},
+  "protocolsBreakdown": "Protokolle",
+  "@protocolsBreakdown": {},
+  "sourceAddressBreakdown": "Quelladressen",
+  "@sourceAddressBreakdown": {},
+  "reverseLookup": "Rückwärtsauflösung",
+  "@reverseLookup": {},
+  "other": "Sonstige",
+  "@other": {},
+  "timeRangeFrom": "Von",
+  "@timeRangeFrom": {},
+  "timeRangeTo": "Bis",
+  "@timeRangeTo": {},
+  "resolutionLabel": "Auflösung",
+  "@resolutionLabel": {},
+  "resolution30s": "30 Sekunden",
+  "@resolution30s": {},
+  "resolution5min": "5 Minuten",
+  "@resolution5min": {},
+  "resolution1hr": "1 Stunde",
+  "@resolution1hr": {},
+  "resolution24hr": "24 Stunden",
+  "@resolution24hr": {},
+  "perInterfaceBreakdown": "Aufschlüsselung pro Interface",
+  "@perInterfaceBreakdown": {},
+  "totalBytesIn": "Gesamte eingehende Bytes",
+  "@totalBytesIn": {},
+  "totalBytesOut": "Gesamte ausgehende Bytes",
+  "@totalBytesOut": {},
+  "totalPacketsIn": "Gesamte eingehende Pakete",
+  "@totalPacketsIn": {},
+  "totalPacketsOut": "Gesamte ausgehende Pakete",
+  "@totalPacketsOut": {},
+  "checkingNetflowStatus": "NetFlow-Status wird geprüft...",
+  "@checkingNetflowStatus": {},
+  "timePresetLabel": "{window}, Durchschnitt {avgInterval}",
+  "@timePresetLabel": {
+    "placeholders": {
+      "window": { "type": "String" },
+      "avgInterval": { "type": "String" }
+    }
+  },
+  "durationHours": "{count} {count, plural, =1{Stunde} other{Stunden}}",
+  "@durationHours": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationDays": "{count} {count, plural, =1{Tag} other{Tage}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationLastYear": "Letztes Jahr",
+  "@durationLastYear": {},
+  "goToNetflowConfig": "Zur NetFlow-Konfiguration",
+  "@goToNetflowConfig": {},
+  "tabTotals": "Gesamt",
+  "@tabTotals": {},
+  "tabDetails": "Details",
+  "@tabDetails": {},
+  "tabExport": "Exportieren",
+  "@tabExport": {},
+  "collection": "Sammlung",
+  "@collection": {},
+  "resolutionSeconds": "Auflösung (Sekunden)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (1 Tag)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "NetFlow-CSV exportieren",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "NetFlow-CSV erfolgreich exportiert",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "Fehler beim Exportieren der NetFlow-CSV: {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFrom": "Datum von",
+  "@dateFrom": {},
+  "dateTo": "Datum bis",
+  "@dateTo": {},
+  "dstPort": "Zielport",
+  "@dstPort": {},
+  "dstAddress": "Zieladresse",
+  "@dstAddress": {},
+  "srcAddress": "Quelladresse",
+  "@srcAddress": {},
+  "serviceColumn": "Dienst",
+  "@serviceColumn": {},
+  "sourceColumn": "Quelle",
+  "@sourceColumn": {},
+  "destinationColumn": "Ziel",
+  "@destinationColumn": {},
+  "bytesColumn": "Bytes",
+  "@bytesColumn": {},
+  "lastSeenColumn": "Zuletzt gesehen",
+  "@lastSeenColumn": {},
+  "percentColumn": "%",
+  "@percentColumn": {},
+  "total": "Gesamt",
+  "@total": {},
+  "netflowConfig": "NetFlow",
+  "@netflowConfig": {},
+  "netflowCaptureTab": "Erfassung",
+  "@netflowCaptureTab": {},
+  "netflowCacheTab": "Cache",
+  "@netflowCacheTab": {},
+  "netflowListeningInterfaces": "Listening-Interfaces",
+  "@netflowListeningInterfaces": {},
+  "netflowWanInterfaces": "WAN-Interfaces",
+  "@netflowWanInterfaces": {},
+  "netflowVersion": "Version",
+  "@netflowVersion": {},
+  "netflowDestinations": "Ziele",
+  "@netflowDestinations": {},
+  "netflowCaptureLocal": "Lokal erfassen",
+  "@netflowCaptureLocal": {},
+  "netflowActiveTimeout": "Aktives Timeout",
+  "@netflowActiveTimeout": {},
+  "netflowInactiveTimeout": "Inaktives Timeout",
+  "@netflowInactiveTimeout": {},
+  "netflowResetData": "NetFlow-Daten zurücksetzen",
+  "@netflowResetData": {},
+  "netflowResetWarning": "Möchten Sie wirklich die NetFlow-Daten zurücksetzen? Dadurch werden alle Insight-Graphdaten gelöscht.",
+  "@netflowResetWarning": {},
+  "netflowSaved": "NetFlow-Konfiguration gespeichert.",
+  "@netflowSaved": {},
+  "netflowCacheStatsTitle": "Cache-Statistiken",
+  "@netflowCacheStatsTitle": {},
+  "netflowCacheFlow": "Flow",
+  "@netflowCacheFlow": {},
+  "netflowCacheInterface": "Interface",
+  "@netflowCacheInterface": {},
+  "netflowCachePackets": "Pakete",
+  "@netflowCachePackets": {},
+  "netflowCacheSrcIps": "Quellen",
+  "@netflowCacheSrcIps": {},
+  "netflowCacheDstIps": "Ziele",
+  "@netflowCacheDstIps": {},
+  "remove": "Entfernen",
+  "@remove": {},
+  "netflowListeningInterfacesHint": "Wählen Sie alle Interfaces aus, auf denen NetFlow aktiviert werden soll.",
+  "@netflowListeningInterfacesHint": {},
+  "netflowWanInterfacesHint": "Wählen Sie Interfaces für WAN-Verkehr aus, um NAT-Doppelzählung zu vermeiden.",
+  "@netflowWanInterfacesHint": {},
+  "netflowCaptureLocalHint": "NetFlow-Daten auf dieser Firewall für Insight sammeln. Der lokale Cache speichert nur die letzten 100 MB.",
+  "@netflowCaptureLocalHint": {},
+  "netflowDestinationsHint": "Ziele für NetFlow-Daten angeben (IP:Port, z. B. 192.168.0.1:2550).",
+  "@netflowDestinationsHint": {},
+  "netflowActiveTimeoutHint": "Lange Datenströme in kleinere Teile aufteilen.",
+  "@netflowActiveTimeoutHint": {},
+  "netflowInactiveTimeoutHint": "Inaktive Datenströme ablaufen lassen.",
+  "@netflowInactiveTimeoutHint": {},
+  "netflowAddDestination": "Ziel hinzufügen",
+  "@netflowAddDestination": {}
 }

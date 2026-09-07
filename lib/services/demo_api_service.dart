@@ -42,7 +42,16 @@ import '../models/openvpn_client_override.dart';
 import '../models/openvpn_client_override_search_response.dart';
 import '../models/openvpn_log_search_response.dart';
 import '../models/neighbor.dart';
+import '../models/netflow_cache_stat.dart';
+import '../models/netflow_config.dart';
+import '../models/netflow_status.dart';
+import '../models/insight_flow_detail.dart';
+import '../models/network_insight_direction_total.dart';
+import '../models/network_insight_timeserie.dart';
+import '../models/network_insight_top_addr.dart';
+import '../models/network_insight_top_port.dart';
 import 'demo_data_service.dart';
+import 'demo/demo_network_insight_data_generator.dart';
 import 'opnsense_api_service.dart';
 import 'demo/demo_api_decorator.dart';
 
@@ -50,6 +59,8 @@ import 'demo/demo_api_decorator.dart';
 class DemoApiService {
   final OPNsenseApiService _realApiService;
   final DemoDataService _demoDataService = DemoDataService();
+  final DemoNetworkInsightDataGenerator _insightGenerator =
+      DemoNetworkInsightDataGenerator();
   bool _isDemoMode = false;
 
   DemoApiService(this._realApiService);
@@ -1720,6 +1731,281 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
         },
         realAction: () => _realApiService.getFirmwareChangelog(version),
         delayMs: 300,
+      );
+
+  // ── Network Insight ─────────────────────────────────────────────────────────
+
+  Future<NetflowStatus> checkNetflowEnabled() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateNetflowStatus(),
+        realAction: () => _realApiService.checkNetflowEnabled(),
+        delayMs: 300,
+      );
+
+  Future<Map<String, String>> getInsightInterfaces() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateInterfaces(),
+        realAction: () => _realApiService.getInsightInterfaces(),
+        delayMs: 300,
+      );
+
+  Future<List<NetworkInsightSeries>> getInsightTimeseries({
+    required int startTs,
+    required int endTs,
+    required int resolution,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTimeseries(
+          startTs: startTs,
+          endTs: endTs,
+          resolution: resolution,
+        ),
+        realAction: () => _realApiService.getInsightTimeseries(
+          startTs: startTs,
+          endTs: endTs,
+          resolution: resolution,
+        ),
+        delayMs: 500,
+      );
+
+  Future<List<NetworkInsightTopPort>> getInsightTopPorts({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTopPorts(),
+        realAction: () => _realApiService.getInsightTopPorts(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        delayMs: 400,
+      );
+
+  Future<List<NetworkInsightTopAddr>> getInsightTopAddresses({
+    required String interface,
+    required int startTs,
+    required int endTs,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateTopAddresses(),
+        realAction: () => _realApiService.getInsightTopAddresses(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+        ),
+        delayMs: 400,
+      );
+
+  Future<Map<String, String>> reverseLookupAddresses(List<String> addresses) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        // In demo mode echo each address back unchanged (no real DNS).
+        demoAction: () async =>
+            {for (final a in addresses) a: a},
+        realAction: () => _realApiService.reverseLookupAddresses(addresses),
+        delayMs: 300,
+      );
+
+  Future<List<NetworkInsightDirectionTotal>> getInsightDirectionTotals({
+    required String interface,
+    required int startTs,
+    required int endTs,
+    required String measure,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => measure == 'packets'
+            ? _insightGenerator.generateDirectionPacketTotals()
+            : _insightGenerator.generateDirectionOctetTotals(),
+        realAction: () => _realApiService.getInsightDirectionTotals(
+          interface: interface,
+          startTs: startTs,
+          endTs: endTs,
+          measure: measure,
+        ),
+        delayMs: 400,
+      );
+
+  Future<List<InsightFlowDetail>> getInsightFlowDetails({
+    required int startTs,
+    required int endTs,
+    required String interface,
+    String? extraFilterField,
+    String? extraFilterValue,
+    String? dstPort,
+    String? dstAddr,
+    String? srcAddr,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => [
+          const InsightFlowDetail(
+            servicePort: '41127',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '162.196.24.123',
+            dstAddr: '192.168.1.100',
+            total: 170996949,
+            lastSeen: 1788777019,
+            lastSeenStr: '2026-09-07 13:30:19',
+            label: '41127 (tcp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '25872',
+            protocol: '17',
+            interface: 'pppoe1',
+            srcAddr: '208.77.22.27',
+            dstAddr: '192.168.1.100',
+            total: 117204231,
+            lastSeen: 1788777021,
+            lastSeenStr: '2026-09-07 13:30:21',
+            label: '25872 (udp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '6881',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '192.184.193.31',
+            dstAddr: '192.168.1.100',
+            total: 63944273,
+            lastSeen: 1788778168,
+            lastSeenStr: '2026-09-07 13:49:28',
+            label: '6881 (tcp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '42069',
+            protocol: '17',
+            interface: 'pppoe1',
+            srcAddr: '116.251.128.81',
+            dstAddr: '192.168.1.100',
+            total: 32093596,
+            lastSeen: 1788777495,
+            lastSeenStr: '2026-09-07 13:38:15',
+            label: '42069 (udp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '443',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '185.199.111.133',
+            dstAddr: '192.168.1.200',
+            total: 2135567,
+            lastSeen: 1788775201,
+            lastSeenStr: '2026-09-07 13:00:01',
+            label: 'https (tcp)',
+          ),
+          // "Other" sentinel row
+          const InsightFlowDetail(
+            servicePort: '',
+            protocol: '',
+            interface: '',
+            srcAddr: '',
+            dstAddr: '',
+            total: 57794173,
+            lastSeen: '',
+            lastSeenStr: '',
+            label: '',
+          ),
+        ],
+        realAction: () => _realApiService.getInsightFlowDetails(
+          startTs: startTs,
+          endTs: endTs,
+          interface: interface,
+          extraFilterField: extraFilterField,
+          extraFilterValue: extraFilterValue,
+          dstPort: dstPort,
+          dstAddr: dstAddr,
+          srcAddr: srcAddr,
+        ),
+        delayMs: 500,
+      );
+
+  Future<String> exportInsightData({
+    required String collection,
+    required int fromTs,
+    required int toTs,
+    required int resolution,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _insightGenerator.generateExportCsv(
+          collection: collection,
+          fromTs: fromTs,
+          toTs: toTs,
+          resolution: resolution,
+        ),
+        realAction: () => _realApiService.exportInsightData(
+          collection: collection,
+          fromTs: fromTs,
+          toTs: toTs,
+          resolution: resolution,
+        ),
+        delayMs: 600,
+      );
+
+  // ── NetFlow Config ────────────────────────────────────────────────────────
+
+  Future<NetflowConfig> getNetflowConfig() => DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => const NetflowConfig(
+          listeningInterfaceOptions: {'lan': 'LAN', 'wan': 'WAN', 'opt1': 'WAN2_MIFI'},
+          listeningInterfaces: ['lan', 'wan'],
+          wanInterfaceOptions: {'lan': 'LAN', 'wan': 'WAN', 'opt1': 'WAN2_MIFI'},
+          wanInterfaces: ['wan'],
+          versionOptions: {'v5': 'v5', 'v9': 'v9'},
+          version: 'v9',
+          targets: ['127.0.0.1:2056'],
+          captureLocal: false,
+          activeTimeout: '1800',
+          inactiveTimeout: '15',
+        ),
+        realAction: () => _realApiService.getNetflowConfig(),
+        delayMs: 400,
+      );
+
+  Future<void> saveNetflowConfig(NetflowConfig config) =>
+      DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.saveNetflowConfig(config),
+      );
+
+  Future<void> reconfigureNetflow() => DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.reconfigureNetflow(),
+        delayMs: 300,
+      );
+
+  Future<void> resetNetflowData() => DemoApiDecorator.execute<void>(
+        isDemoMode: _isDemoMode,
+        demoAction: () async {},
+        realAction: () => _realApiService.resetNetflowData(),
+        delayMs: 300,
+      );
+
+  Future<List<NetflowCacheStat>> getNetflowCacheStats() =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => [
+          NetflowCacheStat.fromEntry('netflow_vtnet1',
+              {'Pkts': 170626, 'if': 'vtnet1', 'SrcIPaddresses': 205, 'DstIPaddresses': 605}),
+          NetflowCacheStat.fromEntry('ksocket_netflow_vtnet1',
+              {'Pkts': 0, 'if': 'netflow_vtnet1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+          NetflowCacheStat.fromEntry('netflow_pppoe1',
+              {'Pkts': 0, 'if': 'pppoe1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+          NetflowCacheStat.fromEntry('ksocket_netflow_pppoe1',
+              {'Pkts': 0, 'if': 'netflow_pppoe1', 'SrcIPaddresses': 0, 'DstIPaddresses': 0}),
+        ],
+        realAction: () => _realApiService.getNetflowCacheStats(),
+        delayMs: 400,
       );
 
   /// Clear service state

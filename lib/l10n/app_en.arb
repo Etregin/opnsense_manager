@@ -276,11 +276,11 @@
   "@cancel": {},
   "checkForUpdates": "Check for Updates",
   "@checkForUpdates": {},
-  "checkingForUpdates": "Checking for updates\u2026",
+  "checkingForUpdates": "Checking for updates…",
   "@checkingForUpdates": {},
   "installUpdate": "Install Update",
   "@installUpdate": {},
-  "installingUpdate": "Installing update\u2026",
+  "installingUpdate": "Installing update…",
   "@installingUpdate": {},
   "updateComplete": "Update installed successfully",
   "@updateComplete": {},
@@ -1007,7 +1007,9 @@
   "failedToSwitchProfile": "Failed to switch profile: {error}",
   "@failedToSwitchProfile": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "failedToBlockHost": "Failed to block host",
@@ -1638,6 +1640,121 @@
   "@live": {},
   "liveNetworkMonitor": "Live Network Monitor",
   "@liveNetworkMonitor": {},
+  "networkInsight": "Insights",
+  "@networkInsight": {},
+  "reporting": "Reporting",
+  "@reporting": {},
+  "netflowNotEnabled": "Local data collection is not enabled at the moment, please configure NetFlow first.",
+  "@netflowNotEnabled": {},
+  "interfaceTotalsBitsPerSec": "Interface Totals (bits/sec)",
+  "@interfaceTotalsBitsPerSec": {},
+  "showLoopback": "Show Loopback",
+  "@showLoopback": {},
+  "protocolsBreakdown": "Protocols",
+  "@protocolsBreakdown": {},
+  "sourceAddressBreakdown": "Source Addresses",
+  "@sourceAddressBreakdown": {},
+  "reverseLookup": "Reverse Lookup",
+  "@reverseLookup": {},
+  "other": "Other",
+  "@other": {},
+  "timeRangeFrom": "From",
+  "@timeRangeFrom": {},
+  "timeRangeTo": "To",
+  "@timeRangeTo": {},
+  "resolutionLabel": "Resolution",
+  "@resolutionLabel": {},
+  "resolution30s": "30 seconds",
+  "@resolution30s": {},
+  "resolution5min": "5 minutes",
+  "@resolution5min": {},
+  "resolution1hr": "1 hour",
+  "@resolution1hr": {},
+  "resolution24hr": "24 hours",
+  "@resolution24hr": {},
+  "perInterfaceBreakdown": "Per-Interface Breakdown",
+  "@perInterfaceBreakdown": {},
+  "totalBytesIn": "Total Bytes In",
+  "@totalBytesIn": {},
+  "totalBytesOut": "Total Bytes Out",
+  "@totalBytesOut": {},
+  "totalPacketsIn": "Total Packets In",
+  "@totalPacketsIn": {},
+  "totalPacketsOut": "Total Packets Out",
+  "@totalPacketsOut": {},
+  "checkingNetflowStatus": "Checking NetFlow status...",
+  "@checkingNetflowStatus": {},
+  "timePresetLabel": "{window}, {avgInterval} average",
+  "@timePresetLabel": {
+    "placeholders": {
+      "window": { "type": "String" },
+      "avgInterval": { "type": "String" }
+    }
+  },
+  "durationHours": "{count} {count, plural, =1{Hour} other{Hours}}",
+  "@durationHours": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationDays": "{count} {count, plural, =1{Day} other{Days}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationLastYear": "Last Year",
+  "@durationLastYear": {},
+  "goToNetflowConfig": "Go to NetFlow Configuration",
+  "@goToNetflowConfig": {},
+  "tabTotals": "Totals",
+  "@tabTotals": {},
+  "tabDetails": "Details",
+  "@tabDetails": {},
+  "tabExport": "Export",
+  "@tabExport": {},
+  "collection": "Collection",
+  "@collection": {},
+  "resolutionSeconds": "Resolution (seconds)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (1 day)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "Export NetFlow CSV",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "NetFlow CSV exported successfully",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "Failed to export NetFlow CSV: {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFrom": "Date From",
+  "@dateFrom": {},
+  "dateTo": "Date To",
+  "@dateTo": {},
+  "dstPort": "Destination Port",
+  "@dstPort": {},
+  "dstAddress": "Destination Address",
+  "@dstAddress": {},
+  "srcAddress": "Source Address",
+  "@srcAddress": {},
+  "serviceColumn": "Service",
+  "@serviceColumn": {},
+  "sourceColumn": "Source",
+  "@sourceColumn": {},
+  "destinationColumn": "Destination",
+  "@destinationColumn": {},
+  "bytesColumn": "Bytes",
+  "@bytesColumn": {},
+  "lastSeenColumn": "Last Seen",
+  "@lastSeenColumn": {},
+  "percentColumn": "%",
+  "@percentColumn": {},
+  "total": "Total",
+  "@total": {},
   "neighborDiscovery": "Neighbor Discovery",
   "@neighborDiscovery": {},
   "loading": "Loading...",
@@ -3248,13 +3365,17 @@
   "interfaceNet": "{name} net",
   "@interfaceNet": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "interfaceAddress": "{name} address",
   "@interfaceAddress": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "sortOrderLabel": "Sort Order",
@@ -3278,7 +3399,9 @@
   "errorSavingAlias": "Error saving alias: {error}",
   "@errorSavingAlias": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "aliasNameLabel": "Name",
@@ -3354,13 +3477,71 @@
   "aliasContentEntries": "Content ({count})",
   "@aliasContentEntries": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aliasRuntimeEntries": "{count} active entries (runtime)",
   "@aliasRuntimeEntries": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "netflowConfig": "NetFlow",
+  "@netflowConfig": {},
+  "netflowCaptureTab": "Capture",
+  "@netflowCaptureTab": {},
+  "netflowCacheTab": "Cache",
+  "@netflowCacheTab": {},
+  "netflowListeningInterfaces": "Listening Interfaces",
+  "@netflowListeningInterfaces": {},
+  "netflowWanInterfaces": "WAN Interfaces",
+  "@netflowWanInterfaces": {},
+  "netflowVersion": "Version",
+  "@netflowVersion": {},
+  "netflowDestinations": "Destinations",
+  "@netflowDestinations": {},
+  "netflowCaptureLocal": "Capture Local",
+  "@netflowCaptureLocal": {},
+  "netflowActiveTimeout": "Active Timeout",
+  "@netflowActiveTimeout": {},
+  "netflowInactiveTimeout": "Inactive Timeout",
+  "@netflowInactiveTimeout": {},
+  "netflowResetData": "Reset NetFlow Data",
+  "@netflowResetData": {},
+  "netflowResetWarning": "Do you really want to reset the NetFlow data? This will erase all Insight graph data.",
+  "@netflowResetWarning": {},
+  "netflowSaved": "NetFlow configuration saved.",
+  "@netflowSaved": {},
+  "netflowCacheStatsTitle": "Cache Statistics",
+  "@netflowCacheStatsTitle": {},
+  "netflowCacheFlow": "Flow",
+  "@netflowCacheFlow": {},
+  "netflowCacheInterface": "Interface",
+  "@netflowCacheInterface": {},
+  "netflowCachePackets": "Pkts",
+  "@netflowCachePackets": {},
+  "netflowCacheSrcIps": "Sources",
+  "@netflowCacheSrcIps": {},
+  "netflowCacheDstIps": "Destinations",
+  "@netflowCacheDstIps": {},
+  "remove": "Remove",
+  "@remove": {},
+  "netflowListeningInterfacesHint": "Select all the interfaces to enable NetFlow on.",
+  "@netflowListeningInterfacesHint": {},
+  "netflowWanInterfacesHint": "Select interfaces used for WAN traffic to avoid counting NAT traffic twice.",
+  "@netflowWanInterfacesHint": {},
+  "netflowCaptureLocalHint": "Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.",
+  "@netflowCaptureLocalHint": {},
+  "netflowDestinationsHint": "Select destinations to send NetFlow data to (ip address:port, e.g. 192.168.0.1:2550).",
+  "@netflowDestinationsHint": {},
+  "netflowActiveTimeoutHint": "Split long running flows into smaller parts.",
+  "@netflowActiveTimeoutHint": {},
+  "netflowInactiveTimeoutHint": "Expire idle flows.",
+  "@netflowInactiveTimeoutHint": {},
+  "netflowAddDestination": "Add Destination",
+  "@netflowAddDestination": {}
 }

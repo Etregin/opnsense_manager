@@ -1838,6 +1838,171 @@ class AppLocalizationsAr extends AppLocalizations {
   String get liveNetworkMonitor => 'مراقب الشبكة المباشر';
 
   @override
+  String get networkInsight => 'نظرة ثاقبة على الشبكة';
+
+  @override
+  String get reporting => 'التقارير';
+
+  @override
+  String get netflowNotEnabled =>
+      'جمع البيانات المحلية غير مفعّل حاليًا، يرجى ضبط إعدادات NetFlow أولًا.';
+
+  @override
+  String get interfaceTotalsBitsPerSec => 'إجماليات الواجهة (بت/ثانية)';
+
+  @override
+  String get showLoopback => 'إظهار الاسترجاع';
+
+  @override
+  String get protocolsBreakdown => 'البروتوكولات';
+
+  @override
+  String get sourceAddressBreakdown => 'عناوين المصدر';
+
+  @override
+  String get reverseLookup => 'البحث العكسي';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String get timeRangeFrom => 'من';
+
+  @override
+  String get timeRangeTo => 'إلى';
+
+  @override
+  String get resolutionLabel => 'الدقة';
+
+  @override
+  String get resolution30s => '30 ثانية';
+
+  @override
+  String get resolution5min => '5 دقائق';
+
+  @override
+  String get resolution1hr => 'ساعة واحدة';
+
+  @override
+  String get resolution24hr => '24 ساعة';
+
+  @override
+  String get perInterfaceBreakdown => 'تفصيل لكل واجهة';
+
+  @override
+  String get totalBytesIn => 'إجمالي البايت الواردة';
+
+  @override
+  String get totalBytesOut => 'إجمالي البايت الصادرة';
+
+  @override
+  String get totalPacketsIn => 'إجمالي الحزم الواردة';
+
+  @override
+  String get totalPacketsOut => 'إجمالي الحزم الصادرة';
+
+  @override
+  String get checkingNetflowStatus => 'جارٍ التحقق من حالة NetFlow...';
+
+  @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window، متوسط $avgInterval';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ساعات',
+      one: 'ساعة',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أيام',
+      one: 'يوم',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'السنة الماضية';
+
+  @override
+  String get goToNetflowConfig => 'الانتقال إلى إعدادات NetFlow';
+
+  @override
+  String get tabTotals => 'الإجماليات';
+
+  @override
+  String get tabDetails => 'التفاصيل';
+
+  @override
+  String get tabExport => 'تصدير';
+
+  @override
+  String get collection => 'المجموعة';
+
+  @override
+  String get resolutionSeconds => 'الدقة (بالثواني)';
+
+  @override
+  String get resolution86400 => '86400 (يوم واحد)';
+
+  @override
+  String get exportNetflowCsv => 'تصدير NetFlow بتنسيق CSV';
+
+  @override
+  String get netflowExportSuccess => 'تم تصدير ملف NetFlow CSV بنجاح';
+
+  @override
+  String netflowExportFailed(String error) {
+    return 'فشل تصدير ملف NetFlow CSV: $error';
+  }
+
+  @override
+  String get dateFrom => 'التاريخ من';
+
+  @override
+  String get dateTo => 'التاريخ إلى';
+
+  @override
+  String get dstPort => 'المنفذ الوجهة';
+
+  @override
+  String get dstAddress => 'عنوان الوجهة';
+
+  @override
+  String get srcAddress => 'عنوان المصدر';
+
+  @override
+  String get serviceColumn => 'الخدمة';
+
+  @override
+  String get sourceColumn => 'المصدر';
+
+  @override
+  String get destinationColumn => 'الوجهة';
+
+  @override
+  String get bytesColumn => 'البايتات';
+
+  @override
+  String get lastSeenColumn => 'آخر ظهور';
+
+  @override
+  String get percentColumn => '%';
+
+  @override
+  String get total => 'الإجمالي';
+
+  @override
   String get neighborDiscovery => 'اكتشاف الأجهزة المجاورة';
 
   @override
@@ -4017,4 +4182,91 @@ class AppLocalizationsAr extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count إدخالات نشطة (وقت التشغيل)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'التقاط';
+
+  @override
+  String get netflowCacheTab => 'ذاكرة التخزين المؤقت';
+
+  @override
+  String get netflowListeningInterfaces => 'واجهات الاستماع';
+
+  @override
+  String get netflowWanInterfaces => 'واجهات WAN';
+
+  @override
+  String get netflowVersion => 'الإصدار';
+
+  @override
+  String get netflowDestinations => 'الوجهات';
+
+  @override
+  String get netflowCaptureLocal => 'التقاط محلي';
+
+  @override
+  String get netflowActiveTimeout => 'مهلة التدفق النشط';
+
+  @override
+  String get netflowInactiveTimeout => 'مهلة التدفق غير النشط';
+
+  @override
+  String get netflowResetData => 'إعادة تعيين بيانات NetFlow';
+
+  @override
+  String get netflowResetWarning =>
+      'هل تريد حقًا إعادة تعيين بيانات NetFlow؟ سيؤدي ذلك إلى مسح جميع بيانات رسوم بيانية Insight.';
+
+  @override
+  String get netflowSaved => 'تم حفظ إعدادات NetFlow.';
+
+  @override
+  String get netflowCacheStatsTitle => 'إحصائيات ذاكرة التخزين المؤقت';
+
+  @override
+  String get netflowCacheFlow => 'التدفق';
+
+  @override
+  String get netflowCacheInterface => 'الواجهة';
+
+  @override
+  String get netflowCachePackets => 'الحزم';
+
+  @override
+  String get netflowCacheSrcIps => 'المصادر';
+
+  @override
+  String get netflowCacheDstIps => 'الوجهات';
+
+  @override
+  String get remove => 'إزالة';
+
+  @override
+  String get netflowListeningInterfacesHint =>
+      'حدد جميع الواجهات لتفعيل NetFlow عليها.';
+
+  @override
+  String get netflowWanInterfacesHint =>
+      'حدد الواجهات المستخدمة لحركة مرور WAN لتجنب احتساب حركة NAT مرتين.';
+
+  @override
+  String get netflowCaptureLocalHint =>
+      'جمع بيانات NetFlow على هذا الجدار الناري لاستخدامها مع Insight. يحتفظ الذاكرة المحلية بآخر 100 ميغابايت فقط.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'حدد وجهات إرسال بيانات NetFlow إليها (عنوان IP:منفذ، مثلاً 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'تقسيم التدفقات طويلة المدى إلى أجزاء أصغر.';
+
+  @override
+  String get netflowInactiveTimeoutHint => 'انتهاء صلاحية التدفقات الخاملة.';
+
+  @override
+  String get netflowAddDestination => 'إضافة وجهة';
 }

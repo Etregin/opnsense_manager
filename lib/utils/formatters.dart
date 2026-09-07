@@ -51,6 +51,21 @@ class Formatters {
   static String formatBytesPerSecond(int bytesPerSecond, {int decimals = 2}) {
     return '${formatBytes(bytesPerSecond, decimals: decimals)}${StringConstants.unitPerSec}';
   }
+
+  /// Format bits per second (bps) to human-readable format.
+  ///
+  /// Used for Network Insight charts where the API returns bps values directly.
+  static String formatBitsPerSecond(double bps, {int decimals = 1}) {
+    if (bps <= 0) return '0 bps';
+    const suffixes = ['bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps'];
+    var i = 0;
+    var value = bps;
+    while (value >= 1000 && i < suffixes.length - 1) {
+      value /= 1000;
+      i++;
+    }
+    return '${value.toStringAsFixed(decimals)} ${suffixes[i]}';
+  }
   
   /// Format uptime in seconds to human-readable format
   static String formatUptime(int seconds, BuildContext context) {

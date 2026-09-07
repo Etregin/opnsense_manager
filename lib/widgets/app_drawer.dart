@@ -45,6 +45,7 @@ import 'drawer/expansion_navigation_tile.dart';
 import 'drawer/navigation_tile.dart';
 import 'drawer/firewall_navigation_section.dart';
 import 'drawer/network_navigation_section.dart';
+import 'drawer/reporting_navigation_section.dart';
 import 'drawer/vpn_navigation_section.dart';
 import 'common/confirmation_dialog.dart';
 
@@ -69,6 +70,7 @@ class _AppDrawerState extends State<AppDrawer> {
   bool _firewallExpanded = false;
   bool _vpnExpanded = false;
   bool _systemLogsExpanded = false;
+  bool _reportingExpanded = false;
 
   /// Internally fetched system info, used when the caller does not supply one.
   SystemInfo? _internalSystemInfo;
@@ -87,6 +89,8 @@ class _AppDrawerState extends State<AppDrawer> {
                    NavigationService.isRouteInSection(widget.currentRoute, Routes.openvpnPrefix) ||
                    NavigationService.isRouteInSection(widget.currentRoute, Routes.tailscalePrefix);
     _systemLogsExpanded = NavigationService.isRouteInSection(widget.currentRoute, Routes.systemLogPrefix);
+    _reportingExpanded = NavigationService.isRouteInSection(widget.currentRoute, Routes.reportingPrefix) ||
+                         widget.currentRoute == Routes.liveNetworkMonitor;
   }
 
   @override
@@ -150,8 +154,19 @@ class _AppDrawerState extends State<AppDrawer> {
           NetworkNavigationSection(
             currentRoute: widget.currentRoute,
           ),
-          
-          // 4. Firewall navigation section
+
+          // 4. Reporting navigation section (Live Network Monitor + Network Insight)
+          ReportingNavigationSection(
+            currentRoute: widget.currentRoute,
+            isExpanded: _reportingExpanded,
+            onExpansionChanged: (expanded) {
+              setState(() {
+                _reportingExpanded = expanded;
+              });
+            },
+          ),
+
+          // 5. Firewall navigation section
           FirewallNavigationSection(
             currentRoute: widget.currentRoute,
             isExpanded: _firewallExpanded,
@@ -162,7 +177,7 @@ class _AppDrawerState extends State<AppDrawer> {
             },
           ),
           
-          // 4. VPN navigation section
+          // 6. VPN navigation section
           VPNNavigationSection(
             currentRoute: widget.currentRoute,
             isExpanded: _vpnExpanded,

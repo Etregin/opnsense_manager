@@ -283,12 +283,11 @@
   "@cancel": {},
   "checkForUpdates": "Vérifier les mises à jour",
   "@checkForUpdates": {},
-  "checkingForUpdates": "Vérification des mises à jour\u2026",
+  "checkingForUpdates": "Vérification des mises à jour…",
   "@checkingForUpdates": {},
-
   "installUpdate": "Installer la mise à jour",
   "@installUpdate": {},
-  "installingUpdate": "Installation en cours\u2026",
+  "installingUpdate": "Installation en cours…",
   "@installingUpdate": {},
   "updateComplete": "Mise à jour installée avec succès",
   "@updateComplete": {},
@@ -1030,7 +1029,9 @@
   "failedToSwitchProfile": "Échec du changement de profil : {error}",
   "@failedToSwitchProfile": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "failedToBlockHost": "Échec du blocage de l'hôte",
@@ -3154,8 +3155,7 @@
   "rawTimestamp": "Horodatage brut",
   "@rawTimestamp": {
     "description": "Label for raw timestamp row in log detail"
-  }
-,
+  },
   "organisationSection": "Organisation",
   "@organisationSection": {},
   "interfaceSection": "Interface",
@@ -3303,13 +3303,17 @@
   "interfaceNet": "{name} net",
   "@interfaceNet": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "interfaceAddress": "{name} address",
   "@interfaceAddress": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "sortOrderLabel": "Sort Order",
@@ -3333,7 +3337,9 @@
   "errorSavingAlias": "Error saving alias: {error}",
   "@errorSavingAlias": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "aliasNameLabel": "Name",
@@ -3409,13 +3415,186 @@
   "aliasContentEntries": "Contenu ({count})",
   "@aliasContentEntries": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aliasRuntimeEntries": "{count} entrées actives (runtime)",
   "@aliasRuntimeEntries": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "networkInsight": "Analyse réseau",
+  "@networkInsight": {},
+  "reporting": "Rapports",
+  "@reporting": {},
+  "netflowNotEnabled": "La collecte de données locale n'est pas activée pour le moment. Veuillez d'abord configurer NetFlow.",
+  "@netflowNotEnabled": {},
+  "interfaceTotalsBitsPerSec": "Totaux d'interface (bits/s)",
+  "@interfaceTotalsBitsPerSec": {},
+  "showLoopback": "Afficher le loopback",
+  "@showLoopback": {},
+  "protocolsBreakdown": "Protocoles",
+  "@protocolsBreakdown": {},
+  "sourceAddressBreakdown": "Adresses sources",
+  "@sourceAddressBreakdown": {},
+  "reverseLookup": "Résolution inverse",
+  "@reverseLookup": {},
+  "other": "Autres",
+  "@other": {},
+  "timeRangeFrom": "De",
+  "@timeRangeFrom": {},
+  "timeRangeTo": "À",
+  "@timeRangeTo": {},
+  "resolutionLabel": "Résolution",
+  "@resolutionLabel": {},
+  "resolution30s": "30 secondes",
+  "@resolution30s": {},
+  "resolution5min": "5 minutes",
+  "@resolution5min": {},
+  "resolution1hr": "1 heure",
+  "@resolution1hr": {},
+  "resolution24hr": "24 heures",
+  "@resolution24hr": {},
+  "perInterfaceBreakdown": "Détail par interface",
+  "@perInterfaceBreakdown": {},
+  "totalBytesIn": "Total octets entrants",
+  "@totalBytesIn": {},
+  "totalBytesOut": "Total octets sortants",
+  "@totalBytesOut": {},
+  "totalPacketsIn": "Total paquets entrants",
+  "@totalPacketsIn": {},
+  "totalPacketsOut": "Total paquets sortants",
+  "@totalPacketsOut": {},
+  "checkingNetflowStatus": "Vérification du statut NetFlow...",
+  "@checkingNetflowStatus": {},
+  "timePresetLabel": "{window}, moyenne {avgInterval}",
+  "@timePresetLabel": {
+    "placeholders": {
+      "window": { "type": "String" },
+      "avgInterval": { "type": "String" }
+    }
+  },
+  "durationHours": "{count} {count, plural, =1{heure} other{heures}}",
+  "@durationHours": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationDays": "{count} {count, plural, =1{jour} other{jours}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationLastYear": "Dernière année",
+  "@durationLastYear": {},
+  "goToNetflowConfig": "Aller à la configuration NetFlow",
+  "@goToNetflowConfig": {},
+  "tabTotals": "Totaux",
+  "@tabTotals": {},
+  "tabDetails": "Détails",
+  "@tabDetails": {},
+  "tabExport": "Exporter",
+  "@tabExport": {},
+  "collection": "Collection",
+  "@collection": {},
+  "resolutionSeconds": "Résolution (secondes)",
+  "@resolutionSeconds": {},
+  "resolution86400": "86400 (1 jour)",
+  "@resolution86400": {},
+  "exportNetflowCsv": "Exporter le CSV NetFlow",
+  "@exportNetflowCsv": {},
+  "netflowExportSuccess": "CSV NetFlow exporté avec succès",
+  "@netflowExportSuccess": {},
+  "netflowExportFailed": "Échec de l'exportation du CSV NetFlow : {error}",
+  "@netflowExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFrom": "Date de début",
+  "@dateFrom": {},
+  "dateTo": "Date de fin",
+  "@dateTo": {},
+  "dstPort": "Port de destination",
+  "@dstPort": {},
+  "dstAddress": "Adresse de destination",
+  "@dstAddress": {},
+  "srcAddress": "Adresse source",
+  "@srcAddress": {},
+  "serviceColumn": "Service",
+  "@serviceColumn": {},
+  "sourceColumn": "Source",
+  "@sourceColumn": {},
+  "destinationColumn": "Destination",
+  "@destinationColumn": {},
+  "bytesColumn": "Octets",
+  "@bytesColumn": {},
+  "lastSeenColumn": "Dernière vue",
+  "@lastSeenColumn": {},
+  "percentColumn": "%",
+  "@percentColumn": {},
+  "total": "Total",
+  "@total": {},
+  "netflowConfig": "NetFlow",
+  "@netflowConfig": {},
+  "netflowCaptureTab": "Capture",
+  "@netflowCaptureTab": {},
+  "netflowCacheTab": "Cache",
+  "@netflowCacheTab": {},
+  "netflowListeningInterfaces": "Interfaces d'écoute",
+  "@netflowListeningInterfaces": {},
+  "netflowWanInterfaces": "Interfaces WAN",
+  "@netflowWanInterfaces": {},
+  "netflowVersion": "Version",
+  "@netflowVersion": {},
+  "netflowDestinations": "Destinations",
+  "@netflowDestinations": {},
+  "netflowCaptureLocal": "Capture locale",
+  "@netflowCaptureLocal": {},
+  "netflowActiveTimeout": "Délai d'expiration actif",
+  "@netflowActiveTimeout": {},
+  "netflowInactiveTimeout": "Délai d'expiration inactif",
+  "@netflowInactiveTimeout": {},
+  "netflowResetData": "Réinitialiser les données NetFlow",
+  "@netflowResetData": {},
+  "netflowResetWarning": "Voulez-vous vraiment réinitialiser les données NetFlow ? Cela effacera toutes les données des graphiques Insight.",
+  "@netflowResetWarning": {},
+  "netflowSaved": "Configuration NetFlow enregistrée.",
+  "@netflowSaved": {},
+  "netflowCacheStatsTitle": "Statistiques du cache",
+  "@netflowCacheStatsTitle": {},
+  "netflowCacheFlow": "Flux",
+  "@netflowCacheFlow": {},
+  "netflowCacheInterface": "Interface",
+  "@netflowCacheInterface": {},
+  "netflowCachePackets": "Paquets",
+  "@netflowCachePackets": {},
+  "netflowCacheSrcIps": "Sources",
+  "@netflowCacheSrcIps": {},
+  "netflowCacheDstIps": "Destinations",
+  "@netflowCacheDstIps": {},
+  "remove": "Supprimer",
+  "@remove": {},
+  "netflowListeningInterfacesHint": "Sélectionnez toutes les interfaces sur lesquelles activer NetFlow.",
+  "@netflowListeningInterfacesHint": {},
+  "netflowWanInterfacesHint": "Sélectionnez les interfaces utilisées pour le trafic WAN pour éviter de compter le trafic NAT deux fois.",
+  "@netflowWanInterfacesHint": {},
+  "netflowCaptureLocalHint": "Collectez les données NetFlow sur ce pare-feu pour Insight. Le cache local ne conserve que les 100 derniers Mo.",
+  "@netflowCaptureLocalHint": {},
+  "netflowDestinationsHint": "Sélectionnez les destinations d'envoi des données NetFlow (adresse IP:port, ex. 192.168.0.1:2550).",
+  "@netflowDestinationsHint": {},
+  "netflowActiveTimeoutHint": "Diviser les flux de longue durée en parties plus petites.",
+  "@netflowActiveTimeoutHint": {},
+  "netflowInactiveTimeoutHint": "Expirer les flux inactifs.",
+  "@netflowInactiveTimeoutHint": {},
+  "netflowAddDestination": "Ajouter une destination",
+  "@netflowAddDestination": {}
 }

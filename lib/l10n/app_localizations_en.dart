@@ -1847,6 +1847,171 @@ class AppLocalizationsEn extends AppLocalizations {
   String get liveNetworkMonitor => 'Live Network Monitor';
 
   @override
+  String get networkInsight => 'Insights';
+
+  @override
+  String get reporting => 'Reporting';
+
+  @override
+  String get netflowNotEnabled =>
+      'Local data collection is not enabled at the moment, please configure NetFlow first.';
+
+  @override
+  String get interfaceTotalsBitsPerSec => 'Interface Totals (bits/sec)';
+
+  @override
+  String get showLoopback => 'Show Loopback';
+
+  @override
+  String get protocolsBreakdown => 'Protocols';
+
+  @override
+  String get sourceAddressBreakdown => 'Source Addresses';
+
+  @override
+  String get reverseLookup => 'Reverse Lookup';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get timeRangeFrom => 'From';
+
+  @override
+  String get timeRangeTo => 'To';
+
+  @override
+  String get resolutionLabel => 'Resolution';
+
+  @override
+  String get resolution30s => '30 seconds';
+
+  @override
+  String get resolution5min => '5 minutes';
+
+  @override
+  String get resolution1hr => '1 hour';
+
+  @override
+  String get resolution24hr => '24 hours';
+
+  @override
+  String get perInterfaceBreakdown => 'Per-Interface Breakdown';
+
+  @override
+  String get totalBytesIn => 'Total Bytes In';
+
+  @override
+  String get totalBytesOut => 'Total Bytes Out';
+
+  @override
+  String get totalPacketsIn => 'Total Packets In';
+
+  @override
+  String get totalPacketsOut => 'Total Packets Out';
+
+  @override
+  String get checkingNetflowStatus => 'Checking NetFlow status...';
+
+  @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window, $avgInterval average';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Hours',
+      one: 'Hour',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Days',
+      one: 'Day',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'Last Year';
+
+  @override
+  String get goToNetflowConfig => 'Go to NetFlow Configuration';
+
+  @override
+  String get tabTotals => 'Totals';
+
+  @override
+  String get tabDetails => 'Details';
+
+  @override
+  String get tabExport => 'Export';
+
+  @override
+  String get collection => 'Collection';
+
+  @override
+  String get resolutionSeconds => 'Resolution (seconds)';
+
+  @override
+  String get resolution86400 => '86400 (1 day)';
+
+  @override
+  String get exportNetflowCsv => 'Export NetFlow CSV';
+
+  @override
+  String get netflowExportSuccess => 'NetFlow CSV exported successfully';
+
+  @override
+  String netflowExportFailed(String error) {
+    return 'Failed to export NetFlow CSV: $error';
+  }
+
+  @override
+  String get dateFrom => 'Date From';
+
+  @override
+  String get dateTo => 'Date To';
+
+  @override
+  String get dstPort => 'Destination Port';
+
+  @override
+  String get dstAddress => 'Destination Address';
+
+  @override
+  String get srcAddress => 'Source Address';
+
+  @override
+  String get serviceColumn => 'Service';
+
+  @override
+  String get sourceColumn => 'Source';
+
+  @override
+  String get destinationColumn => 'Destination';
+
+  @override
+  String get bytesColumn => 'Bytes';
+
+  @override
+  String get lastSeenColumn => 'Last Seen';
+
+  @override
+  String get percentColumn => '%';
+
+  @override
+  String get total => 'Total';
+
+  @override
   String get neighborDiscovery => 'Neighbor Discovery';
 
   @override
@@ -4031,4 +4196,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count active entries (runtime)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'Capture';
+
+  @override
+  String get netflowCacheTab => 'Cache';
+
+  @override
+  String get netflowListeningInterfaces => 'Listening Interfaces';
+
+  @override
+  String get netflowWanInterfaces => 'WAN Interfaces';
+
+  @override
+  String get netflowVersion => 'Version';
+
+  @override
+  String get netflowDestinations => 'Destinations';
+
+  @override
+  String get netflowCaptureLocal => 'Capture Local';
+
+  @override
+  String get netflowActiveTimeout => 'Active Timeout';
+
+  @override
+  String get netflowInactiveTimeout => 'Inactive Timeout';
+
+  @override
+  String get netflowResetData => 'Reset NetFlow Data';
+
+  @override
+  String get netflowResetWarning =>
+      'Do you really want to reset the NetFlow data? This will erase all Insight graph data.';
+
+  @override
+  String get netflowSaved => 'NetFlow configuration saved.';
+
+  @override
+  String get netflowCacheStatsTitle => 'Cache Statistics';
+
+  @override
+  String get netflowCacheFlow => 'Flow';
+
+  @override
+  String get netflowCacheInterface => 'Interface';
+
+  @override
+  String get netflowCachePackets => 'Pkts';
+
+  @override
+  String get netflowCacheSrcIps => 'Sources';
+
+  @override
+  String get netflowCacheDstIps => 'Destinations';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get netflowListeningInterfacesHint =>
+      'Select all the interfaces to enable NetFlow on.';
+
+  @override
+  String get netflowWanInterfacesHint =>
+      'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.';
+
+  @override
+  String get netflowCaptureLocalHint =>
+      'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'Select destinations to send NetFlow data to (ip address:port, e.g. 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'Split long running flows into smaller parts.';
+
+  @override
+  String get netflowInactiveTimeoutHint => 'Expire idle flows.';
+
+  @override
+  String get netflowAddDestination => 'Add Destination';
 }

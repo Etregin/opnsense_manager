@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../constants/routes.dart';
 import '../../l10n/app_localizations.dart';
-import '../../screens/live_network_monitor_screen.dart';
 import '../../screens/dhcp_leases_screen.dart';
 import '../../screens/neighbor_discovery_screen.dart';
 import '../../screens/wol_screen.dart';
@@ -80,13 +79,6 @@ class _NetworkNavigationSectionState extends State<NetworkNavigationSection> {
 
     return Column(
       children: [
-        NavigationTile(
-          icon: Icons.network_check,
-          title: l10n.liveNetworkMonitor,
-          currentRoute: widget.currentRoute,
-          targetRoute: Routes.liveNetworkMonitor,
-          destination: const LiveNetworkMonitorScreen(),
-        ),
         NavigationTile(
           icon: Icons.dns,
           title: l10n.dhcpLeases,

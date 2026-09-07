@@ -3338,6 +3338,294 @@ abstract class AppLocalizations {
   /// **'Live Network Monitor'**
   String get liveNetworkMonitor;
 
+  /// No description provided for @networkInsight.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get networkInsight;
+
+  /// No description provided for @reporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting'**
+  String get reporting;
+
+  /// No description provided for @netflowNotEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Local data collection is not enabled at the moment, please configure NetFlow first.'**
+  String get netflowNotEnabled;
+
+  /// No description provided for @interfaceTotalsBitsPerSec.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface Totals (bits/sec)'**
+  String get interfaceTotalsBitsPerSec;
+
+  /// No description provided for @showLoopback.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Loopback'**
+  String get showLoopback;
+
+  /// No description provided for @protocolsBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocols'**
+  String get protocolsBreakdown;
+
+  /// No description provided for @sourceAddressBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Addresses'**
+  String get sourceAddressBreakdown;
+
+  /// No description provided for @reverseLookup.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse Lookup'**
+  String get reverseLookup;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @timeRangeFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get timeRangeFrom;
+
+  /// No description provided for @timeRangeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get timeRangeTo;
+
+  /// No description provided for @resolutionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolution'**
+  String get resolutionLabel;
+
+  /// No description provided for @resolution30s.
+  ///
+  /// In en, this message translates to:
+  /// **'30 seconds'**
+  String get resolution30s;
+
+  /// No description provided for @resolution5min.
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get resolution5min;
+
+  /// No description provided for @resolution1hr.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get resolution1hr;
+
+  /// No description provided for @resolution24hr.
+  ///
+  /// In en, this message translates to:
+  /// **'24 hours'**
+  String get resolution24hr;
+
+  /// No description provided for @perInterfaceBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-Interface Breakdown'**
+  String get perInterfaceBreakdown;
+
+  /// No description provided for @totalBytesIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Bytes In'**
+  String get totalBytesIn;
+
+  /// No description provided for @totalBytesOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Bytes Out'**
+  String get totalBytesOut;
+
+  /// No description provided for @totalPacketsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Packets In'**
+  String get totalPacketsIn;
+
+  /// No description provided for @totalPacketsOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Packets Out'**
+  String get totalPacketsOut;
+
+  /// No description provided for @checkingNetflowStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking NetFlow status...'**
+  String get checkingNetflowStatus;
+
+  /// No description provided for @timePresetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{window}, {avgInterval} average'**
+  String timePresetLabel(String window, String avgInterval);
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{Hour} other{Hours}}'**
+  String durationHours(int count);
+
+  /// No description provided for @durationDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{Day} other{Days}}'**
+  String durationDays(int count);
+
+  /// No description provided for @durationLastYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Year'**
+  String get durationLastYear;
+
+  /// No description provided for @goToNetflowConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to NetFlow Configuration'**
+  String get goToNetflowConfig;
+
+  /// No description provided for @tabTotals.
+  ///
+  /// In en, this message translates to:
+  /// **'Totals'**
+  String get tabTotals;
+
+  /// No description provided for @tabDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get tabDetails;
+
+  /// No description provided for @tabExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get tabExport;
+
+  /// No description provided for @collection.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection'**
+  String get collection;
+
+  /// No description provided for @resolutionSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolution (seconds)'**
+  String get resolutionSeconds;
+
+  /// No description provided for @resolution86400.
+  ///
+  /// In en, this message translates to:
+  /// **'86400 (1 day)'**
+  String get resolution86400;
+
+  /// No description provided for @exportNetflowCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export NetFlow CSV'**
+  String get exportNetflowCsv;
+
+  /// No description provided for @netflowExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow CSV exported successfully'**
+  String get netflowExportSuccess;
+
+  /// No description provided for @netflowExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export NetFlow CSV: {error}'**
+  String netflowExportFailed(String error);
+
+  /// No description provided for @dateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Date From'**
+  String get dateFrom;
+
+  /// No description provided for @dateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Date To'**
+  String get dateTo;
+
+  /// No description provided for @dstPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Port'**
+  String get dstPort;
+
+  /// No description provided for @dstAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Address'**
+  String get dstAddress;
+
+  /// No description provided for @srcAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Address'**
+  String get srcAddress;
+
+  /// No description provided for @serviceColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get serviceColumn;
+
+  /// No description provided for @sourceColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get sourceColumn;
+
+  /// No description provided for @destinationColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get destinationColumn;
+
+  /// No description provided for @bytesColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bytes'**
+  String get bytesColumn;
+
+  /// No description provided for @lastSeenColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get lastSeenColumn;
+
+  /// No description provided for @percentColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'%'**
+  String get percentColumn;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
   /// No description provided for @neighborDiscovery.
   ///
   /// In en, this message translates to:
@@ -7291,6 +7579,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} active entries (runtime)'**
   String aliasRuntimeEntries(String count);
+
+  /// No description provided for @netflowConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow'**
+  String get netflowConfig;
+
+  /// No description provided for @netflowCaptureTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture'**
+  String get netflowCaptureTab;
+
+  /// No description provided for @netflowCacheTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache'**
+  String get netflowCacheTab;
+
+  /// No description provided for @netflowListeningInterfaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening Interfaces'**
+  String get netflowListeningInterfaces;
+
+  /// No description provided for @netflowWanInterfaces.
+  ///
+  /// In en, this message translates to:
+  /// **'WAN Interfaces'**
+  String get netflowWanInterfaces;
+
+  /// No description provided for @netflowVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get netflowVersion;
+
+  /// No description provided for @netflowDestinations.
+  ///
+  /// In en, this message translates to:
+  /// **'Destinations'**
+  String get netflowDestinations;
+
+  /// No description provided for @netflowCaptureLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture Local'**
+  String get netflowCaptureLocal;
+
+  /// No description provided for @netflowActiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Timeout'**
+  String get netflowActiveTimeout;
+
+  /// No description provided for @netflowInactiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive Timeout'**
+  String get netflowInactiveTimeout;
+
+  /// No description provided for @netflowResetData.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset NetFlow Data'**
+  String get netflowResetData;
+
+  /// No description provided for @netflowResetWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you really want to reset the NetFlow data? This will erase all Insight graph data.'**
+  String get netflowResetWarning;
+
+  /// No description provided for @netflowSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow configuration saved.'**
+  String get netflowSaved;
+
+  /// No description provided for @netflowCacheStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Statistics'**
+  String get netflowCacheStatsTitle;
+
+  /// No description provided for @netflowCacheFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Flow'**
+  String get netflowCacheFlow;
+
+  /// No description provided for @netflowCacheInterface.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface'**
+  String get netflowCacheInterface;
+
+  /// No description provided for @netflowCachePackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Pkts'**
+  String get netflowCachePackets;
+
+  /// No description provided for @netflowCacheSrcIps.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get netflowCacheSrcIps;
+
+  /// No description provided for @netflowCacheDstIps.
+  ///
+  /// In en, this message translates to:
+  /// **'Destinations'**
+  String get netflowCacheDstIps;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @netflowListeningInterfacesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all the interfaces to enable NetFlow on.'**
+  String get netflowListeningInterfacesHint;
+
+  /// No description provided for @netflowWanInterfacesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.'**
+  String get netflowWanInterfacesHint;
+
+  /// No description provided for @netflowCaptureLocalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.'**
+  String get netflowCaptureLocalHint;
+
+  /// No description provided for @netflowDestinationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select destinations to send NetFlow data to (ip address:port, e.g. 192.168.0.1:2550).'**
+  String get netflowDestinationsHint;
+
+  /// No description provided for @netflowActiveTimeoutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Split long running flows into smaller parts.'**
+  String get netflowActiveTimeoutHint;
+
+  /// No description provided for @netflowInactiveTimeoutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Expire idle flows.'**
+  String get netflowInactiveTimeoutHint;
+
+  /// No description provided for @netflowAddDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Destination'**
+  String get netflowAddDestination;
 }
 
 class _AppLocalizationsDelegate

@@ -1868,6 +1868,171 @@ class AppLocalizationsEs extends AppLocalizations {
   String get liveNetworkMonitor => 'Monitor de Red en Vivo';
 
   @override
+  String get networkInsight => 'Información de red';
+
+  @override
+  String get reporting => 'Informes';
+
+  @override
+  String get netflowNotEnabled =>
+      'La recopilación de datos local no está habilitada en este momento. Por favor, configure NetFlow primero.';
+
+  @override
+  String get interfaceTotalsBitsPerSec => 'Totales de interfaz (bits/s)';
+
+  @override
+  String get showLoopback => 'Mostrar loopback';
+
+  @override
+  String get protocolsBreakdown => 'Protocolos';
+
+  @override
+  String get sourceAddressBreakdown => 'Direcciones de origen';
+
+  @override
+  String get reverseLookup => 'Resolución inversa';
+
+  @override
+  String get other => 'Otros';
+
+  @override
+  String get timeRangeFrom => 'Desde';
+
+  @override
+  String get timeRangeTo => 'Hasta';
+
+  @override
+  String get resolutionLabel => 'Resolución';
+
+  @override
+  String get resolution30s => '30 segundos';
+
+  @override
+  String get resolution5min => '5 minutos';
+
+  @override
+  String get resolution1hr => '1 hora';
+
+  @override
+  String get resolution24hr => '24 horas';
+
+  @override
+  String get perInterfaceBreakdown => 'Desglose por interfaz';
+
+  @override
+  String get totalBytesIn => 'Total de bytes entrantes';
+
+  @override
+  String get totalBytesOut => 'Total de bytes salientes';
+
+  @override
+  String get totalPacketsIn => 'Total de paquetes entrantes';
+
+  @override
+  String get totalPacketsOut => 'Total de paquetes salientes';
+
+  @override
+  String get checkingNetflowStatus => 'Comprobando estado de NetFlow...';
+
+  @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window, promedio de $avgInterval';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'horas',
+      one: 'hora',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'días',
+      one: 'día',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'Último año';
+
+  @override
+  String get goToNetflowConfig => 'Ir a la configuración de NetFlow';
+
+  @override
+  String get tabTotals => 'Totales';
+
+  @override
+  String get tabDetails => 'Detalles';
+
+  @override
+  String get tabExport => 'Exportar';
+
+  @override
+  String get collection => 'Colección';
+
+  @override
+  String get resolutionSeconds => 'Resolución (segundos)';
+
+  @override
+  String get resolution86400 => '86400 (1 día)';
+
+  @override
+  String get exportNetflowCsv => 'Exportar CSV de NetFlow';
+
+  @override
+  String get netflowExportSuccess => 'CSV de NetFlow exportado con éxito';
+
+  @override
+  String netflowExportFailed(String error) {
+    return 'Error al exportar CSV de NetFlow: $error';
+  }
+
+  @override
+  String get dateFrom => 'Fecha desde';
+
+  @override
+  String get dateTo => 'Fecha hasta';
+
+  @override
+  String get dstPort => 'Puerto destino';
+
+  @override
+  String get dstAddress => 'Dirección destino';
+
+  @override
+  String get srcAddress => 'Dirección origen';
+
+  @override
+  String get serviceColumn => 'Servicio';
+
+  @override
+  String get sourceColumn => 'Origen';
+
+  @override
+  String get destinationColumn => 'Destino';
+
+  @override
+  String get bytesColumn => 'Bytes';
+
+  @override
+  String get lastSeenColumn => 'Última vez visto';
+
+  @override
+  String get percentColumn => '%';
+
+  @override
+  String get total => 'Total';
+
+  @override
   String get neighborDiscovery => 'Descubrimiento de Vecinos';
 
   @override
@@ -4082,4 +4247,91 @@ class AppLocalizationsEs extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count entradas activas (tiempo de ejecución)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'Captura';
+
+  @override
+  String get netflowCacheTab => 'Caché';
+
+  @override
+  String get netflowListeningInterfaces => 'Interfaces de escucha';
+
+  @override
+  String get netflowWanInterfaces => 'Interfaces WAN';
+
+  @override
+  String get netflowVersion => 'Versión';
+
+  @override
+  String get netflowDestinations => 'Destinos';
+
+  @override
+  String get netflowCaptureLocal => 'Captura local';
+
+  @override
+  String get netflowActiveTimeout => 'Tiempo de espera activo';
+
+  @override
+  String get netflowInactiveTimeout => 'Tiempo de espera inactivo';
+
+  @override
+  String get netflowResetData => 'Restablecer datos de NetFlow';
+
+  @override
+  String get netflowResetWarning =>
+      '¿Realmente desea restablecer los datos de NetFlow? Esto borrará todos los datos de gráficos de Insight.';
+
+  @override
+  String get netflowSaved => 'Configuración de NetFlow guardada.';
+
+  @override
+  String get netflowCacheStatsTitle => 'Estadísticas de caché';
+
+  @override
+  String get netflowCacheFlow => 'Flujo';
+
+  @override
+  String get netflowCacheInterface => 'Interfaz';
+
+  @override
+  String get netflowCachePackets => 'Paquetes';
+
+  @override
+  String get netflowCacheSrcIps => 'Fuentes';
+
+  @override
+  String get netflowCacheDstIps => 'Destinos';
+
+  @override
+  String get remove => 'Eliminar';
+
+  @override
+  String get netflowListeningInterfacesHint =>
+      'Seleccione todas las interfaces en las que activar NetFlow.';
+
+  @override
+  String get netflowWanInterfacesHint =>
+      'Seleccione las interfaces usadas para tráfico WAN para evitar contar el tráfico NAT dos veces.';
+
+  @override
+  String get netflowCaptureLocalHint =>
+      'Recopilar datos NetFlow en este firewall para uso con Insight. La caché local solo conserva los últimos 100 MB.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'Seleccione destinos para enviar datos NetFlow (dirección IP:puerto, p.ej. 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'Dividir flujos de larga duración en partes más pequeñas.';
+
+  @override
+  String get netflowInactiveTimeoutHint => 'Caducar flujos inactivos.';
+
+  @override
+  String get netflowAddDestination => 'Agregar destino';
 }
