@@ -26,6 +26,7 @@ import '../models/firewall_rule.dart';
 import '../models/firewall_form_options.dart';
 import '../models/firewall_alias.dart';
 import '../models/vpn_connection.dart';
+import '../models/insight_flow_detail.dart';
 import '../models/netflow_cache_stat.dart';
 import '../models/netflow_config.dart';
 import '../models/netflow_status.dart';
@@ -768,6 +769,23 @@ class OPNsenseApiService {
         startTs: startTs,
         endTs: endTs,
         measure: measure,
+      );
+
+  Future<List<InsightFlowDetail>> getInsightFlowDetails({
+    required int startTs,
+    required int endTs,
+    required String interface,
+    String? dstPort,
+    String? dstAddr,
+    String? srcAddr,
+  }) =>
+      _networkInsightService.getFlowDetails(
+        startTs: startTs,
+        endTs: endTs,
+        interface: interface,
+        dstPort: dstPort,
+        dstAddr: dstAddr,
+        srcAddr: srcAddr,
       );
 }
 

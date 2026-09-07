@@ -19,6 +19,7 @@
 import 'dart:async' show unawaited;
 
 import 'package:flutter/foundation.dart';
+import '../models/insight_flow_detail.dart';
 import '../models/netflow_status.dart';
 import '../models/network_insight_direction_total.dart';
 import '../models/network_insight_timeserie.dart';
@@ -89,6 +90,54 @@ class NetworkInsightViewModel extends ChangeNotifier {
   List<NetworkInsightDirectionTotal> get directionPacketTotals =>
       List.unmodifiable(_directionPacketTotals);
 
+  // ── Details tab state ───────────────────────────────────────────────────────
+
+  late DateTime _detailsFrom;
+  late DateTime _detailsTo;
+  String _detailsInterface = '';
+  String _detailsDstPort = '';
+  String _detailsDstAddr = '';
+  String _detailsSrcAddr = '';
+  bool _isLoadingDetails = false;
+  String? _detailsErrorMessage;
+  List<InsightFlowDetail> _flowDetails = [];
+
+  DateTime get detailsFrom => _detailsFrom;
+  DateTime get detailsTo => _detailsTo;
+  String get detailsInterface => _detailsInterface;
+  String get detailsDstPort => _detailsDstPort;
+  String get detailsDstAddr => _detailsDstAddr;
+  String get detailsSrcAddr => _detailsSrcAddr;
+  bool get isLoadingDetails => _isLoadingDetails;
+  String? get detailsErrorMessage => _detailsErrorMessage;
+  List<InsightFlowDetail> get flowDetails => List.unmodifiable(_flowDetails);
+
+  void setDetailsDateRange(DateTime from, DateTime to) {
+    _detailsFrom = from;
+    _detailsTo = to;
+    notifyListeners();
+  }
+
+  void setDetailsInterface(String key) {
+    _detailsInterface = key;
+    notifyListeners();
+  }
+
+  void setDetailsDstPort(String v) {
+    _detailsDstPort = v;
+    notifyListeners();
+  }
+
+  void setDetailsDstAddr(String v) {
+    _detailsDstAddr = v;
+    notifyListeners();
+  }
+
+  void setDetailsSrcAddr(String v) {
+    _detailsSrcAddr = v;
+    notifyListeners();
+  }
+
   // ── Reverse DNS lookup ──────────────────────────────────────────────────────
 
   bool _reverseLookupEnabled = false;
@@ -112,6 +161,7 @@ class NetworkInsightViewModel extends ChangeNotifier {
   /// Checks NetFlow status and, if enabled, loads interfaces and chart data.
   Future<void> loadInitial() async {
     _setDefaultTimeRange();
+    _setDefaultDetailsRange();
     _isCheckingNetflow = true;
     _errorMessage = null;
     notifyListeners();
@@ -136,6 +186,12 @@ class NetworkInsightViewModel extends ChangeNotifier {
     _resolution = 30;
   }
 
+  void _setDefaultDetailsRange() {
+    final now = DateTime.now();
+    _detailsFrom = DateTime(now.year, now.month, now.day); // midnight today
+    _detailsTo = now;
+  }
+
   Future<void> _loadInterfaces() async {
     try {
       _interfaces = await _apiService.getInsightInterfaces();
@@ -144,6 +200,8 @@ class NetworkInsightViewModel extends ChangeNotifier {
         (k) => !_isLoopback(_interfaces[k]!),
         orElse: () => _interfaces.keys.first,
       );
+      // Mirror the selected interface to the Details tab default.
+      _detailsInterface = _selectedInterface ?? '';
     } catch (e) {
       _errorMessage = e.toString();
     }
@@ -262,6 +320,33 @@ class NetworkInsightViewModel extends ChangeNotifier {
       _errorMessage = e.toString();
     } finally {
       _isLoadingCharts = false;
+      notifyListeners();
+    }
+  }
+
+  // ── Details loading ─────────────────────────────────────────────────────────
+
+  /// Loads the per-flow details for the Details tab.
+  Future<void> loadFlowDetails() async {
+    _isLoadingDetails = true;
+    _detailsErrorMessage = null;
+    notifyListeners();
+
+    try {
+      final startTs = _detailsFrom.millisecondsSinceEpoch ~/ 1000;
+      final endTs = _detailsTo.millisecondsSinceEpoch ~/ 1000;
+      _flowDetails = await _apiService.getInsightFlowDetails(
+        startTs: startTs,
+        endTs: endTs,
+        interface: _detailsInterface,
+        dstPort: _detailsDstPort.isEmpty ? null : _detailsDstPort,
+        dstAddr: _detailsDstAddr.isEmpty ? null : _detailsDstAddr,
+        srcAddr: _detailsSrcAddr.isEmpty ? null : _detailsSrcAddr,
+      );
+    } catch (e) {
+      _detailsErrorMessage = e.toString();
+    } finally {
+      _isLoadingDetails = false;
       notifyListeners();
     }
   }

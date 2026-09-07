@@ -27,15 +27,20 @@ import '../utils/formatters.dart';
 import '../utils/single_init_mixin.dart';
 import '../viewmodels/network_insight_view_model.dart';
 import '../widgets/app_drawer.dart';
+import '../widgets/common/empty_state_widget.dart';
 import '../widgets/common/error_display.dart';
+import '../widgets/network_insight/insight_details_tab.dart';
 import '../widgets/network_insight/interface_totals_chart.dart';
 import '../widgets/network_insight/netflow_disabled_banner.dart';
 import '../widgets/network_insight/top_breakdown_pie_chart.dart';
 
-/// Network Insight screen.
+/// Insights screen.
 ///
-/// Shows an Interface Totals bps chart at the top (time-range controlled) and
-/// a per-interface breakdown section with protocol/address pie charts below.
+/// Shows three tabs:
+/// - Totals: Interface Totals bps chart and per-interface breakdown with
+///   protocol/address pie charts.
+/// - Details: Per-flow breakdown with filters.
+/// - Export: Placeholder (to be implemented).
 class NetworkInsightScreen extends StatefulWidget {
   const NetworkInsightScreen({super.key});
 
@@ -44,14 +49,16 @@ class NetworkInsightScreen extends StatefulWidget {
 }
 
 class _NetworkInsightScreenState extends State<NetworkInsightScreen>
-    with SingleInitMixin {
+    with SingleInitMixin, TickerProviderStateMixin {
   late NetworkInsightViewModel _vm;
+  late TabController _tabController;
 
   // ── Loopback visibility toggle ──────────────────────────────────────────────
   bool _showLoopback = true;
 
   @override
   void onFirstDependency() {
+    _tabController = TabController(length: 3, vsync: this);
     _vm = NetworkInsightViewModel(context.read<DemoApiService>());
     _vm.addListener(_onVmChanged);
     _vm.loadInitial();
@@ -63,6 +70,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
 
   @override
   void dispose() {
+    _tabController.dispose();
     _vm.removeListener(_onVmChanged);
     _vm.dispose();
     super.dispose();
@@ -128,6 +136,14 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.networkInsight),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: l10n.tabTotals),
+            Tab(text: l10n.tabDetails),
+            Tab(text: l10n.tabExport),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -166,8 +182,52 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
       return const NetflowDisabledBanner();
     }
 
+    return TabBarView(
+      controller: _tabController,
+      children: [
+        _TotalsTab(
+          vm: _vm,
+          presets: _presets,
+          selectedPresetIndex: _selectedPresetIndex,
+          showLoopback: _showLoopback,
+          onPresetChanged: _onPresetChanged,
+          onShowLoopbackChanged: (v) => setState(() => _showLoopback = v),
+          buildPresetLabel: _buildPresetLabel,
+        ),
+        _DetailsTab(vm: _vm),
+        _ExportTab(),
+      ],
+    );
+  }
+}
+
+// ── Totals tab ────────────────────────────────────────────────────────────────
+
+class _TotalsTab extends StatelessWidget {
+  final NetworkInsightViewModel vm;
+  final List<_TimePreset> presets;
+  final int selectedPresetIndex;
+  final bool showLoopback;
+  final ValueChanged<int> onPresetChanged;
+  final ValueChanged<bool> onShowLoopbackChanged;
+  final String Function(AppLocalizations, _TimePreset) buildPresetLabel;
+
+  const _TotalsTab({
+    required this.vm,
+    required this.presets,
+    required this.selectedPresetIndex,
+    required this.showLoopback,
+    required this.onPresetChanged,
+    required this.onShowLoopbackChanged,
+    required this.buildPresetLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return RefreshIndicator(
-      onRefresh: _vm.loadChartData,
+      onRefresh: vm.loadChartData,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(AppConstants.standardPadding),
@@ -185,7 +245,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
     );
   }
 
-  // ── Time range selector ──────────────────────────────────────────────────────
+  // ── Time range selector ────────────────────────────────────────────────────
 
   Widget _buildTimeRangeSelector(BuildContext context, AppLocalizations l10n) {
     return Card(
@@ -204,20 +264,20 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
             Expanded(
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
-                  value: _selectedPresetIndex,
+                  value: selectedPresetIndex,
                   isExpanded: true,
                   items: List.generate(
-                    _presets.length,
+                    presets.length,
                     (i) => DropdownMenuItem(
                       value: i,
                       child: Text(
-                        _buildPresetLabel(l10n, _presets[i]),
+                        buildPresetLabel(l10n, presets[i]),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),
                   onChanged: (i) {
-                    if (i != null) _onPresetChanged(i);
+                    if (i != null) onPresetChanged(i);
                   },
                 ),
               ),
@@ -228,7 +288,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
     );
   }
 
-  // ── Interface totals (top charts) ────────────────────────────────────────────
+  // ── Interface totals (top charts) ──────────────────────────────────────────
 
   Widget _buildInterfaceTotalsSection(
       BuildContext context, AppLocalizations l10n) {
@@ -254,27 +314,27 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Switch(
-                      value: _showLoopback,
-                      onChanged: (v) => setState(() => _showLoopback = v),
+                      value: showLoopback,
+                      onChanged: onShowLoopbackChanged,
                     ),
                   ],
                 ),
               ],
             ),
             const SizedBox(height: AppConstants.compactPadding),
-            if (_vm.isLoadingCharts)
+            if (vm.isLoadingCharts)
               const Center(
                 child: Padding(
                   padding: EdgeInsets.all(AppConstants.standardPadding),
                   child: CircularProgressIndicator(),
                 ),
               )
-            else if (_vm.timeseries.isEmpty)
+            else if (vm.timeseries.isEmpty)
               const SizedBox(height: 80)
             else
               InterfaceTotalsChart(
-                series: _vm.timeseries,
-                showLoopback: _showLoopback,
+                series: vm.timeseries,
+                showLoopback: showLoopback,
               ),
           ],
         ),
@@ -282,7 +342,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
     );
   }
 
-  // ── Per-interface breakdown (pie charts) ─────────────────────────────────────
+  // ── Per-interface breakdown (pie charts) ───────────────────────────────────
 
   Widget _buildBreakdownSection(BuildContext context, AppLocalizations l10n) {
     return Column(
@@ -296,16 +356,16 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            if (_vm.interfaces.isNotEmpty)
+            if (vm.interfaces.isNotEmpty)
               _InterfaceDropdown(
-                interfaces: _vm.interfaces,
-                selectedKey: _vm.selectedInterface,
-                onChanged: _vm.setSelectedInterface,
+                interfaces: vm.interfaces,
+                selectedKey: vm.selectedInterface,
+                onChanged: vm.setSelectedInterface,
               ),
           ],
         ),
         const SizedBox(height: AppConstants.standardPadding),
-        if (_vm.isLoadingCharts)
+        if (vm.isLoadingCharts)
           const Center(child: CircularProgressIndicator())
         else ...[
           _buildTotalsSummary(context, l10n),
@@ -317,8 +377,8 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
   }
 
   Widget _buildTotalsSummary(BuildContext context, AppLocalizations l10n) {
-    final octets = _vm.directionOctetTotals;
-    final packets = _vm.directionPacketTotals;
+    final octets = vm.directionOctetTotals;
+    final packets = vm.directionPacketTotals;
     double bytesIn = 0, bytesOut = 0, pktsIn = 0, pktsOut = 0;
     for (final e in octets) {
       if (e.direction == 'in') bytesIn = e.total;
@@ -366,7 +426,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
   }
 
   Widget _buildPieCharts(BuildContext context, AppLocalizations l10n) {
-    final portItems = _vm.topPorts
+    final portItems = vm.topPorts
         .map((p) => (
               p.isOther ? l10n.other : (p.label.isEmpty ? p.dstPort : p.label),
               p.total,
@@ -374,11 +434,11 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
         .toList();
 
     // Apply resolved hostnames when reverse lookup is enabled.
-    final addrItems = _vm.topAddresses
+    final addrItems = vm.topAddresses
         .map((a) {
           if (a.isOther) return (l10n.other, a.total);
-          final label = _vm.reverseLookupEnabled
-              ? (_vm.resolvedLabels[a.srcAddr] ?? a.srcAddr)
+          final label = vm.reverseLookupEnabled
+              ? (vm.resolvedLabels[a.srcAddr] ?? a.srcAddr)
               : a.srcAddr;
           return (label, a.total);
         })
@@ -414,7 +474,7 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
-                    if (_vm.isResolvingDns)
+                    if (vm.isResolvingDns)
                       const SizedBox(
                         width: 16,
                         height: 16,
@@ -426,10 +486,10 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Switch(
-                      value: _vm.reverseLookupEnabled,
-                      onChanged: _vm.isLoadingCharts
+                      value: vm.reverseLookupEnabled,
+                      onChanged: vm.isLoadingCharts
                           ? null
-                          : (v) => _vm.toggleReverseLookup(enabled: v),
+                          : (v) => vm.toggleReverseLookup(enabled: v),
                     ),
                   ],
                 ),
@@ -448,7 +508,33 @@ class _NetworkInsightScreenState extends State<NetworkInsightScreen>
   }
 }
 
-// ── Private helpers ──────────────────────────────────────────────────────────
+// ── Details tab ───────────────────────────────────────────────────────────────
+
+class _DetailsTab extends StatelessWidget {
+  final NetworkInsightViewModel vm;
+
+  const _DetailsTab({required this.vm});
+
+  @override
+  Widget build(BuildContext context) {
+    return InsightDetailsTab(viewModel: vm);
+  }
+}
+
+// ── Export tab ────────────────────────────────────────────────────────────────
+
+class _ExportTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return EmptyStateWidget(
+      icon: Icons.download,
+      title: l10n.tabExport,
+    );
+  }
+}
+
+// ── Private helpers ───────────────────────────────────────────────────────────
 
 /// Dropdown for the per-interface breakdown filter.
 class _InterfaceDropdown extends StatelessWidget {

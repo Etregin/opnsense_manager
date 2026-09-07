@@ -18,6 +18,7 @@
 
 import 'package:dio/dio.dart';
 import '../../constants/api_endpoints.dart';
+import '../../models/insight_flow_detail.dart';
 import '../../models/netflow_status.dart';
 import '../../models/network_insight_direction_total.dart';
 import '../../models/network_insight_timeserie.dart';
@@ -184,6 +185,68 @@ class NetworkInsightService extends BaseOPNsenseService {
       throw handleDioError(e);
     }
   }
+
+  // ── Flow details ────────────────────────────────────────────────────────────
+
+  /// Returns per-flow details using the `FlowSourceAddrDetails` aggregator.
+  ///
+  /// Filters by [interface] server-side (single filter_field/filter_value pair).
+  /// Optional [dstPort], [dstAddr], and [srcAddr] are applied client-side.
+  /// The "Other" sentinel row (empty fields) is always retained so callers can
+  /// calculate percentages against the true grand total.
+  Future<List<InsightFlowDetail>> getFlowDetails({
+    required int startTs,
+    required int endTs,
+    required String interface,
+    String? dstPort,
+    String? dstAddr,
+    String? srcAddr,
+  }) async {
+    ensureInitialized();
+    try {
+      final path = ApiEndpoints.networkInsightTop(
+        aggregator: 'FlowSourceAddrDetails',
+        startTs: startTs,
+        endTs: endTs,
+        dimensions: 'service_port,protocol,if,src_addr,dst_addr',
+        measure: 'octets',
+        limit: 100,
+      );
+      final response = await dio.get(
+        path,
+        queryParameters: interface.isNotEmpty
+            ? {'filter_field': 'if', 'filter_value': interface}
+            : null,
+      );
+      final list = response.data as List<dynamic>;
+      var rows = list
+          .map((e) => InsightFlowDetail.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      // Apply client-side filters — always keep the "Other" sentinel row.
+      if (dstPort != null && dstPort.isNotEmpty) {
+        rows = rows
+            .where((r) => r.isOther || r.servicePort.contains(dstPort))
+            .toList();
+      }
+      if (dstAddr != null && dstAddr.isNotEmpty) {
+        rows = rows
+            .where((r) => r.isOther || r.dstAddr.contains(dstAddr))
+            .toList();
+      }
+      if (srcAddr != null && srcAddr.isNotEmpty) {
+        rows = rows
+            .where((r) => r.isOther || r.srcAddr.contains(srcAddr))
+            .toList();
+      }
+
+      return rows;
+    } on DioException catch (e) {
+      throw handleDioError(e);
+    }
+  }
+
+  // ── Direction totals ─────────────────────────────────────────────────────────
 
   /// Returns in/out totals for the given [interface].
   ///

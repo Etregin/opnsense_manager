@@ -45,6 +45,7 @@ import '../models/neighbor.dart';
 import '../models/netflow_cache_stat.dart';
 import '../models/netflow_config.dart';
 import '../models/netflow_status.dart';
+import '../models/insight_flow_detail.dart';
 import '../models/network_insight_direction_total.dart';
 import '../models/network_insight_timeserie.dart';
 import '../models/network_insight_top_addr.dart';
@@ -1830,6 +1831,96 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
           measure: measure,
         ),
         delayMs: 400,
+      );
+
+  Future<List<InsightFlowDetail>> getInsightFlowDetails({
+    required int startTs,
+    required int endTs,
+    required String interface,
+    String? dstPort,
+    String? dstAddr,
+    String? srcAddr,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => [
+          const InsightFlowDetail(
+            servicePort: '41127',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '162.196.24.123',
+            dstAddr: '192.168.1.100',
+            total: 170996949,
+            lastSeen: 1788777019,
+            lastSeenStr: '2026-09-07 13:30:19',
+            label: '41127 (tcp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '25872',
+            protocol: '17',
+            interface: 'pppoe1',
+            srcAddr: '208.77.22.27',
+            dstAddr: '192.168.1.100',
+            total: 117204231,
+            lastSeen: 1788777021,
+            lastSeenStr: '2026-09-07 13:30:21',
+            label: '25872 (udp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '6881',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '192.184.193.31',
+            dstAddr: '192.168.1.100',
+            total: 63944273,
+            lastSeen: 1788778168,
+            lastSeenStr: '2026-09-07 13:49:28',
+            label: '6881 (tcp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '42069',
+            protocol: '17',
+            interface: 'pppoe1',
+            srcAddr: '116.251.128.81',
+            dstAddr: '192.168.1.100',
+            total: 32093596,
+            lastSeen: 1788777495,
+            lastSeenStr: '2026-09-07 13:38:15',
+            label: '42069 (udp)',
+          ),
+          const InsightFlowDetail(
+            servicePort: '443',
+            protocol: '6',
+            interface: 'pppoe1',
+            srcAddr: '185.199.111.133',
+            dstAddr: '192.168.1.200',
+            total: 2135567,
+            lastSeen: 1788775201,
+            lastSeenStr: '2026-09-07 13:00:01',
+            label: 'https (tcp)',
+          ),
+          // "Other" sentinel row
+          const InsightFlowDetail(
+            servicePort: '',
+            protocol: '',
+            interface: '',
+            srcAddr: '',
+            dstAddr: '',
+            total: 57794173,
+            lastSeen: '',
+            lastSeenStr: '',
+            label: '',
+          ),
+        ],
+        realAction: () => _realApiService.getInsightFlowDetails(
+          startTs: startTs,
+          endTs: endTs,
+          interface: interface,
+          dstPort: dstPort,
+          dstAddr: dstAddr,
+          srcAddr: srcAddr,
+        ),
+        delayMs: 500,
       );
 
   // ── NetFlow Config ────────────────────────────────────────────────────────
