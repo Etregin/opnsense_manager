@@ -3464,6 +3464,36 @@ abstract class AppLocalizations {
   /// **'Checking NetFlow status...'**
   String get checkingNetflowStatus;
 
+  /// No description provided for @timePresetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{window}, {avgInterval} average'**
+  String timePresetLabel(String window, String avgInterval);
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{Hour} other{Hours}}'**
+  String durationHours(int count);
+
+  /// No description provided for @durationDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{Day} other{Days}}'**
+  String durationDays(int count);
+
+  /// No description provided for @durationLastYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Year'**
+  String get durationLastYear;
+
+  /// No description provided for @goToNetflowConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to NetFlow Configuration'**
+  String get goToNetflowConfig;
+
   /// No description provided for @neighborDiscovery.
   ///
   /// In en, this message translates to:
@@ -7417,6 +7447,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} active entries (runtime)'**
   String aliasRuntimeEntries(String count);
+
+  /// No description provided for @netflowConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow'**
+  String get netflowConfig;
+
+  /// No description provided for @netflowCaptureTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture'**
+  String get netflowCaptureTab;
+
+  /// No description provided for @netflowCacheTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache'**
+  String get netflowCacheTab;
+
+  /// No description provided for @netflowCaptureInterfaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture Interfaces'**
+  String get netflowCaptureInterfaces;
+
+  /// No description provided for @netflowEgressOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Egress Only'**
+  String get netflowEgressOnly;
+
+  /// No description provided for @netflowVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow Version'**
+  String get netflowVersion;
+
+  /// No description provided for @netflowCollectorTargets.
+  ///
+  /// In en, this message translates to:
+  /// **'Collector Targets'**
+  String get netflowCollectorTargets;
+
+  /// No description provided for @netflowCollectLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Local Data Collection'**
+  String get netflowCollectLocal;
+
+  /// No description provided for @netflowActiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Timeout (seconds)'**
+  String get netflowActiveTimeout;
+
+  /// No description provided for @netflowInactiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive Timeout (seconds)'**
+  String get netflowInactiveTimeout;
+
+  /// No description provided for @netflowResetData.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset NetFlow Data'**
+  String get netflowResetData;
+
+  /// No description provided for @netflowResetWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you really want to reset the NetFlow data? This will erase all Insight graph data.'**
+  String get netflowResetWarning;
+
+  /// No description provided for @netflowSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'NetFlow configuration saved.'**
+  String get netflowSaved;
+
+  /// No description provided for @netflowCacheStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Statistics'**
+  String get netflowCacheStatsTitle;
+
+  /// No description provided for @netflowCacheName.
+  ///
+  /// In en, this message translates to:
+  /// **'Flow'**
+  String get netflowCacheName;
+
+  /// No description provided for @netflowCacheInterface.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface'**
+  String get netflowCacheInterface;
+
+  /// No description provided for @netflowCachePackets.
+  ///
+  /// In en, this message translates to:
+  /// **'Pkts'**
+  String get netflowCachePackets;
+
+  /// No description provided for @netflowCacheSrcIps.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get netflowCacheSrcIps;
+
+  /// No description provided for @netflowCacheDstIps.
+  ///
+  /// In en, this message translates to:
+  /// **'Destinations'**
+  String get netflowCacheDstIps;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @netflowCaptureInterfacesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all the interfaces to enable NetFlow on.'**
+  String get netflowCaptureInterfacesHint;
+
+  /// No description provided for @netflowEgressOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.'**
+  String get netflowEgressOnlyHint;
+
+  /// No description provided for @netflowCollectLocalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.'**
+  String get netflowCollectLocalHint;
+
+  /// No description provided for @netflowDestinationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select destinations to send NetFlow data to (ip address:port, e.g. 192.168.0.1:2550).'**
+  String get netflowDestinationsHint;
+
+  /// No description provided for @netflowActiveTimeoutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Split long running flows into smaller parts.'**
+  String get netflowActiveTimeoutHint;
+
+  /// No description provided for @netflowInactiveTimeoutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Expire idle flows.'**
+  String get netflowInactiveTimeoutHint;
+
+  /// No description provided for @netflowAddDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Destination'**
+  String get netflowAddDestination;
 }
 
 class _AppLocalizationsDelegate

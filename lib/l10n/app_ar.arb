@@ -283,12 +283,11 @@
   "@cancel": {},
   "checkForUpdates": "Check for Updates",
   "@checkForUpdates": {},
-  "checkingForUpdates": "Checking for updates\u2026",
+  "checkingForUpdates": "Checking for updates…",
   "@checkingForUpdates": {},
-
   "installUpdate": "Install Update",
   "@installUpdate": {},
-  "installingUpdate": "Installing update\u2026",
+  "installingUpdate": "Installing update…",
   "@installingUpdate": {},
   "updateComplete": "Update installed successfully",
   "@updateComplete": {},
@@ -1030,7 +1029,9 @@
   "failedToSwitchProfile": "فشل تبديل الملف الشخصي: {error}",
   "@failedToSwitchProfile": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "failedToBlockHost": "فشل حظر المضيف",
@@ -3145,8 +3146,7 @@
   "rawTimestamp": "الطابع الزمني الخام",
   "@rawTimestamp": {
     "description": "Label for raw timestamp row in log detail"
-  }
-,
+  },
   "organisationSection": "Organisation",
   "@organisationSection": {},
   "interfaceSection": "Interface",
@@ -3294,13 +3294,17 @@
   "interfaceNet": "{name} net",
   "@interfaceNet": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "interfaceAddress": "{name} address",
   "@interfaceAddress": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "sortOrderLabel": "Sort Order",
@@ -3324,7 +3328,9 @@
   "errorSavingAlias": "Error saving alias: {error}",
   "@errorSavingAlias": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "aliasNameLabel": "Name",
@@ -3400,13 +3406,17 @@
   "aliasContentEntries": "المحتوى ({count})",
   "@aliasContentEntries": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aliasRuntimeEntries": "{count} إدخالات نشطة (وقت التشغيل)",
   "@aliasRuntimeEntries": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
   },
   "networkInsight": "نظرة ثاقبة على الشبكة",
@@ -3450,5 +3460,82 @@
   "totalPacketsOut": "إجمالي الحزم الصادرة",
   "@totalPacketsOut": {},
   "checkingNetflowStatus": "جارٍ التحقق من حالة NetFlow...",
-  "@checkingNetflowStatus": {}
+  "@checkingNetflowStatus": {},
+  "timePresetLabel": "{window}، متوسط {avgInterval}",
+  "@timePresetLabel": {
+    "placeholders": {
+      "window": { "type": "String" },
+      "avgInterval": { "type": "String" }
+    }
+  },
+  "durationHours": "{count} {count, plural, =1{ساعة} other{ساعات}}",
+  "@durationHours": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationDays": "{count} {count, plural, =1{يوم} other{أيام}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationLastYear": "السنة الماضية",
+  "@durationLastYear": {},
+  "goToNetflowConfig": "الانتقال إلى إعدادات NetFlow",
+  "@goToNetflowConfig": {},
+  "netflowConfig": "NetFlow",
+  "@netflowConfig": {},
+  "netflowCaptureTab": "التقاط",
+  "@netflowCaptureTab": {},
+  "netflowCacheTab": "ذاكرة التخزين المؤقت",
+  "@netflowCacheTab": {},
+  "netflowCaptureInterfaces": "واجهات الالتقاط",
+  "@netflowCaptureInterfaces": {},
+  "netflowEgressOnly": "الخروج فقط",
+  "@netflowEgressOnly": {},
+  "netflowVersion": "إصدار NetFlow",
+  "@netflowVersion": {},
+  "netflowCollectorTargets": "أهداف المجمّع",
+  "@netflowCollectorTargets": {},
+  "netflowCollectLocal": "تفعيل جمع البيانات المحلية",
+  "@netflowCollectLocal": {},
+  "netflowActiveTimeout": "مهلة التدفق النشط (ثانية)",
+  "@netflowActiveTimeout": {},
+  "netflowInactiveTimeout": "مهلة التدفق غير النشط (ثانية)",
+  "@netflowInactiveTimeout": {},
+  "netflowResetData": "إعادة تعيين بيانات NetFlow",
+  "@netflowResetData": {},
+  "netflowResetWarning": "هل تريد حقًا إعادة تعيين بيانات NetFlow؟ سيؤدي ذلك إلى مسح جميع بيانات رسوم بيانية Insight.",
+  "@netflowResetWarning": {},
+  "netflowSaved": "تم حفظ إعدادات NetFlow.",
+  "@netflowSaved": {},
+  "netflowCacheStatsTitle": "إحصائيات ذاكرة التخزين المؤقت",
+  "@netflowCacheStatsTitle": {},
+  "netflowCacheName": "التدفق",
+  "@netflowCacheName": {},
+  "netflowCacheInterface": "الواجهة",
+  "@netflowCacheInterface": {},
+  "netflowCachePackets": "الحزم",
+  "@netflowCachePackets": {},
+  "netflowCacheSrcIps": "المصادر",
+  "@netflowCacheSrcIps": {},
+  "netflowCacheDstIps": "الوجهات",
+  "@netflowCacheDstIps": {},
+  "remove": "إزالة",
+  "@remove": {},
+  "netflowCaptureInterfacesHint": "حدد جميع الواجهات لتفعيل NetFlow عليها.",
+  "@netflowCaptureInterfacesHint": {},
+  "netflowEgressOnlyHint": "حدد الواجهات المستخدمة لحركة مرور WAN لتجنب احتساب حركة NAT مرتين.",
+  "@netflowEgressOnlyHint": {},
+  "netflowCollectLocalHint": "جمع بيانات NetFlow على هذا الجدار الناري لاستخدامها مع Insight. يحتفظ الذاكرة المحلية بآخر 100 ميغابايت فقط.",
+  "@netflowCollectLocalHint": {},
+  "netflowDestinationsHint": "حدد وجهات إرسال بيانات NetFlow إليها (عنوان IP:منفذ، مثلاً 192.168.0.1:2550).",
+  "@netflowDestinationsHint": {},
+  "netflowActiveTimeoutHint": "تقسيم التدفقات طويلة المدى إلى أجزاء أصغر.",
+  "@netflowActiveTimeoutHint": {},
+  "netflowInactiveTimeoutHint": "انتهاء صلاحية التدفقات الخاملة.",
+  "@netflowInactiveTimeoutHint": {},
+  "netflowAddDestination": "إضافة وجهة",
+  "@netflowAddDestination": {}
 }

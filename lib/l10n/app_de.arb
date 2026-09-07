@@ -283,12 +283,11 @@
   "@cancel": {},
   "checkForUpdates": "Updates prüfen",
   "@checkForUpdates": {},
-  "checkingForUpdates": "Updates werden geprüft\u2026",
+  "checkingForUpdates": "Updates werden geprüft…",
   "@checkingForUpdates": {},
-
   "installUpdate": "Update installieren",
   "@installUpdate": {},
-  "installingUpdate": "Update wird installiert\u2026",
+  "installingUpdate": "Update wird installiert…",
   "@installingUpdate": {},
   "updateComplete": "Update erfolgreich installiert",
   "@updateComplete": {},
@@ -1030,7 +1029,9 @@
   "failedToSwitchProfile": "Profil wechseln fehlgeschlagen: {error}",
   "@failedToSwitchProfile": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "failedToBlockHost": "Host konnte nicht blockiert werden",
@@ -3154,8 +3155,7 @@
   "rawTimestamp": "Roh-Zeitstempel",
   "@rawTimestamp": {
     "description": "Label for raw timestamp row in log detail"
-  }
-,
+  },
   "organisationSection": "Organisation",
   "@organisationSection": {},
   "interfaceSection": "Interface",
@@ -3303,13 +3303,17 @@
   "interfaceNet": "{name} net",
   "@interfaceNet": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "interfaceAddress": "{name} address",
   "@interfaceAddress": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "sortOrderLabel": "Sort Order",
@@ -3333,7 +3337,9 @@
   "errorSavingAlias": "Error saving alias: {error}",
   "@errorSavingAlias": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "aliasNameLabel": "Name",
@@ -3409,13 +3415,17 @@
   "aliasContentEntries": "Inhalt ({count})",
   "@aliasContentEntries": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aliasRuntimeEntries": "{count} aktive Einträge (Laufzeit)",
   "@aliasRuntimeEntries": {
     "placeholders": {
-      "count": { "type": "String" }
+      "count": {
+        "type": "String"
+      }
     }
   },
   "networkInsight": "Netzwerk-Einblick",
@@ -3459,5 +3469,82 @@
   "totalPacketsOut": "Gesamte ausgehende Pakete",
   "@totalPacketsOut": {},
   "checkingNetflowStatus": "NetFlow-Status wird geprüft...",
-  "@checkingNetflowStatus": {}
+  "@checkingNetflowStatus": {},
+  "timePresetLabel": "{window}, Durchschnitt {avgInterval}",
+  "@timePresetLabel": {
+    "placeholders": {
+      "window": { "type": "String" },
+      "avgInterval": { "type": "String" }
+    }
+  },
+  "durationHours": "{count} {count, plural, =1{Stunde} other{Stunden}}",
+  "@durationHours": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationDays": "{count} {count, plural, =1{Tag} other{Tage}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationLastYear": "Letztes Jahr",
+  "@durationLastYear": {},
+  "goToNetflowConfig": "Zur NetFlow-Konfiguration",
+  "@goToNetflowConfig": {},
+  "netflowConfig": "NetFlow",
+  "@netflowConfig": {},
+  "netflowCaptureTab": "Erfassung",
+  "@netflowCaptureTab": {},
+  "netflowCacheTab": "Cache",
+  "@netflowCacheTab": {},
+  "netflowCaptureInterfaces": "Erfassungs-Interfaces",
+  "@netflowCaptureInterfaces": {},
+  "netflowEgressOnly": "Nur Ausgehend",
+  "@netflowEgressOnly": {},
+  "netflowVersion": "NetFlow-Version",
+  "@netflowVersion": {},
+  "netflowCollectorTargets": "Collector-Ziele",
+  "@netflowCollectorTargets": {},
+  "netflowCollectLocal": "Lokale Datenerfassung aktivieren",
+  "@netflowCollectLocal": {},
+  "netflowActiveTimeout": "Aktives Timeout (Sekunden)",
+  "@netflowActiveTimeout": {},
+  "netflowInactiveTimeout": "Inaktives Timeout (Sekunden)",
+  "@netflowInactiveTimeout": {},
+  "netflowResetData": "NetFlow-Daten zurücksetzen",
+  "@netflowResetData": {},
+  "netflowResetWarning": "Möchten Sie wirklich die NetFlow-Daten zurücksetzen? Dadurch werden alle Insight-Graphdaten gelöscht.",
+  "@netflowResetWarning": {},
+  "netflowSaved": "NetFlow-Konfiguration gespeichert.",
+  "@netflowSaved": {},
+  "netflowCacheStatsTitle": "Cache-Statistiken",
+  "@netflowCacheStatsTitle": {},
+  "netflowCacheName": "Flow",
+  "@netflowCacheName": {},
+  "netflowCacheInterface": "Interface",
+  "@netflowCacheInterface": {},
+  "netflowCachePackets": "Pakete",
+  "@netflowCachePackets": {},
+  "netflowCacheSrcIps": "Quellen",
+  "@netflowCacheSrcIps": {},
+  "netflowCacheDstIps": "Ziele",
+  "@netflowCacheDstIps": {},
+  "remove": "Entfernen",
+  "@remove": {},
+  "netflowCaptureInterfacesHint": "Wählen Sie alle Interfaces aus, auf denen NetFlow aktiviert werden soll.",
+  "@netflowCaptureInterfacesHint": {},
+  "netflowEgressOnlyHint": "Wählen Sie Interfaces für WAN-Verkehr aus, um NAT-Doppelzählung zu vermeiden.",
+  "@netflowEgressOnlyHint": {},
+  "netflowCollectLocalHint": "NetFlow-Daten auf dieser Firewall für Insight sammeln. Der lokale Cache speichert nur die letzten 100 MB.",
+  "@netflowCollectLocalHint": {},
+  "netflowDestinationsHint": "Ziele für NetFlow-Daten angeben (IP:Port, z. B. 192.168.0.1:2550).",
+  "@netflowDestinationsHint": {},
+  "netflowActiveTimeoutHint": "Lange Datenströme in kleinere Teile aufteilen.",
+  "@netflowActiveTimeoutHint": {},
+  "netflowInactiveTimeoutHint": "Inaktive Datenströme ablaufen lassen.",
+  "@netflowInactiveTimeoutHint": {},
+  "netflowAddDestination": "Ziel hinzufügen",
+  "@netflowAddDestination": {}
 }

@@ -1911,6 +1911,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkingNetflowStatus => 'Checking NetFlow status...';
 
   @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window, $avgInterval average';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Hours',
+      one: 'Hour',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Days',
+      one: 'Day',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'Last Year';
+
+  @override
+  String get goToNetflowConfig => 'Go to NetFlow Configuration';
+
+  @override
   String get neighborDiscovery => 'Neighbor Discovery';
 
   @override
@@ -4095,4 +4128,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count active entries (runtime)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'Capture';
+
+  @override
+  String get netflowCacheTab => 'Cache';
+
+  @override
+  String get netflowCaptureInterfaces => 'Capture Interfaces';
+
+  @override
+  String get netflowEgressOnly => 'Egress Only';
+
+  @override
+  String get netflowVersion => 'NetFlow Version';
+
+  @override
+  String get netflowCollectorTargets => 'Collector Targets';
+
+  @override
+  String get netflowCollectLocal => 'Enable Local Data Collection';
+
+  @override
+  String get netflowActiveTimeout => 'Active Timeout (seconds)';
+
+  @override
+  String get netflowInactiveTimeout => 'Inactive Timeout (seconds)';
+
+  @override
+  String get netflowResetData => 'Reset NetFlow Data';
+
+  @override
+  String get netflowResetWarning =>
+      'Do you really want to reset the NetFlow data? This will erase all Insight graph data.';
+
+  @override
+  String get netflowSaved => 'NetFlow configuration saved.';
+
+  @override
+  String get netflowCacheStatsTitle => 'Cache Statistics';
+
+  @override
+  String get netflowCacheName => 'Flow';
+
+  @override
+  String get netflowCacheInterface => 'Interface';
+
+  @override
+  String get netflowCachePackets => 'Pkts';
+
+  @override
+  String get netflowCacheSrcIps => 'Sources';
+
+  @override
+  String get netflowCacheDstIps => 'Destinations';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get netflowCaptureInterfacesHint =>
+      'Select all the interfaces to enable NetFlow on.';
+
+  @override
+  String get netflowEgressOnlyHint =>
+      'Select interfaces used for WAN traffic to avoid counting NAT traffic twice.';
+
+  @override
+  String get netflowCollectLocalHint =>
+      'Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'Select destinations to send NetFlow data to (ip address:port, e.g. 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'Split long running flows into smaller parts.';
+
+  @override
+  String get netflowInactiveTimeoutHint => 'Expire idle flows.';
+
+  @override
+  String get netflowAddDestination => 'Add Destination';
 }

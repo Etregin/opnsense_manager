@@ -1902,6 +1902,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get checkingNetflowStatus => 'جارٍ التحقق من حالة NetFlow...';
 
   @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window، متوسط $avgInterval';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ساعات',
+      one: 'ساعة',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أيام',
+      one: 'يوم',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'السنة الماضية';
+
+  @override
+  String get goToNetflowConfig => 'الانتقال إلى إعدادات NetFlow';
+
+  @override
   String get neighborDiscovery => 'اكتشاف الأجهزة المجاورة';
 
   @override
@@ -4081,4 +4114,91 @@ class AppLocalizationsAr extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count إدخالات نشطة (وقت التشغيل)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'التقاط';
+
+  @override
+  String get netflowCacheTab => 'ذاكرة التخزين المؤقت';
+
+  @override
+  String get netflowCaptureInterfaces => 'واجهات الالتقاط';
+
+  @override
+  String get netflowEgressOnly => 'الخروج فقط';
+
+  @override
+  String get netflowVersion => 'إصدار NetFlow';
+
+  @override
+  String get netflowCollectorTargets => 'أهداف المجمّع';
+
+  @override
+  String get netflowCollectLocal => 'تفعيل جمع البيانات المحلية';
+
+  @override
+  String get netflowActiveTimeout => 'مهلة التدفق النشط (ثانية)';
+
+  @override
+  String get netflowInactiveTimeout => 'مهلة التدفق غير النشط (ثانية)';
+
+  @override
+  String get netflowResetData => 'إعادة تعيين بيانات NetFlow';
+
+  @override
+  String get netflowResetWarning =>
+      'هل تريد حقًا إعادة تعيين بيانات NetFlow؟ سيؤدي ذلك إلى مسح جميع بيانات رسوم بيانية Insight.';
+
+  @override
+  String get netflowSaved => 'تم حفظ إعدادات NetFlow.';
+
+  @override
+  String get netflowCacheStatsTitle => 'إحصائيات ذاكرة التخزين المؤقت';
+
+  @override
+  String get netflowCacheName => 'التدفق';
+
+  @override
+  String get netflowCacheInterface => 'الواجهة';
+
+  @override
+  String get netflowCachePackets => 'الحزم';
+
+  @override
+  String get netflowCacheSrcIps => 'المصادر';
+
+  @override
+  String get netflowCacheDstIps => 'الوجهات';
+
+  @override
+  String get remove => 'إزالة';
+
+  @override
+  String get netflowCaptureInterfacesHint =>
+      'حدد جميع الواجهات لتفعيل NetFlow عليها.';
+
+  @override
+  String get netflowEgressOnlyHint =>
+      'حدد الواجهات المستخدمة لحركة مرور WAN لتجنب احتساب حركة NAT مرتين.';
+
+  @override
+  String get netflowCollectLocalHint =>
+      'جمع بيانات NetFlow على هذا الجدار الناري لاستخدامها مع Insight. يحتفظ الذاكرة المحلية بآخر 100 ميغابايت فقط.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'حدد وجهات إرسال بيانات NetFlow إليها (عنوان IP:منفذ، مثلاً 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'تقسيم التدفقات طويلة المدى إلى أجزاء أصغر.';
+
+  @override
+  String get netflowInactiveTimeoutHint => 'انتهاء صلاحية التدفقات الخاملة.';
+
+  @override
+  String get netflowAddDestination => 'إضافة وجهة';
 }

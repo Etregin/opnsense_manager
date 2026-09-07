@@ -1938,6 +1938,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String get checkingNetflowStatus => 'NetFlow-Status wird geprüft...';
 
   @override
+  String timePresetLabel(String window, String avgInterval) {
+    return '$window, Durchschnitt $avgInterval';
+  }
+
+  @override
+  String durationHours(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Stunden',
+      one: 'Stunde',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String durationDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tage',
+      one: 'Tag',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get durationLastYear => 'Letztes Jahr';
+
+  @override
+  String get goToNetflowConfig => 'Zur NetFlow-Konfiguration';
+
+  @override
   String get neighborDiscovery => 'Nachbarerkennung';
 
   @override
@@ -4146,4 +4179,92 @@ class AppLocalizationsDe extends AppLocalizations {
   String aliasRuntimeEntries(String count) {
     return '$count aktive Einträge (Laufzeit)';
   }
+
+  @override
+  String get netflowConfig => 'NetFlow';
+
+  @override
+  String get netflowCaptureTab => 'Erfassung';
+
+  @override
+  String get netflowCacheTab => 'Cache';
+
+  @override
+  String get netflowCaptureInterfaces => 'Erfassungs-Interfaces';
+
+  @override
+  String get netflowEgressOnly => 'Nur Ausgehend';
+
+  @override
+  String get netflowVersion => 'NetFlow-Version';
+
+  @override
+  String get netflowCollectorTargets => 'Collector-Ziele';
+
+  @override
+  String get netflowCollectLocal => 'Lokale Datenerfassung aktivieren';
+
+  @override
+  String get netflowActiveTimeout => 'Aktives Timeout (Sekunden)';
+
+  @override
+  String get netflowInactiveTimeout => 'Inaktives Timeout (Sekunden)';
+
+  @override
+  String get netflowResetData => 'NetFlow-Daten zurücksetzen';
+
+  @override
+  String get netflowResetWarning =>
+      'Möchten Sie wirklich die NetFlow-Daten zurücksetzen? Dadurch werden alle Insight-Graphdaten gelöscht.';
+
+  @override
+  String get netflowSaved => 'NetFlow-Konfiguration gespeichert.';
+
+  @override
+  String get netflowCacheStatsTitle => 'Cache-Statistiken';
+
+  @override
+  String get netflowCacheName => 'Flow';
+
+  @override
+  String get netflowCacheInterface => 'Interface';
+
+  @override
+  String get netflowCachePackets => 'Pakete';
+
+  @override
+  String get netflowCacheSrcIps => 'Quellen';
+
+  @override
+  String get netflowCacheDstIps => 'Ziele';
+
+  @override
+  String get remove => 'Entfernen';
+
+  @override
+  String get netflowCaptureInterfacesHint =>
+      'Wählen Sie alle Interfaces aus, auf denen NetFlow aktiviert werden soll.';
+
+  @override
+  String get netflowEgressOnlyHint =>
+      'Wählen Sie Interfaces für WAN-Verkehr aus, um NAT-Doppelzählung zu vermeiden.';
+
+  @override
+  String get netflowCollectLocalHint =>
+      'NetFlow-Daten auf dieser Firewall für Insight sammeln. Der lokale Cache speichert nur die letzten 100 MB.';
+
+  @override
+  String get netflowDestinationsHint =>
+      'Ziele für NetFlow-Daten angeben (IP:Port, z. B. 192.168.0.1:2550).';
+
+  @override
+  String get netflowActiveTimeoutHint =>
+      'Lange Datenströme in kleinere Teile aufteilen.';
+
+  @override
+  String get netflowInactiveTimeoutHint =>
+      'Inaktive Datenströme ablaufen lassen.';
+
+  @override
+  String get netflowAddDestination => 'Ziel hinzufügen';
 }
