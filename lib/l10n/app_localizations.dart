@@ -7903,6 +7903,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 hour'**
   String get oneHourDuration;
+
+  /// No description provided for @unboundQueryType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get unboundQueryType;
+
+  /// No description provided for @unboundFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get unboundFamily;
+
+  /// No description provided for @unboundReturnCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Code'**
+  String get unboundReturnCode;
+
+  /// No description provided for @unboundResolveTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve Time'**
+  String get unboundResolveTime;
+
+  /// No description provided for @unboundTtl.
+  ///
+  /// In en, this message translates to:
+  /// **'TTL'**
+  String get unboundTtl;
+
+  /// No description provided for @unboundBlocklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocklist'**
+  String get unboundBlocklist;
+
+  /// No description provided for @unboundPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Policy'**
+  String get unboundPolicy;
+
+  /// No description provided for @unboundVisibleColumns.
+  ///
+  /// In en, this message translates to:
+  /// **'Columns'**
+  String get unboundVisibleColumns;
+
+  /// No description provided for @searchQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Search queries...'**
+  String get searchQueries;
+
+  /// No description provided for @unboundQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Queries'**
+  String get unboundQueries;
 }
 
 class _AppLocalizationsDelegate

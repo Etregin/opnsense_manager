@@ -3605,5 +3605,25 @@
     }
   },
   "oneHourDuration": "1 hour",
-  "@oneHourDuration": {}
+  "@oneHourDuration": {},
+  "unboundQueryType": "Type",
+  "@unboundQueryType": {},
+  "unboundFamily": "Family",
+  "@unboundFamily": {},
+  "unboundReturnCode": "Return Code",
+  "@unboundReturnCode": {},
+  "unboundResolveTime": "Resolve Time",
+  "@unboundResolveTime": {},
+  "unboundTtl": "TTL",
+  "@unboundTtl": {},
+  "unboundBlocklist": "Blocklist",
+  "@unboundBlocklist": {},
+  "unboundPolicy": "Policy",
+  "@unboundPolicy": {},
+  "unboundVisibleColumns": "Columns",
+  "@unboundVisibleColumns": {},
+  "searchQueries": "Search queries...",
+  "@searchQueries": {},
+  "unboundQueries": "Queries",
+  "@unboundQueries": {}
 }

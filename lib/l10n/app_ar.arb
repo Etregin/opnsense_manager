@@ -3649,5 +3649,25 @@
     }
   },
   "oneHourDuration": "ساعة واحدة",
-  "@oneHourDuration": {}
+  "@oneHourDuration": {},
+  "unboundQueryType": "النوع",
+  "@unboundQueryType": {},
+  "unboundFamily": "العائلة",
+  "@unboundFamily": {},
+  "unboundReturnCode": "رمز الإرجاع",
+  "@unboundReturnCode": {},
+  "unboundResolveTime": "وقت الحل",
+  "@unboundResolveTime": {},
+  "unboundTtl": "TTL",
+  "@unboundTtl": {},
+  "unboundBlocklist": "قائمة الحظر",
+  "@unboundBlocklist": {},
+  "unboundPolicy": "السياسة",
+  "@unboundPolicy": {},
+  "unboundVisibleColumns": "الأعمدة",
+  "@unboundVisibleColumns": {},
+  "searchQueries": "بحث في الاستعلامات...",
+  "@searchQueries": {},
+  "unboundQueries": "الاستعلامات",
+  "@unboundQueries": {}
 }

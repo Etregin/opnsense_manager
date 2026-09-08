@@ -4373,4 +4373,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get oneHourDuration => '1 hour';
+
+  @override
+  String get unboundQueryType => 'Type';
+
+  @override
+  String get unboundFamily => 'Family';
+
+  @override
+  String get unboundReturnCode => 'Return Code';
+
+  @override
+  String get unboundResolveTime => 'Resolve Time';
+
+  @override
+  String get unboundTtl => 'TTL';
+
+  @override
+  String get unboundBlocklist => 'Blocklist';
+
+  @override
+  String get unboundPolicy => 'Policy';
+
+  @override
+  String get unboundVisibleColumns => 'Columns';
+
+  @override
+  String get searchQueries => 'Search queries...';
+
+  @override
+  String get unboundQueries => 'Queries';
 }

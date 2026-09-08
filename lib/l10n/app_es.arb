@@ -3658,5 +3658,25 @@
     }
   },
   "oneHourDuration": "1 hora",
-  "@oneHourDuration": {}
+  "@oneHourDuration": {},
+  "unboundQueryType": "Tipo",
+  "@unboundQueryType": {},
+  "unboundFamily": "Familia",
+  "@unboundFamily": {},
+  "unboundReturnCode": "Código de retorno",
+  "@unboundReturnCode": {},
+  "unboundResolveTime": "Tiempo de resolución",
+  "@unboundResolveTime": {},
+  "unboundTtl": "TTL",
+  "@unboundTtl": {},
+  "unboundBlocklist": "Lista de bloqueo",
+  "@unboundBlocklist": {},
+  "unboundPolicy": "Política",
+  "@unboundPolicy": {},
+  "unboundVisibleColumns": "Columnas",
+  "@unboundVisibleColumns": {},
+  "searchQueries": "Buscar consultas...",
+  "@searchQueries": {},
+  "unboundQueries": "Consultas",
+  "@unboundQueries": {}
 }

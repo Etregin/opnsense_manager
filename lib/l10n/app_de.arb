@@ -3658,5 +3658,25 @@
     }
   },
   "oneHourDuration": "1 Stunde",
-  "@oneHourDuration": {}
+  "@oneHourDuration": {},
+  "unboundQueryType": "Typ",
+  "@unboundQueryType": {},
+  "unboundFamily": "Familie",
+  "@unboundFamily": {},
+  "unboundReturnCode": "Rückgabecode",
+  "@unboundReturnCode": {},
+  "unboundResolveTime": "Auflösungszeit",
+  "@unboundResolveTime": {},
+  "unboundTtl": "TTL",
+  "@unboundTtl": {},
+  "unboundBlocklist": "Blockliste",
+  "@unboundBlocklist": {},
+  "unboundPolicy": "Richtlinie",
+  "@unboundPolicy": {},
+  "unboundVisibleColumns": "Spalten",
+  "@unboundVisibleColumns": {},
+  "searchQueries": "Abfragen durchsuchen...",
+  "@searchQueries": {},
+  "unboundQueries": "Abfragen",
+  "@unboundQueries": {}
 }

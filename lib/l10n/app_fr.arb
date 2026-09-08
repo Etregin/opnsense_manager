@@ -3658,5 +3658,25 @@
     }
   },
   "oneHourDuration": "1 heure",
-  "@oneHourDuration": {}
+  "@oneHourDuration": {},
+  "unboundQueryType": "Type",
+  "@unboundQueryType": {},
+  "unboundFamily": "Famille",
+  "@unboundFamily": {},
+  "unboundReturnCode": "Code de retour",
+  "@unboundReturnCode": {},
+  "unboundResolveTime": "Temps de résolution",
+  "@unboundResolveTime": {},
+  "unboundTtl": "TTL",
+  "@unboundTtl": {},
+  "unboundBlocklist": "Liste de blocage",
+  "@unboundBlocklist": {},
+  "unboundPolicy": "Politique",
+  "@unboundPolicy": {},
+  "unboundVisibleColumns": "Colonnes",
+  "@unboundVisibleColumns": {},
+  "searchQueries": "Rechercher des requêtes...",
+  "@searchQueries": {},
+  "unboundQueries": "Requêtes",
+  "@unboundQueries": {}
 }

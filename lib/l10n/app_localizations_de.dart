@@ -4425,4 +4425,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get oneHourDuration => '1 Stunde';
+
+  @override
+  String get unboundQueryType => 'Typ';
+
+  @override
+  String get unboundFamily => 'Familie';
+
+  @override
+  String get unboundReturnCode => 'Rückgabecode';
+
+  @override
+  String get unboundResolveTime => 'Auflösungszeit';
+
+  @override
+  String get unboundTtl => 'TTL';
+
+  @override
+  String get unboundBlocklist => 'Blockliste';
+
+  @override
+  String get unboundPolicy => 'Richtlinie';
+
+  @override
+  String get unboundVisibleColumns => 'Spalten';
+
+  @override
+  String get searchQueries => 'Abfragen durchsuchen...';
+
+  @override
+  String get unboundQueries => 'Abfragen';
 }

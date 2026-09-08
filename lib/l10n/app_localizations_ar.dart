@@ -4359,4 +4359,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get oneHourDuration => 'ساعة واحدة';
+
+  @override
+  String get unboundQueryType => 'النوع';
+
+  @override
+  String get unboundFamily => 'العائلة';
+
+  @override
+  String get unboundReturnCode => 'رمز الإرجاع';
+
+  @override
+  String get unboundResolveTime => 'وقت الحل';
+
+  @override
+  String get unboundTtl => 'TTL';
+
+  @override
+  String get unboundBlocklist => 'قائمة الحظر';
+
+  @override
+  String get unboundPolicy => 'السياسة';
+
+  @override
+  String get unboundVisibleColumns => 'الأعمدة';
+
+  @override
+  String get searchQueries => 'بحث في الاستعلامات...';
+
+  @override
+  String get unboundQueries => 'الاستعلامات';
 }
