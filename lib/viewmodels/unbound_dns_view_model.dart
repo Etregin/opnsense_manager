@@ -18,6 +18,7 @@
 
 import 'package:flutter/foundation.dart';
 import '../models/unbound_overview_status.dart';
+import '../models/unbound_query_item.dart';
 import '../models/unbound_rolling.dart';
 import '../models/unbound_settings.dart';
 import '../models/unbound_totals.dart';
@@ -49,6 +50,16 @@ class UnboundDnsViewModel extends ChangeNotifier {
 
   int _selectedDomainLimit = 10; // 10, 25, 50, 75, 100
 
+  // Details tab state
+  UnboundQuerySearchResponse? _querySearchResponse;
+  int _queriesCurrentPage = 1;
+  int _queriesRowCount = 50; // 50, 100, 200, 500, 1000, -1 (all)
+  String _queriesSearchPhrase = '';
+  String? _queriesFilterClient;
+  int? _queriesFilterTimeStart;
+  int? _queriesFilterTimeEnd;
+  bool _isQueriesLoading = false;
+
   // Settings tab state
   UnboundSettings? _settings;
   bool _statsToggleValue = false;
@@ -73,6 +84,33 @@ class UnboundDnsViewModel extends ChangeNotifier {
   bool get isClientLogarithmic => _isClientLogarithmic;
 
   int get selectedDomainLimit => _selectedDomainLimit;
+
+  UnboundQuerySearchResponse? get querySearchResponse => _querySearchResponse;
+  List<UnboundQueryItem> get queries => _querySearchResponse?.rows ?? [];
+  int get queriesTotal => _querySearchResponse?.total ?? 0;
+  int get queriesCurrentPage => _queriesCurrentPage;
+  int get queriesRowCount => _queriesRowCount;
+  String get queriesSearchPhrase => _queriesSearchPhrase;
+  String? get queriesFilterClient => _queriesFilterClient;
+  int? get queriesFilterTimeStart => _queriesFilterTimeStart;
+  int? get queriesFilterTimeEnd => _queriesFilterTimeEnd;
+  bool get isQueriesLoading => _isQueriesLoading;
+
+  String? get activeFilterLabel {
+    if (_queriesFilterClient == null && _queriesFilterTimeStart == null) return null;
+    final clientPart = _queriesFilterClient ?? '';
+    if (_queriesFilterTimeStart != null && _queriesFilterTimeEnd != null) {
+      final startDt = DateTime.fromMillisecondsSinceEpoch(_queriesFilterTimeStart! * 1000);
+      final endDt = DateTime.fromMillisecondsSinceEpoch(_queriesFilterTimeEnd! * 1000);
+      final startFormatted = '${startDt.month.toString().padLeft(2, '0')}-${startDt.day.toString().padLeft(2, '0')} ${startDt.hour.toString().padLeft(2, '0')}:${startDt.minute.toString().padLeft(2, '0')}';
+      final endFormatted = '${endDt.month.toString().padLeft(2, '0')}-${endDt.day.toString().padLeft(2, '0')} ${endDt.hour.toString().padLeft(2, '0')}:${endDt.minute.toString().padLeft(2, '0')}';
+      if (clientPart.isNotEmpty) {
+        return '$clientPart ($startFormatted - $endFormatted)';
+      }
+      return '($startFormatted - $endFormatted)';
+    }
+    return clientPart;
+  }
 
   UnboundSettings? get settings => _settings;
   bool get statsToggleValue => _statsToggleValue;
@@ -126,10 +164,89 @@ class UnboundDnsViewModel extends ChangeNotifier {
     final rollingFuture = _apiService.getUnboundRolling(_selectedRollingDurationHours);
     final clientFuture = _apiService.getUnboundClientActivity(_selectedClientDurationHours);
 
-    final results = await Future.wait([totalsFuture, rollingFuture, clientFuture]);
+    final queriesFuture = _loadQueriesInternal();
+
+    final results = await Future.wait([totalsFuture, rollingFuture, clientFuture, queriesFuture]);
     _totals = results[0] as UnboundTotals;
     _rollingPoints = results[1] as List<UnboundRollingPoint>;
     _clientActivityPoints = results[2] as List<UnboundRollingClientPoint>;
+  }
+
+  Future<void> _loadQueriesInternal() async {
+    _isQueriesLoading = true;
+    try {
+      final actualRowCount = _queriesRowCount == -1 ? 9999 : _queriesRowCount;
+      _querySearchResponse = await _apiService.searchUnboundQueries(
+        current: _queriesCurrentPage,
+        rowCount: actualRowCount,
+        searchPhrase: _queriesSearchPhrase.isNotEmpty ? _queriesSearchPhrase : null,
+        client: _queriesFilterClient,
+        timeStart: _queriesFilterTimeStart,
+        timeEnd: _queriesFilterTimeEnd,
+      );
+    } catch (_) {
+      // Handled silently or reported
+    } finally {
+      _isQueriesLoading = false;
+    }
+  }
+
+  Future<void> loadQueries() async {
+    _isQueriesLoading = true;
+    notifyListeners();
+    try {
+      final actualRowCount = _queriesRowCount == -1 ? 9999 : _queriesRowCount;
+      _querySearchResponse = await _apiService.searchUnboundQueries(
+        current: _queriesCurrentPage,
+        rowCount: actualRowCount,
+        searchPhrase: _queriesSearchPhrase.isNotEmpty ? _queriesSearchPhrase : null,
+        client: _queriesFilterClient,
+        timeStart: _queriesFilterTimeStart,
+        timeEnd: _queriesFilterTimeEnd,
+      );
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isQueriesLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> setQueriesRowCount(int count) async {
+    _queriesRowCount = count;
+    _queriesCurrentPage = 1;
+    await loadQueries();
+  }
+
+  Future<void> setQueriesSearchPhrase(String phrase) async {
+    _queriesSearchPhrase = phrase;
+    _queriesCurrentPage = 1;
+    await loadQueries();
+  }
+
+  Future<void> setQueriesPage(int page) async {
+    _queriesCurrentPage = page;
+    await loadQueries();
+  }
+
+  Future<void> filterQueriesByClientTime({
+    required String client,
+    required int timeStart,
+    required int timeEnd,
+  }) async {
+    _queriesFilterClient = client;
+    _queriesFilterTimeStart = timeStart;
+    _queriesFilterTimeEnd = timeEnd;
+    _queriesCurrentPage = 1;
+    await loadQueries();
+  }
+
+  Future<void> clearQueriesClientTimeFilter() async {
+    _queriesFilterClient = null;
+    _queriesFilterTimeStart = null;
+    _queriesFilterTimeEnd = null;
+    _queriesCurrentPage = 1;
+    await loadQueries();
   }
 
   // ── Control / Filter Methods ────────────────────────────────────────────────

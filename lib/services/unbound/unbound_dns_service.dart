@@ -19,6 +19,7 @@
 import 'package:dio/dio.dart';
 import '../../constants/api_endpoints.dart';
 import '../../models/unbound_overview_status.dart';
+import '../../models/unbound_query_item.dart';
 import '../../models/unbound_rolling.dart';
 import '../../models/unbound_settings.dart';
 import '../../models/unbound_totals.dart';
@@ -126,6 +127,49 @@ class UnboundDnsService extends BaseOPNsenseService {
       }
       result.sort((a, b) => a.timestamp.compareTo(b.timestamp));
       return result;
+    } on DioException catch (e) {
+      throw handleDioError(e);
+    }
+  }
+
+  /// Searches Unbound DNS query logs.
+  ///
+  /// Calls `POST /api/unbound/overview/search_queries/`.
+  Future<UnboundQuerySearchResponse> searchQueries({
+    int current = 1,
+    int rowCount = 50,
+    String? searchPhrase,
+    String? client,
+    int? timeStart,
+    int? timeEnd,
+  }) async {
+    ensureInitialized();
+    try {
+      final payload = {
+        'current': current,
+        'rowCount': rowCount,
+        'sort': {},
+        if (client != null && client.isNotEmpty) 'client': client,
+        ...?timeStart != null ? {'timeStart': timeStart} : null,
+        ...?timeEnd != null ? {'timeEnd': timeEnd} : null,
+        if (searchPhrase != null && searchPhrase.isNotEmpty)
+          'searchPhrase': searchPhrase,
+      };
+      final response = await dio.post(
+        ApiEndpoints.unboundOverviewSearchQueries,
+        data: payload,
+      );
+      if (response.data is Map<String, dynamic>) {
+        return UnboundQuerySearchResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+      }
+      return const UnboundQuerySearchResponse(
+        total: 0,
+        rowCount: 0,
+        current: 1,
+        rows: [],
+      );
     } on DioException catch (e) {
       throw handleDioError(e);
     }

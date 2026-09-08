@@ -31,6 +31,7 @@ class UnboundClientActivityChart extends StatelessWidget {
   final bool isLogarithmic;
   final ValueChanged<int> onDurationChanged;
   final ValueChanged<bool> onLogarithmicChanged;
+  final void Function(String client, int timeStart, int timeEnd)? onClientSpotTapped;
 
   const UnboundClientActivityChart({
     super.key,
@@ -39,6 +40,7 @@ class UnboundClientActivityChart extends StatelessWidget {
     required this.isLogarithmic,
     required this.onDurationChanged,
     required this.onLogarithmicChanged,
+    this.onClientSpotTapped,
   });
 
   static const List<Color> _clientColors = [
@@ -252,9 +254,23 @@ class UnboundClientActivityChart extends StatelessWidget {
                   borderData: FlBorderData(show: false),
                   lineBarsData: lineBars,
                   lineTouchData: LineTouchData(
+                    touchCallback: (FlTouchEvent event, LineTouchResponse? touchResponse) {
+                      if (event is FlTapUpEvent && touchResponse?.lineBarSpots != null && touchResponse!.lineBarSpots!.isNotEmpty) {
+                        final spot = touchResponse.lineBarSpots!.first;
+                        final ip = spot.barIndex < top10Ips.length ? top10Ips[spot.barIndex] : '';
+                        if (ip.isNotEmpty && onClientSpotTapped != null) {
+                          final intervalSeconds = selectedDurationHours == 1 ? 60 : 600;
+                          final timeEnd = spot.x.toInt();
+                          final timeStart = timeEnd - intervalSeconds;
+                          onClientSpotTapped!(ip, timeStart, timeEnd);
+                        }
+                      }
+                    },
                     touchTooltipData: LineTouchTooltipData(
                       getTooltipItems: (touchedSpots) {
-                        return touchedSpots.map((touchedSpot) {
+                        return touchedSpots
+                            .where((spot) => spot.y > 0)
+                            .map((touchedSpot) {
                           final originalY = isLogarithmic
                               ? (touchedSpot.y == 0 ? 0 : (pow(10, touchedSpot.y) - 1).round())
                               : touchedSpot.y.round();

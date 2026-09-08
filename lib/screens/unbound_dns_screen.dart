@@ -128,7 +128,17 @@ class _UnboundDnsScreenState extends State<UnboundDnsScreen>
             controller: _tabController,
             children: isEnabled
                 ? [
-                    UnboundOverviewTab(viewModel: _viewModel),
+                    UnboundOverviewTab(
+                      viewModel: _viewModel,
+                      onClientFilterSelected: (client, timeStart, timeEnd) {
+                        _viewModel.filterQueriesByClientTime(
+                          client: client,
+                          timeStart: timeStart,
+                          timeEnd: timeEnd,
+                        );
+                        _tabController?.animateTo(1);
+                      },
+                    ),
                     UnboundDetailsTab(viewModel: _viewModel),
                     UnboundSettingsTab(viewModel: _viewModel),
                   ]

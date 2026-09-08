@@ -51,6 +51,7 @@ import '../models/network_insight_timeserie.dart';
 import '../models/network_insight_top_addr.dart';
 import '../models/network_insight_top_port.dart';
 import '../models/unbound_overview_status.dart';
+import '../models/unbound_query_item.dart';
 import '../models/unbound_rolling.dart';
 import '../models/unbound_settings.dart';
 import '../models/unbound_totals.dart';
@@ -2046,6 +2047,35 @@ ${List.generate(16, (i) => List.generate(32, (j) => '0123456789abcdef'[(i * 32 +
         isDemoMode: _isDemoMode,
         demoAction: () async => _unboundGenerator.generateClientActivity(hours),
         realAction: () => _realApiService.getUnboundClientActivity(hours),
+        delayMs: 400,
+      );
+
+  Future<UnboundQuerySearchResponse> searchUnboundQueries({
+    int current = 1,
+    int rowCount = 50,
+    String? searchPhrase,
+    String? client,
+    int? timeStart,
+    int? timeEnd,
+  }) =>
+      DemoApiDecorator.execute(
+        isDemoMode: _isDemoMode,
+        demoAction: () async => _unboundGenerator.generateQueries(
+          current: current,
+          rowCount: rowCount,
+          searchPhrase: searchPhrase,
+          client: client,
+          timeStart: timeStart,
+          timeEnd: timeEnd,
+        ),
+        realAction: () => _realApiService.searchUnboundQueries(
+          current: current,
+          rowCount: rowCount,
+          searchPhrase: searchPhrase,
+          client: client,
+          timeStart: timeStart,
+          timeEnd: timeEnd,
+        ),
         delayMs: 400,
       );
 

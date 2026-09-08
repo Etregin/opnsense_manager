@@ -26,10 +26,12 @@ import 'unbound_rolling_chart.dart';
 
 class UnboundOverviewTab extends StatelessWidget {
   final UnboundDnsViewModel viewModel;
+  final void Function(String client, int timeStart, int timeEnd)? onClientFilterSelected;
 
   const UnboundOverviewTab({
     super.key,
     required this.viewModel,
+    this.onClientFilterSelected,
   });
 
   @override
@@ -55,6 +57,7 @@ class UnboundOverviewTab extends StatelessWidget {
             isLogarithmic: viewModel.isClientLogarithmic,
             onDurationChanged: viewModel.setClientDurationHours,
             onLogarithmicChanged: viewModel.toggleClientLogarithmic,
+            onClientSpotTapped: onClientFilterSelected,
           ),
           const SizedBox(height: AppConstants.standardPadding),
           UnboundDomainsSection(
