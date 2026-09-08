@@ -4403,4 +4403,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unboundQueries => 'Queries';
+
+  @override
+  String get fullScreen => 'Full screen';
 }

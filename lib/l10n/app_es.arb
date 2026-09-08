@@ -3678,5 +3678,7 @@
   "searchQueries": "Buscar consultas...",
   "@searchQueries": {},
   "unboundQueries": "Consultas",
-  "@unboundQueries": {}
+  "@unboundQueries": {},
+  "fullScreen": "Pantalla completa",
+  "@fullScreen": {}
 }

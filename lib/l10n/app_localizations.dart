@@ -7963,6 +7963,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Queries'**
   String get unboundQueries;
+
+  /// No description provided for @fullScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Full screen'**
+  String get fullScreen;
 }
 
 class _AppLocalizationsDelegate

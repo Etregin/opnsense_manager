@@ -4389,4 +4389,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unboundQueries => 'الاستعلامات';
+
+  @override
+  String get fullScreen => 'ملء الشاشة';
 }

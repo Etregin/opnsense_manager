@@ -4453,4 +4453,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unboundQueries => 'Requêtes';
+
+  @override
+  String get fullScreen => 'Plein écran';
 }

@@ -35,10 +35,13 @@ class InterfaceTotalsChart extends StatelessWidget {
   /// When `true`, include Loopback (`lo0`) series in the charts.
   final bool showLoopback;
 
+  final bool isFullScreen;
+
   const InterfaceTotalsChart({
     super.key,
     required this.series,
     this.showLoopback = false,
+    this.isFullScreen = false,
   });
 
   // Fixed colour palette cycling through distinct hues per interface.
@@ -72,18 +75,33 @@ class InterfaceTotalsChart extends StatelessWidget {
       }
     }
 
-    return Column(
+    Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (isFullScreen)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppConstants.compactPadding),
+            child: _buildLegend(context, ifaceOrder, filtered),
+          ),
         _SectionLabel(label: '↓ ${l10n.timeRangeFrom}'),
-        _buildChart(context, inSeries, ifaceOrder),
+        if (isFullScreen)
+          Expanded(child: _buildChart(context, inSeries, ifaceOrder))
+        else
+          _buildChart(context, inSeries, ifaceOrder),
         const SizedBox(height: AppConstants.standardPadding),
         _SectionLabel(label: '↑ ${l10n.timeRangeTo}'),
-        _buildChart(context, outSeries, ifaceOrder),
-        const SizedBox(height: AppConstants.compactPadding),
-        _buildLegend(context, ifaceOrder, filtered),
+        if (isFullScreen)
+          Expanded(child: _buildChart(context, outSeries, ifaceOrder))
+        else
+          _buildChart(context, outSeries, ifaceOrder),
+        if (!isFullScreen) ...[
+          const SizedBox(height: AppConstants.compactPadding),
+          _buildLegend(context, ifaceOrder, filtered),
+        ],
       ],
     );
+
+    return content;
   }
 
   Widget _buildChart(

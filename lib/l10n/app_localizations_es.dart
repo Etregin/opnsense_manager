@@ -4455,4 +4455,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unboundQueries => 'Consultas';
+
+  @override
+  String get fullScreen => 'Pantalla completa';
 }

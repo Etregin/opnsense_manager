@@ -32,6 +32,7 @@ class UnboundClientActivityChart extends StatelessWidget {
   final ValueChanged<int> onDurationChanged;
   final ValueChanged<bool> onLogarithmicChanged;
   final void Function(String client, int timeStart, int timeEnd)? onClientSpotTapped;
+  final bool isFullScreen;
 
   const UnboundClientActivityChart({
     super.key,
@@ -41,6 +42,7 @@ class UnboundClientActivityChart extends StatelessWidget {
     required this.onDurationChanged,
     required this.onLogarithmicChanged,
     this.onClientSpotTapped,
+    this.isFullScreen = false,
   });
 
   static const List<Color> _clientColors = [
@@ -135,71 +137,102 @@ class UnboundClientActivityChart extends StatelessWidget {
       );
     }
 
-    return Card(
-      elevation: AppConstants.cardElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppConstants.standardPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.topClientActivityOverTheLast,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            Expanded(
+              child: Text(
+                l10n.topClientActivityOverTheLast,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-                DropdownButton<int>(
-                  value: selectedDurationHours,
-                  underline: const SizedBox.shrink(),
-                  items: [
-                    DropdownMenuItem(value: 24, child: Text(l10n.hoursDuration(24))),
-                    DropdownMenuItem(value: 12, child: Text(l10n.hoursDuration(12))),
-                    DropdownMenuItem(value: 1, child: Text(l10n.oneHourDuration)),
-                  ],
-                  onChanged: (val) {
-                    if (val != null) onDurationChanged(val);
-                  },
-                ),
-              ],
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Wrap(
-                    spacing: AppConstants.compactPadding,
-                    runSpacing: 4,
-                    children: [
-                      for (int i = 0; i < top10Ips.length; i++)
-                        _LegendDot(
-                          color: _clientColors[i % _clientColors.length],
-                          label: top10Ips[i],
+            DropdownButton<int>(
+              value: selectedDurationHours,
+              underline: const SizedBox.shrink(),
+              items: [
+                DropdownMenuItem(value: 24, child: Text(l10n.hoursDuration(24))),
+                DropdownMenuItem(value: 12, child: Text(l10n.hoursDuration(12))),
+                DropdownMenuItem(value: 1, child: Text(l10n.oneHourDuration)),
+              ],
+              onChanged: (val) {
+                if (val != null) onDurationChanged(val);
+              },
+            ),
+            if (!isFullScreen) ...[
+              const SizedBox(width: AppConstants.compactPadding),
+              IconButton(
+                icon: const Icon(Icons.fullscreen, size: 20),
+                tooltip: l10n.fullScreen,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (ctx) => Scaffold(
+                        appBar: AppBar(
+                          title: Text(l10n.topClientActivityOverTheLast),
                         ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(l10n.logarithmic, style: theme.textTheme.bodySmall),
-                    Switch(
-                      value: isLogarithmic,
-                      onChanged: onLogarithmicChanged,
+                        body: SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.all(AppConstants.standardPadding),
+                            child: UnboundClientActivityChart(
+                              points: points,
+                              selectedDurationHours: selectedDurationHours,
+                              isLogarithmic: isLogarithmic,
+                              onDurationChanged: onDurationChanged,
+                              onLogarithmicChanged: onLogarithmicChanged,
+                              onClientSpotTapped: (client, start, end) {
+                                Navigator.of(ctx).pop();
+                                onClientSpotTapped?.call(client, start, end);
+                              },
+                              isFullScreen: true,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ],
+                  );
+                },
+              ),
+            ],
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Wrap(
+                spacing: AppConstants.compactPadding,
+                runSpacing: 4,
+                children: [
+                  for (int i = 0; i < top10Ips.length; i++)
+                    _LegendDot(
+                      color: _clientColors[i % _clientColors.length],
+                      label: top10Ips[i],
+                    ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Text(l10n.logarithmic, style: theme.textTheme.bodySmall),
+                Switch(
+                  value: isLogarithmic,
+                  onChanged: onLogarithmicChanged,
                 ),
               ],
             ),
-            const SizedBox(height: AppConstants.standardPadding),
-            SizedBox(
-              height: 200,
-              child: LineChart(
+          ],
+        ),
+        const SizedBox(height: AppConstants.standardPadding),
+        Expanded(
+          flex: isFullScreen ? 1 : 0,
+          child: SizedBox(
+            height: isFullScreen ? null : 200,
+            child: LineChart(
                 LineChartData(
                   minX: minX,
                   maxX: maxX,
@@ -294,8 +327,22 @@ class UnboundClientActivityChart extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+      ],
+    );
+
+    if (isFullScreen) {
+      return content;
+    }
+
+    return Card(
+      elevation: AppConstants.cardElevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.cardBorderRadius),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppConstants.standardPadding),
+        child: content,
       ),
     );
   }

@@ -3625,5 +3625,7 @@
   "searchQueries": "Search queries...",
   "@searchQueries": {},
   "unboundQueries": "Queries",
-  "@unboundQueries": {}
+  "@unboundQueries": {},
+  "fullScreen": "Full screen",
+  "@fullScreen": {}
 }

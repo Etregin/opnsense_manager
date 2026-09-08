@@ -3669,5 +3669,7 @@
   "searchQueries": "بحث في الاستعلامات...",
   "@searchQueries": {},
   "unboundQueries": "الاستعلامات",
-  "@unboundQueries": {}
+  "@unboundQueries": {},
+  "fullScreen": "ملء الشاشة",
+  "@fullScreen": {}
 }

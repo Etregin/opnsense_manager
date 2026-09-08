@@ -4455,4 +4455,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get unboundQueries => 'Abfragen';
+
+  @override
+  String get fullScreen => 'Vollbild';
 }
