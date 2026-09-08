@@ -53,6 +53,7 @@ import '../models/openvpn_route_search_response.dart';
 import '../models/openvpn_log_search_response.dart';
 import '../models/neighbor.dart';
 import '../models/unbound_overview_status.dart';
+import '../models/unbound_query_item.dart';
 import '../models/unbound_rolling.dart';
 import '../models/unbound_settings.dart';
 import '../models/unbound_totals.dart';
@@ -828,6 +829,23 @@ class OPNsenseApiService {
 
   Future<List<UnboundRollingClientPoint>> getUnboundClientActivity(int hours) =>
       _unboundDnsService.getClientActivity(hours);
+
+  Future<UnboundQuerySearchResponse> searchUnboundQueries({
+    int current = 1,
+    int rowCount = 50,
+    String? searchPhrase,
+    String? client,
+    int? timeStart,
+    int? timeEnd,
+  }) =>
+      _unboundDnsService.searchQueries(
+        current: current,
+        rowCount: rowCount,
+        searchPhrase: searchPhrase,
+        client: client,
+        timeStart: timeStart,
+        timeEnd: timeEnd,
+      );
 
   Future<UnboundSettings> getUnboundSettings() =>
       _unboundDnsService.getSettings();

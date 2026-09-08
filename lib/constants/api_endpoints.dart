@@ -227,6 +227,7 @@ class ApiEndpoints {
   static const String unboundOverviewIsEnabled = '/unbound/overview/is_enabled';
   static const String unboundOverviewReset = '/unbound/overview/reset';
   static const String unboundOverviewGetPolicies = '/unbound/overview/get_policies';
+  static const String unboundOverviewSearchQueries = '/unbound/overview/search_queries/';
   static const String unboundSettingsGet = '/unbound/settings/get';
   static const String unboundSettingsSet = '/unbound/settings/set';
   static const String unboundServiceReconfigureGeneral = '/unbound/service/reconfigure_general';

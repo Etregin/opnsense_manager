@@ -17,6 +17,7 @@
  */
 
 import '../../models/unbound_overview_status.dart';
+import '../../models/unbound_query_item.dart';
 import '../../models/unbound_rolling.dart';
 import '../../models/unbound_settings.dart';
 import '../../models/unbound_totals.dart';
@@ -123,5 +124,211 @@ class DemoUnboundDataGenerator {
       ));
     }
     return points;
+  }
+
+  UnboundQuerySearchResponse generateQueries({
+    int current = 1,
+    int rowCount = 50,
+    String? searchPhrase,
+    String? client,
+    int? timeStart,
+    int? timeEnd,
+  }) {
+    final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    final allSampleQueries = [
+      UnboundQueryItem(
+        time: now - 5,
+        client: 'localhost',
+        family: 'ip4',
+        type: 'A',
+        domain: 'pkg.opnsense.org.',
+        action: 'Pass',
+        source: 'Cache',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 311,
+        policy: '',
+        status: 1,
+      ),
+      UnboundQueryItem(
+        time: now - 15,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'AAAA',
+        domain: 'api.github.com.',
+        action: 'Pass',
+        source: 'Cache',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 2696,
+        policy: '',
+        status: 1,
+      ),
+      UnboundQueryItem(
+        time: now - 20,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'A',
+        domain: 'api.github.com.',
+        action: 'Pass',
+        source: 'Recursion',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 114,
+        dnssecStatus: 'Unchecked',
+        ttl: 60,
+        policy: '',
+        status: 0,
+      ),
+      UnboundQueryItem(
+        time: now - 35,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'A',
+        domain: 'region1.v2.argotunnel.com.',
+        action: 'Pass',
+        source: 'Cache',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 27597,
+        policy: '',
+        status: 1,
+      ),
+      UnboundQueryItem(
+        time: now - 60,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'AAAA',
+        domain: 'telemetry.microsoft.com.',
+        action: 'Block',
+        source: 'Blocklist',
+        blocklist: 'easylist',
+        rcode: 'REFUSED',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 0,
+        policy: '',
+        status: 2,
+      ),
+      UnboundQueryItem(
+        time: now - 85,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'A',
+        domain: 'opentracker.i2p.rocks.',
+        action: 'Pass',
+        source: 'Cache',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 230,
+        policy: '',
+        status: 1,
+      ),
+      UnboundQueryItem(
+        time: now - 110,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'AAAA',
+        domain: 'api.themoviedb.org.',
+        action: 'Pass',
+        source: 'Recursion',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 202,
+        dnssecStatus: 'Unchecked',
+        ttl: 60,
+        policy: '',
+        status: 0,
+      ),
+      UnboundQueryItem(
+        time: now - 140,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'PTR',
+        domain: '1.2.16.172.in-addr.arpa.',
+        action: 'Pass',
+        source: 'Local-data',
+        blocklist: '',
+        rcode: 'NXDOMAIN',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 0,
+        policy: '',
+        status: 1,
+      ),
+      UnboundQueryItem(
+        time: now - 160,
+        client: '47.245.117.221',
+        family: 'ip4',
+        type: 'A',
+        domain: 'usage.truenas.com.',
+        action: 'Pass',
+        source: 'Recursion',
+        blocklist: '',
+        rcode: 'NOERROR',
+        resolveTimeMs: 135,
+        dnssecStatus: 'Unchecked',
+        ttl: 3600,
+        policy: '',
+        status: 0,
+      ),
+      UnboundQueryItem(
+        time: now - 200,
+        client: '192.168.1.100',
+        family: 'ip4',
+        type: 'A',
+        domain: 'adservice.google.com.',
+        action: 'Block',
+        source: 'Blocklist',
+        blocklist: 'adguard',
+        rcode: 'NXDOMAIN',
+        resolveTimeMs: 0,
+        dnssecStatus: 'Unchecked',
+        ttl: 0,
+        policy: '',
+        status: 2,
+      ),
+    ];
+
+    var filtered = allSampleQueries;
+    if (client != null && client.isNotEmpty) {
+      filtered = filtered.where((item) => item.client == client).toList();
+    }
+    if (timeStart != null) {
+      filtered = filtered.where((item) => (item.time ?? 0) >= timeStart).toList();
+    }
+    if (timeEnd != null) {
+      filtered = filtered.where((item) => (item.time ?? 0) <= timeEnd).toList();
+    }
+    if (searchPhrase != null && searchPhrase.isNotEmpty) {
+      final q = searchPhrase.toLowerCase();
+      filtered = filtered.where((item) {
+        return (item.domain?.toLowerCase().contains(q) ?? false) ||
+            (item.client?.toLowerCase().contains(q) ?? false) ||
+            (item.type?.toLowerCase().contains(q) ?? false) ||
+            (item.action?.toLowerCase().contains(q) ?? false);
+      }).toList();
+    }
+
+    final total = filtered.length;
+    final startIndex = (current - 1) * rowCount;
+    final rows = (startIndex < filtered.length)
+        ? filtered.skip(startIndex).take(rowCount).toList()
+        : <UnboundQueryItem>[];
+
+    return UnboundQuerySearchResponse(
+      total: total,
+      rowCount: rowCount,
+      current: current,
+      rows: rows,
+    );
   }
 }
